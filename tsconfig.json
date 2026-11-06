@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "moduleResolution": "node",
+        "strict": true,
+        "paths": {
+            "three/examples/jsm/libs/dat.gui.module": ["./node_modules/@types/dat.gui"]
+        },
+        "strictPropertyInitialization": false,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "types": ["react", "react-dom", "three"],
+        "jsx": "react"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "server"]
+}

@@ -8,8 +8,10 @@
         },
         "strictPropertyInitialization": false,
         "allowSyntheticDefaultImports": true,
-        "jsx": "react",
+        "skipLibCheck": true,
+        "types": ["react", "react-dom", "three"],
+        "jsx": "react"
     },
-    
     "include": ["Application/*", "./*"],
+    "exclude": ["../node_modules", "../server"]
 }

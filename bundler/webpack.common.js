@@ -36,7 +36,11 @@ module.exports = {
             },
             {
                 test: /\.ts?$/,
-                use: 'ts-loader',
+                loader: 'ts-loader',
+                options: {
+                    transpileOnly: true,
+                    configFile: path.resolve(__dirname, '../tsconfig.json'),
+                },
                 exclude: /node_modules/,
             },
             // JS

@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AntrikshOS — Motion Graphics & Visual Designer</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    :root {
+      --win-bg: #c0c0c0;
+      --win-blue: #000080;
+      --win-blue-light: #1084d0;
+      --win-border-light: #ffffff;
+      --win-border-dark: #808080;
+      --win-border-darkest: #000000;
+      --win-gray-text: #808080;
+      --desktop-bg: #1d2e2f;
+      --accent: #00f2fe;
+      --accent-hover: #4facfe;
+      --font-system: 'MS Sans Serif', Tahoma, 'Segoe UI', Geneva, sans-serif;
+      --font-mono: 'Consolas', 'Courier New', monospace;
+    }
+
+    body {
+      background-color: var(--desktop-bg);
+      font-family: var(--font-system);
+      font-size: 13px;
+      color: #000;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* CRT scanline overlay effect */
+    .crt-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+      background-size: 100% 4px;
+      z-index: 9999;
+      opacity: 0.45;
+    }
+
+    /* Desktop Area */
+    #desktop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 34px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 16px;
+      z-index: 1;
+    }
+
+    /* Desktop Icon */
+    .desktop-icon {
+      width: 82px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      padding: 6px 4px;
+      border: 1px dotted transparent;
+      border-radius: 2px;
+      transition: background 0.1s;
+    }
+
+    .desktop-icon:hover {
+      background: rgba(0, 0, 128, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .desktop-icon:active, .desktop-icon.selected {
+      background: rgba(0, 0, 128, 0.5);
+      border-color: #ffffff;
+    }
+
+    .desktop-icon-img {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 4px;
+      filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
+    }
+
+    .desktop-icon-label {
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 500;
+      text-shadow: 1px 1px 2px #000, 0 0 4px #000;
+      word-break: break-word;
+      line-height: 1.2;
+    }
+
+    /* Window Styles */
+    .window {
+      position: absolute;
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-darkest);
+      border-bottom: 2px solid var(--win-border-darkest);
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      min-width: 320px;
+      min-height: 200px;
+      z-index: 10;
+    }
+
+    .window.active {
+      z-index: 100;
+    }
+
+    .window-titlebar {
+      background: linear-gradient(90deg, var(--win-blue) 0%, var(--win-blue-light) 100%);
+      color: #ffffff;
+      padding: 3px 4px 3px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: bold;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      cursor: move;
+    }
+
+    .window:not(.active) .window-titlebar {
+      background: linear-gradient(90deg, #808080 0%, #b0b0b0 100%);
+      color: #d4d4d4;
+    }
+
+    .titlebar-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .titlebar-icon {
+      font-size: 14px;
+    }
+
+    .titlebar-buttons {
+      display: flex;
+      gap: 2px;
+    }
+
+    .btn-win {
+      width: 16px;
+      height: 14px;
+      background: var(--win-bg);
+      border-top: 1px solid var(--win-border-light);
+      border-left: 1px solid var(--win-border-light);
+      border-right: 1px solid var(--win-border-darkest);
+      border-bottom: 1px solid var(--win-border-darkest);
+      font-size: 9px;
+      font-weight: bold;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #000;
+    }
+
+    .btn-win:active {
+      border-top: 1px solid var(--win-border-darkest);
+      border-left: 1px solid var(--win-border-darkest);
+      border-right: 1px solid var(--win-border-light);
+      border-bottom: 1px solid var(--win-border-light);
+      padding-top: 1px;
+      padding-left: 1px;
+    }
+
+    .window-menu {
+      display: flex;
+      gap: 12px;
+      padding: 2px 6px;
+      border-bottom: 1px solid var(--win-border-dark);
+      font-size: 11px;
+    }
+
+    .window-menu span {
+      cursor: pointer;
+    }
+
+    .window-menu span:hover {
+      background: var(--win-blue);
+      color: #fff;
+    }
+
+    .window-body {
+      flex: 1;
+      padding: 12px;
+      background: #ffffff;
+      margin: 4px;
+      border-top: 2px solid var(--win-border-dark);
+      border-left: 2px solid var(--win-border-dark);
+      border-right: 2px solid var(--win-border-light);
+      border-bottom: 2px solid var(--win-border-light);
+      overflow-y: auto;
+      user-select: text;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* Content styling inside windows */
+    .section-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--win-blue);
+      border-bottom: 2px solid #000;
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      background: #eef2f7;
+      border: 1px solid #c0c0c0;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      margin: 2px;
+    }
+
+    .badge-tag {
+      background: #000080;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-size: 10px;
+      margin-right: 4px;
+    }
+
+    .item-card {
+      background: #f7f9fa;
+      border: 1px solid #d0d0d0;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      border-radius: 2px;
+    }
+
+    .item-card h4 {
+      font-size: 13px;
+      color: #111;
+      margin-bottom: 4px;
+    }
+
+    .item-card p, .item-card li {
+      font-size: 11.5px;
+      color: #333;
+    }
+
+    .item-card ul {
+      margin-left: 18px;
+      margin-top: 4px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 14px;
+      background: #e0e0e0;
+      border: 1px solid #808080;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #d0d0d0;
+    }
+
+    .contact-row a {
+      color: #000080;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .btn-action {
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-darkest);
+      border-bottom: 2px solid var(--win-border-darkest);
+      padding: 6px 14px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: #000;
+      margin-top: 8px;
+    }
+
+    .btn-action:active {
+      border-top: 2px solid var(--win-border-darkest);
+      border-left: 2px solid var(--win-border-darkest);
+      border-right: 2px solid var(--win-border-light);
+      border-bottom: 2px solid var(--win-border-light);
+      padding-top: 7px;
+      padding-left: 15px;
+    }
+
+    /* Taskbar */
+    #taskbar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 34px;
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px 4px;
+      z-index: 1000;
+    }
+
+    .start-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-darkest);
+      border-bottom: 2px solid var(--win-border-darkest);
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .start-btn:active, .start-btn.active {
+      border-top: 2px solid var(--win-border-darkest);
+      border-left: 2px solid var(--win-border-darkest);
+      border-right: 2px solid var(--win-border-light);
+      border-bottom: 2px solid var(--win-border-light);
+      background: #b4b4b4;
+    }
+
+    .taskbar-tasks {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+      margin: 0 8px;
+      overflow-x: auto;
+    }
+
+    .task-item {
+      min-width: 120px;
+      max-width: 160px;
+      height: 24px;
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-darkest);
+      border-bottom: 2px solid var(--win-border-darkest);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 6px;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .task-item.active {
+      border-top: 2px solid var(--win-border-darkest);
+      border-left: 2px solid var(--win-border-darkest);
+      border-right: 2px solid var(--win-border-light);
+      border-bottom: 2px solid var(--win-border-light);
+      background: #e0e0e0;
+      font-weight: bold;
+    }
+
+    .taskbar-tray {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 2px 8px;
+      border-top: 1px solid var(--win-border-dark);
+      border-left: 1px solid var(--win-border-dark);
+      border-right: 1px solid var(--win-border-light);
+      border-bottom: 1px solid var(--win-border-light);
+      font-size: 11px;
+    }
+
+    /* Start Menu */
+    #startMenu {
+      position: absolute;
+      bottom: 34px;
+      left: 2px;
+      width: 260px;
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-darkest);
+      border-bottom: 2px solid var(--win-border-darkest);
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+      display: none;
+      flex-direction: row;
+      z-index: 2000;
+    }
+
+    #startMenu.active {
+      display: flex;
+    }
+
+    .start-banner {
+      width: 32px;
+      background: linear-gradient(180deg, var(--win-blue) 0%, #000040 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: flex-end;
+      padding: 10px 4px;
+      font-weight: bold;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 2px;
+      font-size: 14px;
+    }
+
+    .start-items {
+      flex: 1;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .start-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .start-item:hover {
+      background: var(--win-blue);
+      color: #ffffff;
+    }
+
+    .start-divider {
+      height: 1px;
+      background: var(--win-border-dark);
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="crt-overlay"></div>
+
+  <!-- Desktop Icons Grid -->
+  <div id="desktop">
+    <div class="desktop-icon" onclick="openWindow('win-about')">
+      <div class="desktop-icon-img">📄</div>
+      <div class="desktop-icon-label">About Me.txt</div>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('win-skills')">
+      <div class="desktop-icon-img">⚡</div>
+      <div class="desktop-icon-label">Core Skills.exe</div>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('win-software')">
+      <div class="desktop-icon-img">🛠️</div>
+      <div class="desktop-icon-label">Software Tools.app</div>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('win-projects')">
+      <div class="desktop-icon-img">💼</div>
+      <div class="desktop-icon-label">Creative Work.dir</div>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('win-education')">
+      <div class="desktop-icon-img">🎓</div>
+      <div class="desktop-icon-label">Education.doc</div>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('win-attributes')">
+      <div class="desktop-icon-img">🌟</div>
+      <div class="desktop-icon-label">Attributes.ini</div>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('win-objective')">
+      <div class="desktop-icon-img">🎯</div>
+      <div class="desktop-icon-label">Career Objective.txt</div>
+    </div>
+
+    <div class="desktop-icon" onclick="openWindow('win-contact')">
+      <div class="desktop-icon-img">📞</div>
+      <div class="desktop-icon-label">Contact.url</div>
+    </div>
+
+    <div class="desktop-icon" onclick="window.open('https://www.behance.net/devbaisoya', '_blank')">
+      <div class="desktop-icon-img">🎨</div>
+      <div class="desktop-icon-label">Behance Portfolio.lnk</div>
+    </div>
+  </div>
+
+  <!-- WINDOW 1: ABOUT ME -->
+  <div class="window active" id="win-about" style="top: 40px; left: 160px; width: 560px; height: 420px;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-about')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">📄</span>
+        <span>About Me.txt - ANTRIKSH</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-about')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-about')">□</div>
+        <div class="btn-win" onclick="closeWindow('win-about')">✕</div>
+      </div>
+    </div>
+    <div class="window-menu">
+      <span>File</span><span>Edit</span><span>Search</span><span>Help</span>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>👤 ANTRIKSH — Professional Summary</span>
+      </div>
+      <p style="font-weight: bold; color: #000080; margin-bottom: 8px;">
+        Motion Graphics Designer | Video Editor | Graphic Designer
+      </p>
+      <p style="margin-bottom: 12px; font-size: 12px; line-height: 1.6;">
+        Creative and detail-oriented visual designer specializing in Motion Graphics, Video Editing, and Graphic Design. Skilled in creating engaging visual content, animated graphics, promotional videos, and digital designs. Proficient in Adobe After Effects, Premiere Pro, Photoshop, and Illustrator, with a strong interest in visual storytelling, animation, and creative content production. Eager to contribute creative ideas and technical skills to a professional creative team.
+      </p>
+
+      <div class="item-card">
+        <h4>Studio Location & Direct Contacts:</h4>
+        <p><b>Address:</b> H No-31, Aliganj, Kotla Mubarakpur, South Delhi, Delhi, 110003</p>
+        <p><b>Phone:</b> <a href="tel:+919871784187" style="color: #000080; font-weight: bold;">+91 98717 84187</a></p>
+        <p><b>Email:</b> <a href="mailto:devbaisoya36@gmail.com" style="color: #000080; font-weight: bold;">devbaisoya36@gmail.com</a></p>
+        <p><b>Behance:</b> <a href="https://www.behance.net/devbaisoya" target="_blank" style="color: #000080; font-weight: bold;">https://www.behance.net/devbaisoya</a></p>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <a href="https://www.behance.net/devbaisoya" target="_blank" class="btn-action">
+          <span>🎨 Open Full Portfolio on Behance</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 2: CORE SKILLS -->
+  <div class="window" id="win-skills" style="top: 70px; left: 240px; width: 540px; height: 430px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-skills')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">⚡</span>
+        <span>Core Skills.exe</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-skills')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-skills')">□</div>
+        <div class="btn-win" onclick="closeWindow('win-skills')">✕</div>
+      </div>
+    </div>
+    <div class="window-menu">
+      <span>View</span><span>Filter</span><span>Options</span><span>Help</span>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>⚡ 7 Core Creative Disciplines</span>
+      </div>
+
+      <div class="item-card">
+        <h4>1. Motion Graphics &amp; 2D Animation</h4>
+        <p>Fluid 2D animation, keyframing, typography pacing, and digital screen visuals.</p>
+        <div><span class="badge-tag">2D Motion</span><span class="badge-tag">Keyframing</span><span class="badge-tag">Transitions</span></div>
+      </div>
+
+      <div class="item-card">
+        <h4>2. Video Editing &amp; Post-Production</h4>
+        <p>Rhythm cutting, pacing, audio sync, color grading, and dynamic sequence assembly.</p>
+        <div><span class="badge-tag">Pacing</span><span class="badge-tag">Audio Sync</span><span class="badge-tag">Color Grading</span></div>
+      </div>
+
+      <div class="item-card">
+        <h4>3. Graphic Design &amp; Visual Communication</h4>
+        <p>Striking visual concepts, layout hierarchy, promotional media, and branding aesthetics.</p>
+        <div><span class="badge-tag">Hierarchy</span><span class="badge-tag">Layout</span><span class="badge-tag">Composition</span></div>
+      </div>
+
+      <div class="item-card">
+        <h4>4. Logo Animation &amp; Kinetic Typography</h4>
+        <p>Kinetic text, animated stings, brand identity motion, and logo reveals.</p>
+        <div><span class="badge-tag">Kinetic Type</span><span class="badge-tag">Logo Reveals</span><span class="badge-tag">Identity</span></div>
+      </div>
+
+      <div class="item-card">
+        <h4>5. Social Media Creatives &amp; Promotional Content</h4>
+        <p>Vertical reels, high-retention promo edits, hooks, banners, and digital ads.</p>
+        <div><span class="badge-tag">Reels</span><span class="badge-tag">Banners</span><span class="badge-tag">Shorts</span></div>
+      </div>
+
+      <div class="item-card">
+        <h4>6. Visual Storytelling &amp; Composition</h4>
+        <p>Emotional arcs, camera blocking, focal depth, pacing, and visual story flow.</p>
+        <div><span class="badge-tag">Story Arc</span><span class="badge-tag">Depth</span><span class="badge-tag">Visual Flow</span></div>
+      </div>
+
+      <div class="item-card">
+        <h4>7. VFX Compositing &amp; Editing</h4>
+        <p>Multi-pass compositing, rotoscoping, chroma keying, motion tracking, and particle simulation (Arena Animation).</p>
+        <div><span class="badge-tag">Chroma Key</span><span class="badge-tag">Tracking</span><span class="badge-tag">Multi-Pass</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 3: SOFTWARE PROFICIENCY -->
+  <div class="window" id="win-software" style="top: 90px; left: 300px; width: 500px; height: 380px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-software')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">🛠️</span>
+        <span>Software Tools.app</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-software')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-software')">□</div>
+        <div class="btn-win" onclick="closeWindow('win-software')">✕</div>
+      </div>
+    </div>
+    <div class="window-menu">
+      <span>Tools</span><span>Benchmarks</span><span>Help</span>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>🛠️ Adobe Creative Cloud Proficiency</span>
+      </div>
+
+      <div class="item-card">
+        <div style="display:flex; justify-content:space-between; font-weight:bold;">
+          <span>Adobe After Effects</span>
+          <span style="color:#000080;">95%</span>
+        </div>
+        <p>Motion Graphics &amp; Animation • 2D Keyframing • VFX Compositing</p>
+        <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+      </div>
+
+      <div class="item-card">
+        <div style="display:flex; justify-content:space-between; font-weight:bold;">
+          <span>Adobe Premiere Pro</span>
+          <span style="color:#000080;">92%</span>
+        </div>
+        <p>Video Editing &amp; Post-Production • Timeline Pacing • Audio Mastering</p>
+        <div class="progress-bar"><div class="progress-fill" style="width: 92%;"></div></div>
+      </div>
+
+      <div class="item-card">
+        <div style="display:flex; justify-content:space-between; font-weight:bold;">
+          <span>Adobe Photoshop</span>
+          <span style="color:#000080;">94%</span>
+        </div>
+        <p>Image Editing &amp; Digital Design • Asset Texturing • Visual Retouching</p>
+        <div class="progress-bar"><div class="progress-fill" style="width: 94%;"></div></div>
+      </div>
+
+      <div class="item-card">
+        <div style="display:flex; justify-content:space-between; font-weight:bold;">
+          <span>Adobe Illustrator</span>
+          <span style="color:#000080;">90%</span>
+        </div>
+        <p>Vector Graphics &amp; Design • Kinetic Type Assets • Logo Assets</p>
+        <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 4: CREATIVE PROJECTS -->
+  <div class="window" id="win-projects" style="top: 60px; left: 200px; width: 580px; height: 440px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-projects')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">💼</span>
+        <span>Creative Work &amp; Projects</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-projects')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-projects')">□</div>
+        <div class="btn-win" onclick="closeWindow('win-projects')">✕</div>
+      </div>
+    </div>
+    <div class="window-menu">
+      <span>Portfolio</span><span>Projects</span><span>External Links</span><span>Help</span>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>💼 Selected Projects &amp; Disciplines</span>
+      </div>
+
+      <div class="item-card">
+        <h4>1. Motion Graphics &amp; Animation</h4>
+        <ul>
+          <li>Created animated visual content and explored motion design techniques.</li>
+          <li>Worked on animation concepts focused on typography, transitions, and visual storytelling.</li>
+        </ul>
+        <div style="margin-top:6px;"><span class="badge-tag">After Effects</span><span class="badge-tag">Kinetic Type</span><span class="badge-tag">2D Motion</span></div>
+      </div>
+
+      <div class="item-card">
+        <h4>2. Video Editing &amp; Post-Production</h4>
+        <ul>
+          <li>Developed video-editing projects with a focus on pacing, transitions, and engaging visual presentation.</li>
+          <li>Explored editing workflows and post-production techniques for digital content.</li>
+        </ul>
+        <div style="margin-top:6px;"><span class="badge-tag">Premiere Pro</span><span class="badge-tag">Pacing &amp; Rhythm</span><span class="badge-tag">Audio Sync</span></div>
+      </div>
+
+      <div class="item-card">
+        <h4>3. Graphic Design &amp; Visual Content</h4>
+        <ul>
+          <li>Created graphic design concepts for digital media and promotional visuals.</li>
+          <li>Applied typography, composition, and visual hierarchy to design work.</li>
+        </ul>
+        <div style="margin-top:6px;"><span class="badge-tag">Photoshop</span><span class="badge-tag">Illustrator</span><span class="badge-tag">Key Visuals</span></div>
+      </div>
+
+      <div style="text-align: center; margin-top: 14px;">
+        <a href="https://www.behance.net/devbaisoya" target="_blank" class="btn-action">
+          <span>🎨 View Full Portfolio on Behance (behance.net/devbaisoya)</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 5: EDUCATION -->
+  <div class="window" id="win-education" style="top: 110px; left: 260px; width: 500px; height: 350px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-education')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">🎓</span>
+        <span>Education.doc</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-education')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-education')">□</div>
+        <div class="btn-win" onclick="closeWindow('win-education')">✕</div>
+      </div>
+    </div>
+    <div class="window-menu">
+      <span>Credentials</span><span>Certificates</span><span>Help</span>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>🎓 Academic &amp; Technical Credentials</span>
+      </div>
+
+      <div class="item-card">
+        <span class="badge-pill" style="background:#000080; color:#fff;">DEGREE (PURSUING)</span>
+        <h4 style="margin-top:4px;">Bachelor of Arts (BA)</h4>
+        <p><b>PGDAV College</b>, University of Delhi</p>
+        <p style="color:#666; font-size:11px;">Status: Currently Pursuing</p>
+      </div>
+
+      <div class="item-card">
+        <span class="badge-pill" style="background:#2e7d32; color:#fff;">SPECIALIZED TRAINING</span>
+        <h4 style="margin-top:4px;">VFX Compositing &amp; Editing</h4>
+        <p><b>Arena Animation</b>, South Extension, New Delhi</p>
+        <p style="color:#666; font-size:11px;">Duration: 2024 to 2025</p>
+      </div>
+
+      <div class="item-card">
+        <span class="badge-pill" style="background:#795548; color:#fff;">SECONDARY EDUCATION</span>
+        <h4 style="margin-top:4px;">Senior Secondary Education (Class XII)</h4>
+        <p><b>National Institute of Open Schooling (NIOS)</b></p>
+        <p style="color:#666; font-size:11px;">Year: 2021</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 6: ATTRIBUTES -->
+  <div class="window" id="win-attributes" style="top: 130px; left: 320px; width: 440px; height: 320px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-attributes')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">🌟</span>
+        <span>Attributes.ini</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-attributes')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-attributes')">□</div>
+        <div class="btn-win" onclick="closeWindow('win-attributes')">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>🌟 Professional Strengths &amp; Attributes</span>
+      </div>
+      <div class="item-card">
+        <h4>✦ Creative thinking and attention to detail</h4>
+        <p>High sensitivity to rhythm, visual balance, color harmonics, and pixel precision.</p>
+      </div>
+      <div class="item-card">
+        <h4>✦ Visual problem-solving</h4>
+        <p>Translating complex ideas and messages into engaging, clear visual sequences.</p>
+      </div>
+      <div class="item-card">
+        <h4>✦ Adaptability and willingness to learn</h4>
+        <p>Fast assimilation of emerging editing workflows, motion tools, and creative briefs.</p>
+      </div>
+      <div class="item-card">
+        <h4>✦ Time management and teamwork</h4>
+        <p>Reliable project delivery, collaborative communication, and disciplined milestone execution.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 7: CAREER OBJECTIVE -->
+  <div class="window" id="win-objective" style="top: 100px; left: 220px; width: 500px; height: 280px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-objective')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">🎯</span>
+        <span>Career Objective.txt</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-objective')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-objective')">□</div>
+        <div class="btn-win" onclick="closeWindow('win-objective')">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>🎯 Career Objective</span>
+      </div>
+      <blockquote style="background:#f4f4f4; border-left: 4px solid #000080; padding: 14px; font-size: 13px; font-style: italic; line-height: 1.6; color: #111;">
+        &ldquo;To join a creative team as a Motion Graphics Designer, contributing to animation, video production, and visual design projects while continuously developing my skills in motion design and post-production.&rdquo;
+      </blockquote>
+      <div style="margin-top: 16px; text-align: right;">
+        <p style="font-weight: bold; color: #000080;">ANTRIKSH</p>
+        <p style="font-size: 11px; color: #666;">Motion Graphics Designer | Video Editor | Graphic Designer</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 8: CONTACT -->
+  <div class="window" id="win-contact" style="top: 80px; left: 250px; width: 480px; height: 350px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-contact')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">📞</span>
+        <span>Contact Information</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-contact')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-contact')">□</div>
+        <div class="btn-win" onclick="closeWindow('win-contact')">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>📞 Get in Touch with Antriksh</span>
+      </div>
+
+      <div class="contact-row">
+        <span>✉️</span>
+        <div>
+          <div style="font-size:11px; color:#666;">Email:</div>
+          <a href="mailto:devbaisoya36@gmail.com">devbaisoya36@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <span>📱</span>
+        <div>
+          <div style="font-size:11px; color:#666;">Phone / WhatsApp:</div>
+          <a href="tel:+919871784187">+91 98717 84187</a>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <span>📍</span>
+        <div>
+          <div style="font-size:11px; color:#666;">Location:</div>
+          <span>H No-31, Aliganj, Kotla Mubarakpur, South Delhi, Delhi, 110003</span>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <span>🎨</span>
+        <div>
+          <div style="font-size:11px; color:#666;">Behance Portfolio:</div>
+          <a href="https://www.behance.net/devbaisoya" target="_blank">behance.net/devbaisoya</a>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px; text-align: center;">
+        <a href="mailto:devbaisoya36@gmail.com" class="btn-action">
+          <span>📨 Send an Email</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- START MENU -->
+  <div id="startMenu">
+    <div class="start-banner">ANTRIKSH OS</div>
+    <div class="start-items">
+      <div class="start-item" onclick="openWindow('win-about'); toggleStartMenu()">📄 About Me</div>
+      <div class="start-item" onclick="openWindow('win-skills'); toggleStartMenu()">⚡ Core Skills</div>
+      <div class="start-item" onclick="openWindow('win-software'); toggleStartMenu()">🛠️ Software Tools</div>
+      <div class="start-item" onclick="openWindow('win-projects'); toggleStartMenu()">💼 Creative Projects</div>
+      <div class="start-item" onclick="openWindow('win-education'); toggleStartMenu()">🎓 Education</div>
+      <div class="start-item" onclick="openWindow('win-attributes'); toggleStartMenu()">🌟 Attributes</div>
+      <div class="start-item" onclick="openWindow('win-objective'); toggleStartMenu()">🎯 Objective</div>
+      <div class="start-divider"></div>
+      <div class="start-item" onclick="openWindow('win-contact'); toggleStartMenu()">📞 Contact Antriksh</div>
+      <div class="start-item" onclick="window.open('https://www.behance.net/devbaisoya', '_blank'); toggleStartMenu()">🎨 Behance Portfolio</div>
+    </div>
+  </div>
+
+  <!-- TASKBAR -->
+  <div id="taskbar">
+    <div class="start-btn" id="startBtn" onclick="toggleStartMenu()">
+      <span style="font-size: 14px;">🪟</span>
+      <span>Start</span>
+    </div>
+
+    <div class="taskbar-tasks" id="taskbarTasks">
+      <!-- Dynamically filled with active window tabs -->
+    </div>
+
+    <div class="taskbar-tray">
+      <span>🔊</span>
+      <span id="trayClock">12:00 PM</span>
+    </div>
+  </div>
+
+  <script>
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      document.getElementById('trayClock').textContent = `${hours}:${minutes} ${ampm}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Start Menu Toggle
+    function toggleStartMenu() {
+      const menu = document.getElementById('startMenu');
+      const btn = document.getElementById('startBtn');
+      menu.classList.toggle('active');
+      btn.classList.toggle('active');
+    }
+
+    // Close Start Menu when clicking desktop
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('startMenu');
+      const btn = document.getElementById('startBtn');
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('active');
+        btn.classList.remove('active');
+      }
+    });
+
+    // Window Management
+    let highestZ = 100;
+    const windowTitles = {
+      'win-about': '📄 About Me.txt',
+      'win-skills': '⚡ Core Skills',
+      'win-software': '🛠️ Software Tools',
+      'win-projects': '💼 Creative Work',
+      'win-education': '🎓 Education',
+      'win-attributes': '🌟 Attributes',
+      'win-objective': '🎯 Career Objective',
+      'win-contact': '📞 Contact Info'
+    };
+
+    function bringToFront(id) {
+      highestZ++;
+      const win = document.getElementById(id);
+      if (win) {
+        document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
+        win.classList.add('active');
+        win.style.zIndex = highestZ;
+        updateTaskbar();
+      }
+    }
+
+    function openWindow(id) {
+      const win = document.getElementById(id);
+      if (win) {
+        win.style.display = 'flex';
+        bringToFront(id);
+      }
+    }
+
+    function closeWindow(id) {
+      const win = document.getElementById(id);
+      if (win) {
+        win.style.display = 'none';
+        updateTaskbar();
+      }
+    }
+
+    function minimizeWindow(id) {
+      const win = document.getElementById(id);
+      if (win) {
+        win.style.display = 'none';
+        updateTaskbar();
+      }
+    }
+
+    function maximizeWindow(id) {
+      const win = document.getElementById(id);
+      if (!win) return;
+      if (win.dataset.maximized === 'true') {
+        win.style.top = win.dataset.origTop;
+        win.style.left = win.dataset.origLeft;
+        win.style.width = win.dataset.origWidth;
+        win.style.height = win.dataset.origHeight;
+        win.dataset.maximized = 'false';
+      } else {
+        win.dataset.origTop = win.style.top;
+        win.dataset.origLeft = win.style.left;
+        win.dataset.origWidth = win.style.width;
+        win.dataset.origHeight = win.style.height;
+        win.style.top = '0px';
+        win.style.left = '0px';
+        win.style.width = '100vw';
+        win.style.height = 'calc(100vh - 34px)';
+        win.dataset.maximized = 'true';
+      }
+    }
+
+    function updateTaskbar() {
+      const taskContainer = document.getElementById('taskbarTasks');
+      taskContainer.innerHTML = '';
+      document.querySelectorAll('.window').forEach(win => {
+        if (win.style.display !== 'none') {
+          const task = document.createElement('div');
+          task.className = 'task-item' + (win.classList.contains('active') ? ' active' : '');
+          task.textContent = windowTitles[win.id] || win.id;
+          task.onclick = () => {
+            if (win.classList.contains('active')) {
+              win.style.display = 'none';
+              win.classList.remove('active');
+            } else {
+              win.style.display = 'flex';
+              bringToFront(win.id);
+            }
+            updateTaskbar();
+          };
+          taskContainer.appendChild(task);
+        }
+      });
+    }
+
+    // Draggable Windows
+    let dragEl = null;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    function startDrag(e, id) {
+      dragEl = document.getElementById(id);
+      bringToFront(id);
+      const rect = dragEl.getBoundingClientRect();
+      dragOffsetX = e.clientX - rect.left;
+      dragOffsetY = e.clientY - rect.top;
+      document.addEventListener('mousemove', onDrag);
+      document.addEventListener('mouseup', stopDrag);
+    }
+
+    function onDrag(e) {
+      if (!dragEl) return;
+      dragEl.style.left = Math.max(0, e.clientX - dragOffsetX) + 'px';
+      dragEl.style.top = Math.max(0, e.clientY - dragOffsetY) + 'px';
+    }
+
+    function stopDrag() {
+      dragEl = null;
+      document.removeEventListener('mousemove', onDrag);
+      document.removeEventListener('mouseup', stopDrag);
+    }
+
+    // Window focus on click
+    document.querySelectorAll('.window').forEach(win => {
+      win.addEventListener('mousedown', () => bringToFront(win.id));
+    });
+
+    // Bubble mouse events to parent Three.js scene so 3D camera tracks correctly
+    document.addEventListener('mousemove', (e) => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'mousemove',
+          clientX: e.clientX,
+          clientY: e.clientY
+        }, '*');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'keydown',
+          key: e.key
+        }, '*');
+      }
+    });
+
+    document.addEventListener('keyup', (e) => {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'keyup',
+          key: e.key
+        }, '*');
+      }
+    });
+
+    // Initialize taskbar on load
+    updateTaskbar();
+  </script>
+</body>
+</html>
