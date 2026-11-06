@@ -7,6 +7,7 @@ import Resources from '../Utils/Resources';
 import Sizes from '../Utils/Sizes';
 import Camera from '../Camera/Camera';
 import EventEmitter from '../Utils/EventEmitter';
+import UIEventBus from '../UI/EventBus';
 
 const SCREEN_SIZE = { w: 1280, h: 1024 };
 const IFRAME_PADDING = 32;
@@ -175,6 +176,9 @@ export default class MonitorScreen extends EventEmitter {
                     } else if (event.data.type === 'keyup') {
                         // @ts-ignore
                         evt.key = event.data.key;
+                    } else if (event.data.type === 'openCV') {
+                        UIEventBus.dispatch('openCV', {});
+                        return;
                     }
 
                     iframe.dispatchEvent(evt);

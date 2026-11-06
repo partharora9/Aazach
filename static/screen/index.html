@@ -12,19 +12,128 @@
       user-select: none;
     }
 
+    /* ═══════════════════════════════════════════════════════════════
+       THEME DESIGN TOKENS (CSS VARIABLES)
+       ═══════════════════════════════════════════════════════════════ */
     :root {
+      /* Shared Accent Defaults */
+      --accent: #000080;
+      --accent-light: #1084d0;
+      --accent-hover: #1e90ff;
+
+      /* Classic Theme Defaults (Win95/98) */
       --win-bg: #c0c0c0;
-      --win-blue: #000080;
-      --win-blue-light: #1084d0;
+      --win-text: #000000;
       --win-border-light: #ffffff;
       --win-border-dark: #808080;
       --win-border-darkest: #000000;
-      --win-gray-text: #808080;
-      --desktop-bg: #1d2e2f;
-      --accent: #00f2fe;
-      --accent-hover: #4facfe;
+      --win-radius: 0px;
+      --win-shadow: 2px 2px 8px rgba(0,0,0,0.45);
+      --win-body-bg: #ffffff;
+      --win-body-text: #222222;
+      --win-body-border-top: 2px solid var(--win-border-dark);
+      --win-body-border-left: 2px solid var(--win-border-dark);
+      --win-body-border-right: 2px solid var(--win-border-light);
+      --win-body-border-bottom: 2px solid var(--win-border-light);
+
+      --taskbar-bg: #c0c0c0;
+      --taskbar-height: 34px;
+      --taskbar-border: 2px solid #ffffff;
+      --taskbar-justify: space-between;
+
+      --start-bg: #c0c0c0;
+      --start-border: 2px solid #ffffff;
+      --start-radius: 0px;
+      --start-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+
       --font-system: 'MS Sans Serif', Tahoma, 'Segoe UI', Geneva, sans-serif;
       --font-mono: 'Consolas', 'Courier New', monospace;
+
+      --desktop-bg: #1d2e2f;
+      --wallpaper-fit: cover;
+      --wallpaper-repeat: no-repeat;
+      --wallpaper-position: center;
+    }
+
+    /* ─── THEME: WINDOWS 11 (Centered Mica / Acrylic) ─── */
+    body.theme-win11 {
+      --font-system: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --win-bg: rgba(34, 36, 44, 0.94);
+      --win-text: #ffffff;
+      --win-border-light: rgba(255, 255, 255, 0.16);
+      --win-border-dark: rgba(0, 0, 0, 0.35);
+      --win-border-darkest: rgba(0, 0, 0, 0.5);
+      --win-radius: 10px;
+      --win-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 1px rgba(255,255,255,0.2);
+      --win-body-bg: #18191f;
+      --win-body-text: #e4e4e7;
+      --win-body-border-top: 1px solid rgba(255, 255, 255, 0.08);
+      --win-body-border-left: none;
+      --win-body-border-right: none;
+      --win-body-border-bottom: none;
+
+      --taskbar-bg: rgba(24, 25, 30, 0.82);
+      --taskbar-height: 44px;
+      --taskbar-border: 1px solid rgba(255, 255, 255, 0.12);
+
+      --start-bg: rgba(28, 30, 38, 0.92);
+      --start-border: 1px solid rgba(255, 255, 255, 0.16);
+      --start-radius: 12px;
+      --start-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ─── THEME: WINDOWS 10 (Modern Flat & Live Tiles) ─── */
+    body.theme-win10 {
+      --font-system: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      --win-bg: #ffffff;
+      --win-text: #111111;
+      --win-border-light: var(--accent);
+      --win-border-dark: var(--accent);
+      --win-border-darkest: var(--accent);
+      --win-radius: 0px;
+      --win-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --win-body-bg: #ffffff;
+      --win-body-text: #222222;
+      --win-body-border-top: 1px solid #e2e8f0;
+      --win-body-border-left: none;
+      --win-body-border-right: none;
+      --win-body-border-bottom: none;
+
+      --taskbar-bg: rgba(16, 16, 18, 0.96);
+      --taskbar-height: 40px;
+      --taskbar-border: 1px solid rgba(255, 255, 255, 0.08);
+
+      --start-bg: rgba(24, 24, 28, 0.96);
+      --start-border: 1px solid rgba(255, 255, 255, 0.15);
+      --start-radius: 0px;
+      --start-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    /* ─── THEME: WINDOWS 7 AERO (Glass Sheen) ─── */
+    body.theme-win7 {
+      --font-system: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --win-bg: rgba(210, 225, 245, 0.88);
+      --win-text: #0c1a30;
+      --win-border-light: rgba(255, 255, 255, 0.65);
+      --win-border-dark: rgba(30, 60, 100, 0.5);
+      --win-border-darkest: rgba(10, 30, 60, 0.7);
+      --win-radius: 8px 8px 4px 4px;
+      --win-shadow: 0 12px 36px rgba(5, 20, 45, 0.55), 0 0 15px rgba(100, 180, 255, 0.3);
+      --win-body-bg: #ffffff;
+      --win-body-text: #1f2937;
+      --win-body-border-top: 1px solid #cbd5e1;
+      --win-body-border-left: 1px solid #cbd5e1;
+      --win-body-border-right: 1px solid #cbd5e1;
+      --win-body-border-bottom: 1px solid #cbd5e1;
+
+      --taskbar-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(20, 50, 95, 0.8) 12%, rgba(10, 28, 55, 0.92) 100%);
+      --taskbar-height: 40px;
+      --taskbar-border: 1px solid rgba(255, 255, 255, 0.45);
+
+      --start-bg: rgba(15, 32, 60, 0.92);
+      --start-border: 1px solid rgba(255, 255, 255, 0.4);
+      --start-radius: 8px 8px 0 0;
+      --start-shadow: 0 16px 40px rgba(0, 10, 30, 0.65);
     }
 
     body {
@@ -38,7 +147,45 @@
       position: relative;
     }
 
-    /* CRT scanline overlay effect */
+    /* ═══════════════════════════════════════════════════════════════
+       WALLPAPER DUAL-LAYER CROSSFADE CONTAINER
+       ═══════════════════════════════════════════════════════════════ */
+    #wallpaper-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .wallpaper-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: var(--wallpaper-fit);
+      background-repeat: var(--wallpaper-repeat);
+      background-position: var(--wallpaper-position);
+      transition: opacity 0.45s ease-in-out;
+      pointer-events: none;
+    }
+
+    #wallpaper-layer-active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    #wallpaper-layer-next {
+      opacity: 0;
+      z-index: 2;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       CRT OVERLAY EFFECTS (KEPT ON TOP OF EVERYTHING)
+       ═══════════════════════════════════════════════════════════════ */
     .crt-overlay {
       position: fixed;
       top: 0;
@@ -58,19 +205,19 @@
       top: 0;
       left: 0;
       right: 0;
-      bottom: 34px;
+      bottom: var(--taskbar-height);
       padding: 16px;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
       align-content: flex-start;
       gap: 16px;
-      z-index: 1;
+      z-index: 2;
     }
 
     /* Desktop Icon */
     .desktop-icon {
-      width: 82px;
+      width: 84px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -78,18 +225,30 @@
       cursor: pointer;
       padding: 6px 4px;
       border: 1px dotted transparent;
-      border-radius: 2px;
-      transition: background 0.1s;
+      border-radius: 4px;
+      transition: background 0.15s, border-color 0.15s;
     }
 
     .desktop-icon:hover {
-      background: rgba(0, 0, 128, 0.2);
+      background: rgba(0, 120, 215, 0.25);
       border-color: rgba(255, 255, 255, 0.4);
     }
 
     .desktop-icon:active, .desktop-icon.selected {
-      background: rgba(0, 0, 128, 0.5);
+      background: rgba(0, 120, 215, 0.55);
       border-color: #ffffff;
+    }
+
+    .theme-win11 .desktop-icon:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(8px);
+    }
+
+    .theme-win7 .desktop-icon:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 10px rgba(100, 180, 255, 0.4);
     }
 
     .desktop-icon-img {
@@ -100,19 +259,21 @@
       justify-content: center;
       font-size: 26px;
       margin-bottom: 4px;
-      filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
+      filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.6));
     }
 
     .desktop-icon-label {
       color: #ffffff;
       font-size: 11px;
       font-weight: 500;
-      text-shadow: 1px 1px 2px #000, 0 0 4px #000;
+      text-shadow: 1px 1px 2px #000, 0 0 5px #000;
       word-break: break-word;
       line-height: 1.2;
     }
 
-    /* Window Styles */
+    /* ═══════════════════════════════════════════════════════════════
+       WINDOW MANAGEMENT & CHROME
+       ═══════════════════════════════════════════════════════════════ */
     .window {
       position: absolute;
       background: var(--win-bg);
@@ -120,40 +281,99 @@
       border-left: 2px solid var(--win-border-light);
       border-right: 2px solid var(--win-border-darkest);
       border-bottom: 2px solid var(--win-border-darkest);
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.45);
+      border-radius: var(--win-radius);
+      box-shadow: var(--win-shadow);
       display: flex;
       flex-direction: column;
-      min-width: 320px;
-      min-height: 200px;
+      min-width: 340px;
+      min-height: 220px;
       z-index: 10;
+      overflow: hidden;
+      transition: box-shadow 0.2s ease;
     }
 
     .window.active {
       z-index: 100;
     }
 
+    /* Win11 Window Chrome */
+    .theme-win11 .window {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+    }
+
+    /* Win10 Window Chrome */
+    .theme-win10 .window {
+      border: 1px solid #71717a;
+    }
+
+    .theme-win10 .window.active {
+      border: 1px solid var(--accent);
+    }
+
+    /* Win7 Window Chrome */
+    .theme-win7 .window {
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
     .window-titlebar {
-      background: linear-gradient(90deg, var(--win-blue) 0%, var(--win-blue-light) 100%);
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
       color: #ffffff;
-      padding: 3px 4px 3px 6px;
+      padding: 4px 6px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-weight: bold;
       font-size: 12px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       cursor: move;
+      flex-shrink: 0;
     }
 
     .window:not(.active) .window-titlebar {
-      background: linear-gradient(90deg, #808080 0%, #b0b0b0 100%);
+      background: linear-gradient(90deg, #808080 0%, #a8a8a8 100%);
       color: #d4d4d4;
+    }
+
+    .theme-win11 .window-titlebar {
+      background: transparent;
+      color: #ffffff;
+      padding: 8px 10px;
+    }
+
+    .theme-win11 .window:not(.active) .window-titlebar {
+      background: transparent;
+      color: #9ca3af;
+    }
+
+    .theme-win10 .window-titlebar {
+      background: #f3f4f6;
+      color: #1f2937;
+      padding: 6px 8px;
+    }
+
+    .theme-win10 .window.active .window-titlebar {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .theme-win7 .window-titlebar {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 45%, rgba(0, 0, 0, 0.12) 100%);
+      color: #0c1a30;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+      padding: 6px 10px;
     }
 
     .titlebar-left {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .titlebar-icon {
@@ -162,18 +382,19 @@
 
     .titlebar-buttons {
       display: flex;
-      gap: 2px;
+      gap: 3px;
+      align-items: center;
     }
 
     .btn-win {
-      width: 16px;
-      height: 14px;
+      width: 18px;
+      height: 16px;
       background: var(--win-bg);
       border-top: 1px solid var(--win-border-light);
       border-left: 1px solid var(--win-border-light);
       border-right: 1px solid var(--win-border-darkest);
       border-bottom: 1px solid var(--win-border-darkest);
-      font-size: 9px;
+      font-size: 10px;
       font-weight: bold;
       line-height: 1;
       display: flex;
@@ -181,6 +402,7 @@
       justify-content: center;
       cursor: pointer;
       color: #000;
+      border-radius: 0;
     }
 
     .btn-win:active {
@@ -192,46 +414,129 @@
       padding-left: 1px;
     }
 
+    /* Win11 Controls */
+    .theme-win11 .btn-win {
+      width: 28px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      color: #d1d5db;
+      border-radius: 4px;
+      font-size: 11px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .theme-win11 .btn-win:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .theme-win11 .btn-win-close:hover {
+      background: #e81123 !important;
+      color: #ffffff !important;
+    }
+
+    /* Win10 Controls */
+    .theme-win10 .btn-win {
+      width: 32px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      font-size: 11px;
+      color: inherit;
+    }
+
+    .theme-win10 .btn-win:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-win10 .window.active .btn-win:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .theme-win10 .btn-win-close:hover {
+      background: #e81123 !important;
+      color: #fff !important;
+    }
+
+    /* Win7 Controls */
+    .theme-win7 .btn-win {
+      width: 26px;
+      height: 18px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(200, 220, 245, 0.5) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      color: #1e293b;
+    }
+
+    .theme-win7 .btn-win-close {
+      background: linear-gradient(180deg, #ff8080 0%, #d32f2f 100%);
+      color: #fff;
+      border-color: #fca5a5;
+    }
+
     .window-menu {
       display: flex;
       gap: 12px;
-      padding: 2px 6px;
+      padding: 3px 8px;
       border-bottom: 1px solid var(--win-border-dark);
-      font-size: 11px;
+      font-size: 11.5px;
+      background: inherit;
+      color: inherit;
+      flex-shrink: 0;
     }
 
     .window-menu span {
       cursor: pointer;
+      padding: 1px 4px;
+      border-radius: 2px;
     }
 
     .window-menu span:hover {
-      background: var(--win-blue);
+      background: var(--accent);
       color: #fff;
+    }
+
+    .theme-win11 .window-menu {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+    }
+
+    .theme-win11 .window-menu span:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
 
     .window-body {
       flex: 1;
-      padding: 12px;
-      background: #ffffff;
+      padding: 14px;
+      background: var(--win-body-bg);
+      color: var(--win-body-text);
       margin: 4px;
-      border-top: 2px solid var(--win-border-dark);
-      border-left: 2px solid var(--win-border-dark);
-      border-right: 2px solid var(--win-border-light);
-      border-bottom: 2px solid var(--win-border-light);
+      border-top: var(--win-body-border-top);
+      border-left: var(--win-body-border-left);
+      border-right: var(--win-body-border-right);
+      border-bottom: var(--win-body-border-bottom);
       overflow-y: auto;
       user-select: text;
       font-size: 12px;
       line-height: 1.5;
     }
 
+    .theme-win11 .window-body {
+      margin: 0;
+      border-radius: 0 0 10px 10px;
+    }
+
     /* Content styling inside windows */
     .section-title {
       font-size: 14px;
       font-weight: bold;
-      color: var(--win-blue);
-      border-bottom: 2px solid #000;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
       padding-bottom: 4px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -246,23 +551,40 @@
       font-size: 11px;
       font-weight: 600;
       margin: 2px;
+      color: #0f172a;
     }
 
     .badge-tag {
-      background: #000080;
+      background: var(--accent);
       color: #fff;
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 2px;
       font-size: 10px;
       margin-right: 4px;
     }
 
     .item-card {
-      background: #f7f9fa;
-      border: 1px solid #d0d0d0;
-      padding: 10px 12px;
+      background: #f8fafc;
+      border: 1px solid #d1d5db;
+      padding: 10px 14px;
       margin-bottom: 10px;
-      border-radius: 2px;
+      border-radius: 3px;
+      color: #1f2937;
+    }
+
+    .theme-win11 .item-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e4e4e7;
+      border-radius: 6px;
+    }
+
+    .theme-win11 .item-card h4 {
+      color: #ffffff;
+    }
+
+    .theme-win11 .item-card p, .theme-win11 .item-card li {
+      color: #cbd5e1;
     }
 
     .item-card h4 {
@@ -284,15 +606,16 @@
     .progress-bar {
       width: 100%;
       height: 14px;
-      background: #e0e0e0;
-      border: 1px solid #808080;
+      background: #e2e8f0;
+      border: 1px solid #94a3b8;
       margin-top: 6px;
       overflow: hidden;
+      border-radius: 2px;
     }
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
     }
 
     .contact-row {
@@ -300,11 +623,15 @@
       align-items: center;
       gap: 10px;
       padding: 8px 0;
-      border-bottom: 1px dashed #d0d0d0;
+      border-bottom: 1px dashed #d1d5db;
+    }
+
+    .theme-win11 .contact-row {
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
     }
 
     .contact-row a {
-      color: #000080;
+      color: var(--accent);
       font-weight: bold;
       text-decoration: underline;
     }
@@ -337,27 +664,64 @@
       padding-left: 15px;
     }
 
-    /* Taskbar */
+    .theme-win11 .btn-action {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .theme-win11 .btn-action:hover {
+      background: var(--accent-hover);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TASKBAR
+       ═══════════════════════════════════════════════════════════════ */
     #taskbar {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 34px;
-      background: var(--win-bg);
-      border-top: 2px solid var(--win-border-light);
+      height: var(--taskbar-height);
+      background: var(--taskbar-bg);
+      border-top: var(--taskbar-border);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 2px 4px;
+      justify-content: var(--taskbar-justify);
+      padding: 0 6px;
       z-index: 1000;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
+    /* Taskbar center group for Windows 11 */
+    .taskbar-center-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      height: 100%;
+    }
+
+    .theme-win11 #taskbar {
+      justify-content: space-between;
+    }
+
+    .theme-win11 .taskbar-center-group {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Start Button */
     .start-btn {
       display: flex;
       align-items: center;
       gap: 6px;
       padding: 3px 10px;
+      height: 26px;
       background: var(--win-bg);
       border-top: 2px solid var(--win-border-light);
       border-left: 2px solid var(--win-border-light);
@@ -366,6 +730,9 @@
       font-weight: bold;
       font-size: 12px;
       cursor: pointer;
+      color: #000;
+      border-radius: 0;
+      flex-shrink: 0;
     }
 
     .start-btn:active, .start-btn.active {
@@ -376,12 +743,90 @@
       background: #b4b4b4;
     }
 
+    /* Win11 Start Button */
+    .theme-win11 .start-btn {
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      height: 36px;
+      width: 40px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .theme-win11 .start-btn:hover, .theme-win11 .start-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Win10 Start Button */
+    .theme-win10 .start-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      height: 100%;
+      width: 44px;
+      padding: 0;
+      justify-content: center;
+    }
+
+    .theme-win10 .start-btn:hover, .theme-win10 .start-btn.active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Win7 Start Orb */
+    .theme-win7 .start-btn {
+      width: 46px;
+      height: 46px;
+      margin-top: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: radial-gradient(circle at 35% 35%, #60a5fa 0%, #1d4ed8 60%, #0f172a 100%);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.6), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+      justify-content: center;
+      padding: 0;
+    }
+
+    .theme-win7 .start-btn:hover {
+      box-shadow: 0 0 16px rgba(96, 165, 250, 0.9), inset 0 2px 3px rgba(255, 255, 255, 0.9);
+    }
+
+    /* Taskbar Search Box (Win10) */
+    .taskbar-search-win10 {
+      display: none;
+      align-items: center;
+      background: #ffffff;
+      color: #4b5563;
+      padding: 4px 10px;
+      height: 28px;
+      font-size: 11.5px;
+      margin-left: 6px;
+      width: 170px;
+      border-radius: 0;
+      cursor: text;
+    }
+
+    .theme-win10 .taskbar-search-win10 {
+      display: flex;
+    }
+
+    /* Taskbar App Tabs */
     .taskbar-tasks {
       display: flex;
       gap: 4px;
       flex: 1;
       margin: 0 8px;
       overflow-x: auto;
+      height: 100%;
+      align-items: center;
+    }
+
+    .theme-win11 .taskbar-tasks {
+      flex: 0 1 auto;
+      margin: 0;
+      gap: 6px;
     }
 
     .task-item {
@@ -396,12 +841,13 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 0 6px;
+      padding: 0 8px;
       font-size: 11px;
       cursor: pointer;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: #000;
     }
 
     .task-item.active {
@@ -413,59 +859,143 @@
       font-weight: bold;
     }
 
+    /* Win11 Task Item */
+    .theme-win11 .task-item {
+      min-width: 36px;
+      max-width: 150px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: #ffffff;
+      position: relative;
+    }
+
+    .theme-win11 .task-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-win11 .task-item.active {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .theme-win11 .task-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    /* Win10 Task Item */
+    .theme-win10 .task-item {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      border-bottom: 2px solid transparent;
+      height: 100%;
+      border-radius: 0;
+    }
+
+    .theme-win10 .task-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-win10 .task-item.active {
+      background: rgba(255, 255, 255, 0.15);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    /* Win7 Task Item */
+    .theme-win7 .task-item {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 4px;
+      color: #ffffff;
+      height: 30px;
+    }
+
+    .theme-win7 .task-item.active {
+      background: rgba(255, 255, 255, 0.35);
+      border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 8px rgba(100, 180, 255, 0.5);
+    }
+
+    /* Tray Area */
     .taskbar-tray {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 2px 8px;
+      gap: 10px;
+      padding: 3px 10px;
       border-top: 1px solid var(--win-border-dark);
       border-left: 1px solid var(--win-border-dark);
       border-right: 1px solid var(--win-border-light);
       border-bottom: 1px solid var(--win-border-light);
       font-size: 11px;
+      color: #000;
+      flex-shrink: 0;
     }
 
-    /* Start Menu */
+    .theme-win11 .taskbar-tray,
+    .theme-win10 .taskbar-tray,
+    .theme-win7 .taskbar-tray {
+      border: none;
+      color: #ffffff;
+      background: transparent;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       START MENU
+       ═══════════════════════════════════════════════════════════════ */
     #startMenu {
       position: absolute;
-      bottom: 34px;
+      bottom: var(--taskbar-height);
       left: 2px;
-      width: 260px;
-      background: var(--win-bg);
-      border-top: 2px solid var(--win-border-light);
-      border-left: 2px solid var(--win-border-light);
+      width: 270px;
+      background: var(--start-bg);
+      border-top: var(--start-border);
+      border-left: var(--start-border);
       border-right: 2px solid var(--win-border-darkest);
       border-bottom: 2px solid var(--win-border-darkest);
-      box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+      border-radius: var(--start-radius);
+      box-shadow: var(--start-shadow);
       display: none;
       flex-direction: row;
       z-index: 2000;
+      overflow: hidden;
     }
 
     #startMenu.active {
       display: flex;
     }
 
+    /* Classic Start Menu */
     .start-banner {
       width: 32px;
-      background: linear-gradient(180deg, var(--win-blue) 0%, #000040 100%);
+      background: linear-gradient(180deg, var(--accent) 0%, #000030 100%);
       color: #ffffff;
       display: flex;
       align-items: flex-end;
-      padding: 10px 4px;
+      padding: 12px 4px;
       font-weight: bold;
       writing-mode: vertical-rl;
       transform: rotate(180deg);
       letter-spacing: 2px;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .start-items {
       flex: 1;
-      padding: 4px;
+      padding: 6px;
       display: flex;
       flex-direction: column;
       gap: 2px;
+      max-height: 480px;
+      overflow-y: auto;
     }
 
     .start-item {
@@ -475,10 +1005,12 @@
       padding: 6px 10px;
       cursor: pointer;
       font-size: 12px;
+      color: inherit;
+      border-radius: 2px;
     }
 
     .start-item:hover {
-      background: var(--win-blue);
+      background: var(--accent);
       color: #ffffff;
     }
 
@@ -487,10 +1019,414 @@
       background: var(--win-border-dark);
       margin: 4px 0;
     }
+
+    /* Win11 Start Menu Modal */
+    .theme-win11 #startMenu {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(var(--taskbar-height) + 10px);
+      width: 440px;
+      flex-direction: column;
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: var(--start-border);
+      border-radius: var(--start-radius);
+      color: #ffffff;
+    }
+
+    .theme-win11 .start-banner {
+      display: none;
+    }
+
+    .theme-win11 .win11-start-search {
+      display: block;
+      padding: 14px 18px 8px 18px;
+    }
+
+    .theme-win11 .win11-search-input {
+      width: 100%;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .theme-win11 .start-items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 12px 18px 18px 18px;
+    }
+
+    .theme-win11 .start-item {
+      flex-direction: column;
+      text-align: center;
+      gap: 6px;
+      padding: 10px 6px;
+      border-radius: 8px;
+      font-size: 11px;
+    }
+
+    .theme-win11 .start-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .theme-win11 .start-item-icon {
+      font-size: 24px;
+    }
+
+    .theme-win11 .start-divider {
+      display: none;
+    }
+
+    .theme-win11 .win11-start-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(0, 0, 0, 0.25);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Win10 Start Menu */
+    .theme-win10 #startMenu {
+      left: 0;
+      bottom: var(--taskbar-height);
+      width: 480px;
+      flex-direction: row;
+      color: #ffffff;
+      background: rgba(20, 20, 24, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .theme-win10 .start-banner {
+      display: none;
+    }
+
+    .theme-win10 .win10-left-pane {
+      width: 210px;
+      padding: 8px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .theme-win10 .win10-tiles-pane {
+      flex: 1;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .win10-tile {
+      background: var(--accent);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 72px;
+      cursor: pointer;
+      font-size: 11px;
+      color: #ffffff;
+      font-weight: 500;
+      transition: transform 0.1s;
+    }
+
+    .win10-tile:hover {
+      transform: scale(1.02);
+      filter: brightness(1.1);
+    }
+
+    /* Win7 Start Menu */
+    .theme-win7 #startMenu {
+      left: 2px;
+      bottom: var(--taskbar-height);
+      width: 380px;
+      flex-direction: row;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .theme-win7 .start-banner {
+      display: none;
+    }
+
+    .theme-win7 .win7-left-pane {
+      width: 230px;
+      background: #ffffff;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      color: #1f2937;
+    }
+
+    .theme-win7 .win7-right-pane {
+      flex: 1;
+      background: rgba(15, 30, 55, 0.85);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: #ffffff;
+      font-size: 11px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RIGHT-CLICK DESKTOP CONTEXT MENU
+       ═══════════════════════════════════════════════════════════════ */
+    #desktopContextMenu {
+      position: absolute;
+      z-index: 3000;
+      width: 190px;
+      background: var(--win-bg);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-darkest);
+      border-bottom: 2px solid var(--win-border-darkest);
+      box-shadow: 3px 3px 12px rgba(0,0,0,0.5);
+      padding: 3px 0;
+      display: none;
+      font-size: 12px;
+      color: var(--win-text);
+    }
+
+    .theme-win11 #desktopContextMenu {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: rgba(30, 32, 40, 0.95);
+      backdrop-filter: blur(25px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+      color: #ffffff;
+      padding: 6px;
+    }
+
+    .ctx-item {
+      padding: 5px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .ctx-item:hover {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .theme-win11 .ctx-item {
+      border-radius: 5px;
+      padding: 6px 10px;
+    }
+
+    .theme-win11 .ctx-item:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .ctx-divider {
+      height: 1px;
+      background: var(--win-border-dark);
+      margin: 3px 0;
+    }
+
+    .theme-win11 .ctx-divider {
+      background: rgba(255, 255, 255, 0.1);
+      margin: 4px 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SETTINGS / PERSONALIZATION WINDOW STYLES
+       ═══════════════════════════════════════════════════════════════ */
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+
+    .theme-win11 .tab-bar {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .tab-btn {
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px 4px 0 0;
+      color: #334155;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .theme-win11 .tab-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      border-radius: 6px;
+    }
+
+    .theme-win11 .tab-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Theme Card Grid */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .theme-card {
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px;
+      cursor: pointer;
+      background: #ffffff;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .theme-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .theme-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .theme-win11 .theme-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .theme-card-preview {
+      height: 70px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    /* Wallpaper Grid */
+    .wallpaper-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .wallpaper-thumb {
+      height: 80px;
+      border-radius: 6px;
+      border: 2px solid #cbd5e1;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .wallpaper-thumb:hover {
+      border-color: var(--accent);
+      transform: scale(1.02);
+    }
+
+    .wallpaper-thumb.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .wallpaper-thumb-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+      font-size: 10px;
+      padding: 2px 4px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Color Swatches Grid */
+    .color-swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .color-swatch {
+      height: 38px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      border: 2px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.08);
+    }
+
+    .color-swatch.active {
+      border-color: #ffffff;
+      box-shadow: 0 0 0 2px #000;
+    }
   </style>
 </head>
-<body>
+<body class="theme-classic">
+  <!-- Scanline CRT Effect -->
   <div class="crt-overlay"></div>
+
+  <!-- Dual-layer background for smooth wallpaper crossfading -->
+  <div id="wallpaper-container">
+    <div id="wallpaper-layer-active" class="wallpaper-layer"></div>
+    <div id="wallpaper-layer-next" class="wallpaper-layer"></div>
+  </div>
 
   <!-- Desktop Icons Grid -->
   <div id="desktop">
@@ -534,13 +1470,27 @@
       <div class="desktop-icon-label">Contact.url</div>
     </div>
 
+    <!-- CV.pdf Desktop Shortcut -->
+    <div class="desktop-icon" onclick="openCVShortcut()">
+      <div class="desktop-icon-img">📋</div>
+      <div class="desktop-icon-label">Antriksh CV.pdf</div>
+    </div>
+
+    <!-- Personalize / Themes Shortcut -->
+    <div class="desktop-icon" onclick="openWindow('win-personalization')">
+      <div class="desktop-icon-img">⚙️</div>
+      <div class="desktop-icon-label">Personalize.exe</div>
+    </div>
+
     <div class="desktop-icon" onclick="window.open('https://www.behance.net/devbaisoya', '_blank')">
       <div class="desktop-icon-img">🎨</div>
       <div class="desktop-icon-label">Behance Portfolio.lnk</div>
     </div>
   </div>
 
-  <!-- WINDOW 1: ABOUT ME -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 1: ABOUT ME
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="window active" id="win-about" style="top: 40px; left: 160px; width: 560px; height: 420px;">
     <div class="window-titlebar" onmousedown="startDrag(event, 'win-about')">
       <div class="titlebar-left">
@@ -550,7 +1500,7 @@
       <div class="titlebar-buttons">
         <div class="btn-win" onclick="minimizeWindow('win-about')">_</div>
         <div class="btn-win" onclick="maximizeWindow('win-about')">□</div>
-        <div class="btn-win" onclick="closeWindow('win-about')">✕</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-about')">✕</div>
       </div>
     </div>
     <div class="window-menu">
@@ -560,7 +1510,7 @@
       <div class="section-title">
         <span>👤 ANTRIKSH — Professional Summary</span>
       </div>
-      <p style="font-weight: bold; color: #000080; margin-bottom: 8px;">
+      <p style="font-weight: bold; color: var(--accent); margin-bottom: 8px;">
         Motion Graphics Designer | Video Editor | Graphic Designer
       </p>
       <p style="margin-bottom: 12px; font-size: 12px; line-height: 1.6;">
@@ -568,22 +1518,27 @@
       </p>
 
       <div class="item-card">
-        <h4>Studio Location & Direct Contacts:</h4>
+        <h4>Studio Location &amp; Direct Contacts:</h4>
         <p><b>Address:</b> H No-31, Aliganj, Kotla Mubarakpur, South Delhi, Delhi, 110003</p>
-        <p><b>Phone:</b> <a href="tel:+919871784187" style="color: #000080; font-weight: bold;">+91 98717 84187</a></p>
-        <p><b>Email:</b> <a href="mailto:devbaisoya36@gmail.com" style="color: #000080; font-weight: bold;">devbaisoya36@gmail.com</a></p>
-        <p><b>Behance:</b> <a href="https://www.behance.net/devbaisoya" target="_blank" style="color: #000080; font-weight: bold;">https://www.behance.net/devbaisoya</a></p>
+        <p><b>Phone:</b> <a href="tel:+919871784187" style="color: var(--accent); font-weight: bold;">+91 98717 84187</a></p>
+        <p><b>Email:</b> <a href="mailto:devbaisoya36@gmail.com" style="color: var(--accent); font-weight: bold;">devbaisoya36@gmail.com</a></p>
+        <p><b>Behance:</b> <a href="https://www.behance.net/devbaisoya" target="_blank" style="color: var(--accent); font-weight: bold;">https://www.behance.net/devbaisoya</a></p>
       </div>
 
-      <div style="margin-top: 10px;">
+      <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
         <a href="https://www.behance.net/devbaisoya" target="_blank" class="btn-action">
           <span>🎨 Open Full Portfolio on Behance</span>
         </a>
+        <button class="btn-action" onclick="openCVShortcut()">
+          <span>📋 View Full Antriksh CV (PDF)</span>
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- WINDOW 2: CORE SKILLS -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 2: CORE SKILLS
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="window" id="win-skills" style="top: 70px; left: 240px; width: 540px; height: 430px; display: none;">
     <div class="window-titlebar" onmousedown="startDrag(event, 'win-skills')">
       <div class="titlebar-left">
@@ -593,7 +1548,7 @@
       <div class="titlebar-buttons">
         <div class="btn-win" onclick="minimizeWindow('win-skills')">_</div>
         <div class="btn-win" onclick="maximizeWindow('win-skills')">□</div>
-        <div class="btn-win" onclick="closeWindow('win-skills')">✕</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-skills')">✕</div>
       </div>
     </div>
     <div class="window-menu">
@@ -607,48 +1562,50 @@
       <div class="item-card">
         <h4>1. Motion Graphics &amp; 2D Animation</h4>
         <p>Fluid 2D animation, keyframing, typography pacing, and digital screen visuals.</p>
-        <div><span class="badge-tag">2D Motion</span><span class="badge-tag">Keyframing</span><span class="badge-tag">Transitions</span></div>
+        <div style="margin-top:4px;"><span class="badge-tag">2D Motion</span><span class="badge-tag">Keyframing</span><span class="badge-tag">Transitions</span></div>
       </div>
 
       <div class="item-card">
         <h4>2. Video Editing &amp; Post-Production</h4>
         <p>Rhythm cutting, pacing, audio sync, color grading, and dynamic sequence assembly.</p>
-        <div><span class="badge-tag">Pacing</span><span class="badge-tag">Audio Sync</span><span class="badge-tag">Color Grading</span></div>
+        <div style="margin-top:4px;"><span class="badge-tag">Pacing</span><span class="badge-tag">Audio Sync</span><span class="badge-tag">Color Grading</span></div>
       </div>
 
       <div class="item-card">
         <h4>3. Graphic Design &amp; Visual Communication</h4>
         <p>Striking visual concepts, layout hierarchy, promotional media, and branding aesthetics.</p>
-        <div><span class="badge-tag">Hierarchy</span><span class="badge-tag">Layout</span><span class="badge-tag">Composition</span></div>
+        <div style="margin-top:4px;"><span class="badge-tag">Hierarchy</span><span class="badge-tag">Layout</span><span class="badge-tag">Composition</span></div>
       </div>
 
       <div class="item-card">
         <h4>4. Logo Animation &amp; Kinetic Typography</h4>
         <p>Kinetic text, animated stings, brand identity motion, and logo reveals.</p>
-        <div><span class="badge-tag">Kinetic Type</span><span class="badge-tag">Logo Reveals</span><span class="badge-tag">Identity</span></div>
+        <div style="margin-top:4px;"><span class="badge-tag">Kinetic Type</span><span class="badge-tag">Logo Reveals</span><span class="badge-tag">Identity</span></div>
       </div>
 
       <div class="item-card">
         <h4>5. Social Media Creatives &amp; Promotional Content</h4>
         <p>Vertical reels, high-retention promo edits, hooks, banners, and digital ads.</p>
-        <div><span class="badge-tag">Reels</span><span class="badge-tag">Banners</span><span class="badge-tag">Shorts</span></div>
+        <div style="margin-top:4px;"><span class="badge-tag">Reels</span><span class="badge-tag">Banners</span><span class="badge-tag">Shorts</span></div>
       </div>
 
       <div class="item-card">
         <h4>6. Visual Storytelling &amp; Composition</h4>
         <p>Emotional arcs, camera blocking, focal depth, pacing, and visual story flow.</p>
-        <div><span class="badge-tag">Story Arc</span><span class="badge-tag">Depth</span><span class="badge-tag">Visual Flow</span></div>
+        <div style="margin-top:4px;"><span class="badge-tag">Story Arc</span><span class="badge-tag">Depth</span><span class="badge-tag">Visual Flow</span></div>
       </div>
 
       <div class="item-card">
         <h4>7. VFX Compositing &amp; Editing</h4>
         <p>Multi-pass compositing, rotoscoping, chroma keying, motion tracking, and particle simulation (Arena Animation).</p>
-        <div><span class="badge-tag">Chroma Key</span><span class="badge-tag">Tracking</span><span class="badge-tag">Multi-Pass</span></div>
+        <div style="margin-top:4px;"><span class="badge-tag">Chroma Key</span><span class="badge-tag">Tracking</span><span class="badge-tag">Multi-Pass</span></div>
       </div>
     </div>
   </div>
 
-  <!-- WINDOW 3: SOFTWARE PROFICIENCY -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 3: SOFTWARE PROFICIENCY
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="window" id="win-software" style="top: 90px; left: 300px; width: 500px; height: 380px; display: none;">
     <div class="window-titlebar" onmousedown="startDrag(event, 'win-software')">
       <div class="titlebar-left">
@@ -658,7 +1615,7 @@
       <div class="titlebar-buttons">
         <div class="btn-win" onclick="minimizeWindow('win-software')">_</div>
         <div class="btn-win" onclick="maximizeWindow('win-software')">□</div>
-        <div class="btn-win" onclick="closeWindow('win-software')">✕</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-software')">✕</div>
       </div>
     </div>
     <div class="window-menu">
@@ -672,7 +1629,7 @@
       <div class="item-card">
         <div style="display:flex; justify-content:space-between; font-weight:bold;">
           <span>Adobe After Effects</span>
-          <span style="color:#000080;">95%</span>
+          <span style="color:var(--accent);">95%</span>
         </div>
         <p>Motion Graphics &amp; Animation • 2D Keyframing • VFX Compositing</p>
         <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
@@ -681,7 +1638,7 @@
       <div class="item-card">
         <div style="display:flex; justify-content:space-between; font-weight:bold;">
           <span>Adobe Premiere Pro</span>
-          <span style="color:#000080;">92%</span>
+          <span style="color:var(--accent);">92%</span>
         </div>
         <p>Video Editing &amp; Post-Production • Timeline Pacing • Audio Mastering</p>
         <div class="progress-bar"><div class="progress-fill" style="width: 92%;"></div></div>
@@ -690,7 +1647,7 @@
       <div class="item-card">
         <div style="display:flex; justify-content:space-between; font-weight:bold;">
           <span>Adobe Photoshop</span>
-          <span style="color:#000080;">94%</span>
+          <span style="color:var(--accent);">94%</span>
         </div>
         <p>Image Editing &amp; Digital Design • Asset Texturing • Visual Retouching</p>
         <div class="progress-bar"><div class="progress-fill" style="width: 94%;"></div></div>
@@ -699,7 +1656,7 @@
       <div class="item-card">
         <div style="display:flex; justify-content:space-between; font-weight:bold;">
           <span>Adobe Illustrator</span>
-          <span style="color:#000080;">90%</span>
+          <span style="color:var(--accent);">90%</span>
         </div>
         <p>Vector Graphics &amp; Design • Kinetic Type Assets • Logo Assets</p>
         <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
@@ -707,7 +1664,9 @@
     </div>
   </div>
 
-  <!-- WINDOW 4: CREATIVE PROJECTS -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 4: CREATIVE PROJECTS
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="window" id="win-projects" style="top: 60px; left: 200px; width: 580px; height: 440px; display: none;">
     <div class="window-titlebar" onmousedown="startDrag(event, 'win-projects')">
       <div class="titlebar-left">
@@ -717,7 +1676,7 @@
       <div class="titlebar-buttons">
         <div class="btn-win" onclick="minimizeWindow('win-projects')">_</div>
         <div class="btn-win" onclick="maximizeWindow('win-projects')">□</div>
-        <div class="btn-win" onclick="closeWindow('win-projects')">✕</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-projects')">✕</div>
       </div>
     </div>
     <div class="window-menu">
@@ -763,7 +1722,9 @@
     </div>
   </div>
 
-  <!-- WINDOW 5: EDUCATION -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 5: EDUCATION
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="window" id="win-education" style="top: 110px; left: 260px; width: 500px; height: 350px; display: none;">
     <div class="window-titlebar" onmousedown="startDrag(event, 'win-education')">
       <div class="titlebar-left">
@@ -773,7 +1734,7 @@
       <div class="titlebar-buttons">
         <div class="btn-win" onclick="minimizeWindow('win-education')">_</div>
         <div class="btn-win" onclick="maximizeWindow('win-education')">□</div>
-        <div class="btn-win" onclick="closeWindow('win-education')">✕</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-education')">✕</div>
       </div>
     </div>
     <div class="window-menu">
@@ -785,7 +1746,7 @@
       </div>
 
       <div class="item-card">
-        <span class="badge-pill" style="background:#000080; color:#fff;">DEGREE (PURSUING)</span>
+        <span class="badge-pill" style="background:var(--accent); color:#fff;">DEGREE (PURSUING)</span>
         <h4 style="margin-top:4px;">Bachelor of Arts (BA)</h4>
         <p><b>PGDAV College</b>, University of Delhi</p>
         <p style="color:#666; font-size:11px;">Status: Currently Pursuing</p>
@@ -807,7 +1768,9 @@
     </div>
   </div>
 
-  <!-- WINDOW 6: ATTRIBUTES -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 6: ATTRIBUTES
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="window" id="win-attributes" style="top: 130px; left: 320px; width: 440px; height: 320px; display: none;">
     <div class="window-titlebar" onmousedown="startDrag(event, 'win-attributes')">
       <div class="titlebar-left">
@@ -817,7 +1780,7 @@
       <div class="titlebar-buttons">
         <div class="btn-win" onclick="minimizeWindow('win-attributes')">_</div>
         <div class="btn-win" onclick="maximizeWindow('win-attributes')">□</div>
-        <div class="btn-win" onclick="closeWindow('win-attributes')">✕</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-attributes')">✕</div>
       </div>
     </div>
     <div class="window-body">
@@ -843,7 +1806,9 @@
     </div>
   </div>
 
-  <!-- WINDOW 7: CAREER OBJECTIVE -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 7: CAREER OBJECTIVE
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="window" id="win-objective" style="top: 100px; left: 220px; width: 500px; height: 280px; display: none;">
     <div class="window-titlebar" onmousedown="startDrag(event, 'win-objective')">
       <div class="titlebar-left">
@@ -853,24 +1818,26 @@
       <div class="titlebar-buttons">
         <div class="btn-win" onclick="minimizeWindow('win-objective')">_</div>
         <div class="btn-win" onclick="maximizeWindow('win-objective')">□</div>
-        <div class="btn-win" onclick="closeWindow('win-objective')">✕</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-objective')">✕</div>
       </div>
     </div>
     <div class="window-body">
       <div class="section-title">
         <span>🎯 Career Objective</span>
       </div>
-      <blockquote style="background:#f4f4f4; border-left: 4px solid #000080; padding: 14px; font-size: 13px; font-style: italic; line-height: 1.6; color: #111;">
+      <blockquote style="background:#f4f4f4; border-left: 4px solid var(--accent); padding: 14px; font-size: 13px; font-style: italic; line-height: 1.6; color: #111;">
         &ldquo;To join a creative team as a Motion Graphics Designer, contributing to animation, video production, and visual design projects while continuously developing my skills in motion design and post-production.&rdquo;
       </blockquote>
       <div style="margin-top: 16px; text-align: right;">
-        <p style="font-weight: bold; color: #000080;">ANTRIKSH</p>
+        <p style="font-weight: bold; color: var(--accent);">ANTRIKSH</p>
         <p style="font-size: 11px; color: #666;">Motion Graphics Designer | Video Editor | Graphic Designer</p>
       </div>
     </div>
   </div>
 
-  <!-- WINDOW 8: CONTACT -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 8: CONTACT
+       ═══════════════════════════════════════════════════════════════ -->
   <div class="window" id="win-contact" style="top: 80px; left: 250px; width: 480px; height: 350px; display: none;">
     <div class="window-titlebar" onmousedown="startDrag(event, 'win-contact')">
       <div class="titlebar-left">
@@ -880,7 +1847,7 @@
       <div class="titlebar-buttons">
         <div class="btn-win" onclick="minimizeWindow('win-contact')">_</div>
         <div class="btn-win" onclick="maximizeWindow('win-contact')">□</div>
-        <div class="btn-win" onclick="closeWindow('win-contact')">✕</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-contact')">✕</div>
       </div>
     </div>
     <div class="window-body">
@@ -928,72 +1895,870 @@
     </div>
   </div>
 
-  <!-- START MENU -->
-  <div id="startMenu">
-    <div class="start-banner">ANTRIKSH OS</div>
-    <div class="start-items">
-      <div class="start-item" onclick="openWindow('win-about'); toggleStartMenu()">📄 About Me</div>
-      <div class="start-item" onclick="openWindow('win-skills'); toggleStartMenu()">⚡ Core Skills</div>
-      <div class="start-item" onclick="openWindow('win-software'); toggleStartMenu()">🛠️ Software Tools</div>
-      <div class="start-item" onclick="openWindow('win-projects'); toggleStartMenu()">💼 Creative Projects</div>
-      <div class="start-item" onclick="openWindow('win-education'); toggleStartMenu()">🎓 Education</div>
-      <div class="start-item" onclick="openWindow('win-attributes'); toggleStartMenu()">🌟 Attributes</div>
-      <div class="start-item" onclick="openWindow('win-objective'); toggleStartMenu()">🎯 Objective</div>
-      <div class="start-divider"></div>
-      <div class="start-item" onclick="openWindow('win-contact'); toggleStartMenu()">📞 Contact Antriksh</div>
-      <div class="start-item" onclick="window.open('https://www.behance.net/devbaisoya', '_blank'); toggleStartMenu()">🎨 Behance Portfolio</div>
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 9: PERSONALIZATION & SETTINGS
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="window" id="win-personalization" style="top: 50px; left: 180px; width: 620px; height: 480px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-personalization')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">⚙️</span>
+        <span>Settings — Personalization</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win" onclick="minimizeWindow('win-personalization')">_</div>
+        <div class="btn-win" onclick="maximizeWindow('win-personalization')">□</div>
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-personalization')">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <!-- Tabs Header -->
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tab-btn-themes" onclick="switchSettingsTab('themes')">🎨 Themes</button>
+        <button class="tab-btn" id="tab-btn-background" onclick="switchSettingsTab('background')">🖼️ Background</button>
+        <button class="tab-btn" id="tab-btn-colors" onclick="switchSettingsTab('colors')">🌈 Colours</button>
+      </div>
+
+      <!-- TAB 1: THEMES -->
+      <div class="tab-content active" id="tab-content-themes">
+        <p style="margin-bottom: 12px; font-size: 11.5px; opacity: 0.85;">
+          Select a system theme to instantly transform the window chrome, taskbar, start menu, and typography:
+        </p>
+        <div class="theme-grid">
+          <!-- Theme 1: Win95 Classic -->
+          <div class="theme-card active" id="card-theme-classic" onclick="setTheme('classic')">
+            <div class="theme-card-preview" style="background:#1d2e2f;">
+              <div style="height:14px; background:#000080; color:#fff; font-size:8px; padding:1px 4px; display:flex; justify-content:space-between;">
+                <span>Classic 95</span><span>_ □ ✕</span>
+              </div>
+              <div style="height:12px; background:#c0c0c0; border-top:1px solid #fff; font-size:8px; display:flex; align-items:center; padding:0 4px;">
+                <span>Start</span>
+              </div>
+            </div>
+            <h4 style="font-size:12px; margin-bottom:2px;">Windows 95 Classic</h4>
+            <p style="font-size:10.5px; opacity:0.8;">Retro 90s aesthetic, 3D bevels, and blue gradient title bars (Default).</p>
+          </div>
+
+          <!-- Theme 2: Win7 Aero -->
+          <div class="theme-card" id="card-theme-win7" onclick="setTheme('win7')">
+            <div class="theme-card-preview" style="background:linear-gradient(135deg, #1e3a8a, #0369a1);">
+              <div style="height:14px; background:linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(200,225,255,0.3) 100%); color:#0f172a; font-size:8px; padding:1px 4px; border-radius:3px 3px 0 0; display:flex; justify-content:space-between;">
+                <span>Aero Glass</span><span style="color:#ef4444;">✕</span>
+              </div>
+              <div style="height:12px; background:linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(10,30,60,0.8) 100%); font-size:8px; display:flex; align-items:center; padding:0 4px; color:#fff;">
+                <span>🔵 Orb</span>
+              </div>
+            </div>
+            <h4 style="font-size:12px; margin-bottom:2px;">Windows 7 Aero</h4>
+            <p style="font-size:10.5px; opacity:0.8;">Aero Glass translucency, start orb, and glossy title bar reflections.</p>
+          </div>
+
+          <!-- Theme 3: Win10 Modern -->
+          <div class="theme-card" id="card-theme-win10" onclick="setTheme('win10')">
+            <div class="theme-card-preview" style="background:#111827;">
+              <div style="height:14px; background:#0078d7; color:#fff; font-size:8px; padding:1px 4px; display:flex; justify-content:space-between;">
+                <span>Windows 10</span><span>✕</span>
+              </div>
+              <div style="height:12px; background:#101014; color:#fff; font-size:8px; display:flex; align-items:center; padding:0 4px; justify-content:space-between;">
+                <span>🪟 Search</span><span>12:00</span>
+              </div>
+            </div>
+            <h4 style="font-size:12px; margin-bottom:2px;">Windows 10</h4>
+            <p style="font-size:10.5px; opacity:0.8;">Flat sharp borders, integrated taskbar search box, and live tiles.</p>
+          </div>
+
+          <!-- Theme 4: Win11 Centered -->
+          <div class="theme-card" id="card-theme-win11" onclick="setTheme('win11')">
+            <div class="theme-card-preview" style="background:linear-gradient(135deg, #181920, #272730);">
+              <div style="height:14px; background:rgba(255,255,255,0.08); color:#fff; font-size:8px; padding:1px 6px; border-radius:5px 5px 0 0; display:flex; justify-content:space-between;">
+                <span>Windows 11</span><span>✕</span>
+              </div>
+              <div style="height:12px; background:rgba(30,30,35,0.9); border-radius:4px; font-size:8px; display:flex; align-items:center; justify-content:center; gap:4px; color:#fff;">
+                <span>🪟</span><span>📁</span><span>⚙️</span>
+              </div>
+            </div>
+            <h4 style="font-size:12px; margin-bottom:2px;">Windows 11</h4>
+            <p style="font-size:10.5px; opacity:0.8;">Centered taskbar icons, acrylic mica materials, and rounded corners.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: BACKGROUND -->
+      <div class="tab-content" id="tab-content-background">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="font-weight:bold; font-size:12px;">Choose your background:</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <label style="font-size:11px;">Fit:</label>
+            <select id="wallpaperFitSelect" onchange="setWallpaperFit(this.value)" style="padding:3px 6px; font-size:11px; border-radius:3px;">
+              <option value="cover">Fill</option>
+              <option value="contain">Fit</option>
+              <option value="100% 100%">Stretch</option>
+              <option value="repeat">Tile</option>
+              <option value="center">Center</option>
+            </select>
+
+            <label style="font-size:11px; margin-left:8px;">Slideshow:</label>
+            <select id="slideshowSelect" onchange="setSlideshowInterval(this.value)" style="padding:3px 6px; font-size:11px; border-radius:3px;">
+              <option value="0">Off</option>
+              <option value="1">1 Min</option>
+              <option value="5">5 Min</option>
+              <option value="10">10 Min</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 12 Wallpapers Grid -->
+        <div class="wallpaper-grid" id="wallpaperThumbnails">
+          <!-- Dynamically populated by JS -->
+        </div>
+
+        <!-- Custom Upload & Solid Color Bar -->
+        <div style="margin-top:14px; padding:10px; background:rgba(0,0,0,0.05); border:1px solid #cbd5e1; border-radius:4px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-weight:bold; font-size:11.5px;">📁 Custom Image:</span>
+            <input type="file" id="wallpaperFileInput" accept="image/*" onchange="handleCustomWallpaperUpload(event)" style="font-size:11px; max-width:180px;">
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-weight:bold; font-size:11.5px;">🎨 Solid Color:</span>
+            <input type="color" id="solidColorPicker" value="#1d2e2f" onchange="setSolidColor(this.value)" style="width:32px; height:24px; cursor:pointer; border:none;">
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: COLOURS -->
+      <div class="tab-content" id="tab-content-colors">
+        <p style="margin-bottom: 10px; font-size:11.5px; opacity:0.85;">
+          Choose an accent colour to personalize active title bars, selection badges, buttons, and highlights:
+        </p>
+
+        <div class="color-swatch-grid" id="accentSwatches">
+          <!-- Dynamically populated with 10 preset colors -->
+        </div>
+
+        <div style="margin-top:16px; padding:10px; background:rgba(0,0,0,0.05); border:1px solid #cbd5e1; border-radius:4px; display:flex; align-items:center; gap:12px;">
+          <span style="font-weight:bold; font-size:11.5px;">Custom Accent Colour:</span>
+          <input type="color" id="customAccentPicker" value="#000080" onchange="setAccentColor(this.value)" style="width:40px; height:28px; cursor:pointer; border:none;">
+          <span id="customAccentHex" style="font-family:var(--font-mono); font-size:12px; font-weight:bold;">#000080</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- TASKBAR -->
+  <!-- ═══════════════════════════════════════════════════════════════
+       WINDOW 10: DISPLAY SETTINGS (COSMETIC)
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="window" id="win-display" style="top: 120px; left: 280px; width: 440px; height: 320px; display: none;">
+    <div class="window-titlebar" onmousedown="startDrag(event, 'win-display')">
+      <div class="titlebar-left">
+        <span class="titlebar-icon">🖥️</span>
+        <span>Display Properties</span>
+      </div>
+      <div class="titlebar-buttons">
+        <div class="btn-win btn-win-close" onclick="closeWindow('win-display')">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="section-title">
+        <span>🖥️ CRT Monitor Hardware Telemetry</span>
+      </div>
+      <div class="item-card">
+        <p><b>Display Adapter:</b> Antriksh 3D Video Accelerator</p>
+        <p><b>Native Resolution:</b> 1280 × 1024 (5:4 CRT Aspect Ratio)</p>
+        <p><b>Refresh Rate:</b> 60 Hz Vertical Scan / 64 kHz Horizontal</p>
+        <p><b>Color Depth:</b> 32-bit True Color (16.7M Colors)</p>
+        <p><b>Phosphor Type:</b> Color Shadow Mask CRT with Static Noise Overlay</p>
+        <p><b>CRT Curvature &amp; Glass:</b> Active 3D Smudge &amp; Vignette Layers</p>
+      </div>
+      <div style="text-align:right; margin-top:10px;">
+        <button class="btn-action" onclick="closeWindow('win-display')">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       RIGHT-CLICK DESKTOP CONTEXT MENU
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="desktopContextMenu">
+    <div class="ctx-item" onclick="openWindow('win-personalization'); switchSettingsTab('themes'); closeContextMenu();">
+      <span>🎨</span><span>Personalize Themes</span>
+    </div>
+    <div class="ctx-item" onclick="openWindow('win-personalization'); switchSettingsTab('background'); closeContextMenu();">
+      <span>🖼️</span><span>Change Wallpaper...</span>
+    </div>
+    <div class="ctx-item" onclick="refreshDesktop(); closeContextMenu();">
+      <span>🔄</span><span>Refresh Desktop</span>
+    </div>
+    <div class="ctx-item" onclick="openWindow('win-display'); closeContextMenu();">
+      <span>🖥️</span><span>Display Settings</span>
+    </div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-item" onclick="openCVShortcut(); closeContextMenu();">
+      <span>📋</span><span>View Antriksh CV (PDF)</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       START MENU
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="startMenu">
+    <div class="start-banner">ANTRIKSH OS</div>
+
+    <!-- Win11 Top Search Bar -->
+    <div class="win11-start-search" style="display:none;" id="win11SearchBox">
+      <input type="text" class="win11-search-input" placeholder="Type here to search apps, files & settings...">
+    </div>
+
+    <!-- Start Items Dynamic List -->
+    <div class="start-items" id="startItemsList">
+      <div class="start-item" onclick="openWindow('win-about'); toggleStartMenu()"><span class="start-item-icon">📄</span><span>About Me</span></div>
+      <div class="start-item" onclick="openWindow('win-skills'); toggleStartMenu()"><span class="start-item-icon">⚡</span><span>Core Skills</span></div>
+      <div class="start-item" onclick="openWindow('win-software'); toggleStartMenu()"><span class="start-item-icon">🛠️</span><span>Software Tools</span></div>
+      <div class="start-item" onclick="openWindow('win-projects'); toggleStartMenu()"><span class="start-item-icon">💼</span><span>Creative Projects</span></div>
+      <div class="start-item" onclick="openWindow('win-education'); toggleStartMenu()"><span class="start-item-icon">🎓</span><span>Education</span></div>
+      <div class="start-item" onclick="openWindow('win-attributes'); toggleStartMenu()"><span class="start-item-icon">🌟</span><span>Attributes</span></div>
+      <div class="start-item" onclick="openWindow('win-objective'); toggleStartMenu()"><span class="start-item-icon">🎯</span><span>Career Objective</span></div>
+      <div class="start-item" onclick="openCVShortcut(); toggleStartMenu()"><span class="start-item-icon">📋</span><span>Antriksh CV (PDF)</span></div>
+      <div class="start-divider"></div>
+      <div class="start-item" onclick="openWindow('win-personalization'); toggleStartMenu()"><span class="start-item-icon">⚙️</span><span>Personalization &amp; Themes</span></div>
+      <div class="start-item" onclick="openWindow('win-contact'); toggleStartMenu()"><span class="start-item-icon">📞</span><span>Contact Antriksh</span></div>
+      <div class="start-item" onclick="window.open('https://www.behance.net/devbaisoya', '_blank'); toggleStartMenu()"><span class="start-item-icon">🎨</span><span>Behance Portfolio</span></div>
+    </div>
+
+    <!-- Win11 User Footer -->
+    <div class="win11-start-footer" style="display:none;" id="win11Footer">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:18px;">👤</span>
+        <span style="font-weight:600; font-size:12px;">Antriksh</span>
+      </div>
+      <div style="display:flex; gap:10px; cursor:pointer;" onclick="openWindow('win-personalization'); toggleStartMenu();">
+        <span title="Settings">⚙️</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TASKBAR
+       ═══════════════════════════════════════════════════════════════ -->
   <div id="taskbar">
-    <div class="start-btn" id="startBtn" onclick="toggleStartMenu()">
-      <span style="font-size: 14px;">🪟</span>
-      <span>Start</span>
+    <div class="taskbar-center-group">
+      <!-- Start Button with Theme Logo -->
+      <div class="start-btn" id="startBtn" onclick="toggleStartMenu()" title="Start">
+        <span id="startBtnLogo" style="font-size: 14px;">🪟</span>
+        <span id="startBtnText">Start</span>
+      </div>
+
+      <!-- Win10 Search Box -->
+      <div class="taskbar-search-win10" onclick="openWindow('win-about')">
+        <span style="margin-right:6px;">🔍</span><span>Type here to search</span>
+      </div>
+
+      <!-- Taskbar Window Tabs -->
+      <div class="taskbar-tasks" id="taskbarTasks">
+        <!-- Dynamically filled with active window tabs -->
+      </div>
     </div>
 
-    <div class="taskbar-tasks" id="taskbarTasks">
-      <!-- Dynamically filled with active window tabs -->
-    </div>
-
+    <!-- System Tray Area -->
     <div class="taskbar-tray">
       <span>🔊</span>
       <span id="trayClock">12:00 PM</span>
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════════════
+       SYSTEM JAVASCRIPT: THEMES, WALLPAPERS, PERSISTENCE
+       ═══════════════════════════════════════════════════════════════ -->
   <script>
-    // Live Clock
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12 || 12;
-      document.getElementById('trayClock').textContent = `${hours}:${minutes} ${ampm}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+    /* ─── 1. EXTENSIBLE THEMES CONFIGURATION ─── */
+    const THEMES = {
+      classic: {
+        id: 'classic',
+        name: 'Windows 95 Classic',
+        bodyClass: 'theme-classic',
+        startLogo: '🪟',
+        startText: 'Start',
+        defaultAccent: '#000080'
+      },
+      win7: {
+        id: 'win7',
+        name: 'Windows 7 Aero',
+        bodyClass: 'theme-win7',
+        startLogo: '🌐',
+        startText: '',
+        defaultAccent: '#1d4ed8'
+      },
+      win10: {
+        id: 'win10',
+        name: 'Windows 10',
+        bodyClass: 'theme-win10',
+        startLogo: '❖',
+        startText: '',
+        defaultAccent: '#0078d7'
+      },
+      win11: {
+        id: 'win11',
+        name: 'Windows 11',
+        bodyClass: 'theme-win11',
+        startLogo: '田',
+        startText: '',
+        defaultAccent: '#0067c0'
+      }
+    };
 
-    // Start Menu Toggle
-    function toggleStartMenu() {
-      const menu = document.getElementById('startMenu');
-      const btn = document.getElementById('startBtn');
-      menu.classList.toggle('active');
-      btn.classList.toggle('active');
+    /* ─── 2. EXTENSIBLE 12 ORIGINAL HD SVG/CSS WALLPAPERS ─── */
+    const WALLPAPERS = [
+      {
+        id: 'classic-teal',
+        name: '1. Classic Teal (95)',
+        type: 'css',
+        css: 'linear-gradient(135deg, #1d2e2f 0%, #152223 100%)',
+        preview: '#1d2e2f'
+      },
+      {
+        id: 'cyber-soc',
+        name: '2. Cyber SOC Matrix',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024" viewBox="0 0 1280 1024">
+          <defs>
+            <radialGradient id="socRad" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="#0b1b2b"/>
+              <stop offset="100%" stop-color="#030710"/>
+            </radialGradient>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0, 242, 254, 0.12)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="1280" height="1024" fill="url(#socRad)"/>
+          <rect width="1280" height="1024" fill="url(#grid)"/>
+          <circle cx="640" cy="512" r="320" fill="none" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1.5"/>
+          <circle cx="640" cy="512" r="220" fill="none" stroke="rgba(0, 242, 254, 0.25)" stroke-dasharray="8 6"/>
+          <circle cx="640" cy="512" r="100" fill="none" stroke="rgba(0, 242, 254, 0.35)" stroke-width="2"/>
+          <line x1="640" y1="100" x2="640" y2="924" stroke="rgba(0, 242, 254, 0.15)"/>
+          <line x1="100" y1="512" x2="1180" y2="512" stroke="rgba(0, 242, 254, 0.15)"/>
+          <text x="640" y="505" fill="#00f2fe" font-family="monospace" font-size="12" letter-spacing="4" text-anchor="middle" opacity="0.7">ANTRIKSH // SOC TELEMETRY MATRIX</text>
+          <text x="640" y="525" fill="#38bdf8" font-family="monospace" font-size="10" letter-spacing="2" text-anchor="middle" opacity="0.5">[ 28°34' N  77°13' E // DEFENSE SECURE ]</text>
+        </svg>`,
+        preview: 'linear-gradient(135deg, #0b1b2b, #030710)'
+      },
+      {
+        id: 'cosmic-nebula',
+        name: '3. Cosmic Nebula',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
+          <defs>
+            <radialGradient id="neb1" cx="30%" cy="40%" r="55%">
+              <stop offset="0%" stop-color="#4c1d95" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#050510" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="neb2" cx="70%" cy="65%" r="60%">
+              <stop offset="0%" stop-color="#0284c7" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#050510" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="1280" height="1024" fill="#04040c"/>
+          <rect width="1280" height="1024" fill="url(#neb1)"/>
+          <rect width="1280" height="1024" fill="url(#neb2)"/>
+          <g fill="#ffffff">
+            <circle cx="200" cy="180" r="1.5" opacity="0.8"/>
+            <circle cx="450" cy="320" r="1.2" opacity="0.6"/>
+            <circle cx="850" cy="220" r="2" opacity="0.9"/>
+            <circle cx="1050" cy="480" r="1.5" opacity="0.7"/>
+            <circle cx="720" cy="780" r="1.8" opacity="0.8"/>
+            <circle cx="340" cy="820" r="1.2" opacity="0.5"/>
+            <circle cx="950" cy="860" r="1.5" opacity="0.7"/>
+            <circle cx="640" cy="512" r="2.5" opacity="1"/>
+          </g>
+        </svg>`,
+        preview: 'linear-gradient(135deg, #4c1d95, #0284c7)'
+      },
+      {
+        id: 'spider-noir',
+        name: '4. Red Spider Noir',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
+          <rect width="1280" height="1024" fill="#080204"/>
+          <path d="M0,0 L640,512 L1280,0 M640,512 L640,1024 M0,1024 L640,512 L1280,1024" stroke="rgba(225, 29, 72, 0.4)" stroke-width="1.5" fill="none"/>
+          <polygon points="640,250 820,380 750,650 530,650 460,380" fill="none" stroke="#e11d48" stroke-width="2" opacity="0.6"/>
+          <polygon points="640,320 760,410 710,600 570,600 520,410" fill="none" stroke="#be123c" stroke-width="1.5" opacity="0.5"/>
+          <polygon points="640,390 710,450 680,560 600,560 570,450" fill="rgba(225, 29, 72, 0.15)" stroke="#9f1239" stroke-width="1.5"/>
+          <line x1="0" y1="512" x2="1280" y2="512" stroke="rgba(225, 29, 72, 0.25)"/>
+        </svg>`,
+        preview: 'linear-gradient(135deg, #881337, #090204)'
+      },
+      {
+        id: 'sunset-synth',
+        name: '5. Sunset Synthwave',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#180424"/>
+              <stop offset="45%" stop-color="#581c87"/>
+              <stop offset="65%" stop-color="#c2410c"/>
+              <stop offset="70%" stop-color="#f59e0b"/>
+            </linearGradient>
+            <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fde047"/>
+              <stop offset="100%" stop-color="#e11d48"/>
+            </linearGradient>
+          </defs>
+          <rect width="1280" height="700" fill="url(#skyGrad)"/>
+          <circle cx="640" cy="520" r="170" fill="url(#sunGrad)"/>
+          <rect x="450" y="470" width="380" height="6" fill="#581c87"/>
+          <rect x="460" y="490" width="360" height="9" fill="#581c87"/>
+          <rect x="475" y="515" width="330" height="13" fill="#581c87"/>
+          <rect x="495" y="545" width="290" height="18" fill="#581c87"/>
+          <rect y="700" width="1280" height="324" fill="#0a0112"/>
+          <g stroke="#d946ef" stroke-width="1" opacity="0.35">
+            <line x1="640" y1="700" x2="0" y2="1024"/>
+            <line x1="640" y1="700" x2="200" y2="1024"/>
+            <line x1="640" y1="700" x2="400" y2="1024"/>
+            <line x1="640" y1="700" x2="640" y2="1024"/>
+            <line x1="640" y1="700" x2="880" y2="1024"/>
+            <line x1="640" y1="700" x2="1080" y2="1024"/>
+            <line x1="640" y1="700" x2="1280" y2="1024"/>
+            <line x1="0" y1="730" x2="1280" y2="730"/>
+            <line x1="0" y1="780" x2="1280" y2="780"/>
+            <line x1="0" y1="850" x2="1280" y2="850"/>
+            <line x1="0" y1="940" x2="1280" y2="940"/>
+          </g>
+        </svg>`,
+        preview: 'linear-gradient(180deg, #180424, #f59e0b)'
+      },
+      {
+        id: 'aurora-borealis',
+        name: '6. Aurora Borealis',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
+          <defs>
+            <linearGradient id="auroraSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#020b14"/>
+              <stop offset="100%" stop-color="#041f2d"/>
+            </linearGradient>
+            <linearGradient id="auroraWave" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#10b981" stop-opacity="0.2"/>
+              <stop offset="50%" stop-color="#06b6d4" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+          <rect width="1280" height="1024" fill="url(#auroraSky)"/>
+          <path d="M-50,420 Q300,280 640,400 T1350,320 L1350,600 L-50,600 Z" fill="url(#auroraWave)" opacity="0.6"/>
+          <path d="M-50,360 Q400,220 800,340 T1350,260 L1350,550 L-50,550 Z" fill="url(#auroraWave)" opacity="0.4"/>
+          <circle cx="300" cy="150" r="1.5" fill="#fff" opacity="0.7"/>
+          <circle cx="700" cy="120" r="1.5" fill="#fff" opacity="0.8"/>
+          <circle cx="950" cy="180" r="1.2" fill="#fff" opacity="0.6"/>
+        </svg>`,
+        preview: 'linear-gradient(135deg, #020b14, #06b6d4)'
+      },
+      {
+        id: 'dark-obsidian',
+        name: '7. Dark Obsidian',
+        type: 'css',
+        css: 'radial-gradient(circle at 50% 40%, #1e2129 0%, #0d0e12 70%, #050608 100%)',
+        preview: '#111317'
+      },
+      {
+        id: 'bliss-remix',
+        name: '8. Bliss Modernized',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
+          <defs>
+            <linearGradient id="blissSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1e40af"/>
+              <stop offset="55%" stop-color="#60a5fa"/>
+              <stop offset="70%" stop-color="#93c5fd"/>
+            </linearGradient>
+            <linearGradient id="hill1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4ade80"/>
+              <stop offset="100%" stop-color="#15803d"/>
+            </linearGradient>
+            <linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#86efac"/>
+              <stop offset="100%" stop-color="#166534"/>
+            </linearGradient>
+          </defs>
+          <rect width="1280" height="1024" fill="url(#blissSky)"/>
+          <ellipse cx="400" cy="280" rx="140" ry="25" fill="#ffffff" opacity="0.7"/>
+          <ellipse cx="850" cy="340" rx="180" ry="30" fill="#ffffff" opacity="0.6"/>
+          <path d="M-50,680 Q350,560 750,660 T1350,620 L1350,1050 L-50,1050 Z" fill="url(#hill1)"/>
+          <path d="M-50,780 Q450,640 900,750 T1350,710 L1350,1050 L-50,1050 Z" fill="url(#hill2)"/>
+        </svg>`,
+        preview: 'linear-gradient(180deg, #1e40af, #22c55e)'
+      },
+      {
+        id: 'geometric-silk',
+        name: '9. Abstract Silk Waves',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
+          <defs>
+            <linearGradient id="silk1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1e1b4b"/>
+              <stop offset="50%" stop-color="#4338ca"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+          <rect width="1280" height="1024" fill="#090a12"/>
+          <path d="M-50,200 C300,500 700,100 1350,400 L1350,1050 L-50,1050 Z" fill="url(#silk1)" opacity="0.75"/>
+          <path d="M-50,450 C400,200 800,600 1350,300 L1350,1050 L-50,1050 Z" fill="#0f172a" opacity="0.6"/>
+        </svg>`,
+        preview: 'linear-gradient(135deg, #1e1b4b, #06b6d4)'
+      },
+      {
+        id: 'motion-velocity',
+        name: '10. Motion Velocity',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
+          <defs>
+            <linearGradient id="velBeam" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8"/>
+              <stop offset="60%" stop-color="#f59e0b" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <rect width="1280" height="1024" fill="#050811"/>
+          <polygon points="0,1024 1280,0 1280,300 0,1024" fill="url(#velBeam)"/>
+          <polygon points="0,850 1280,100 1280,200 0,950" fill="#38bdf8" opacity="0.3"/>
+          <polygon points="0,980 900,0 1100,0 0,1024" fill="#fbbf24" opacity="0.2"/>
+        </svg>`,
+        preview: 'linear-gradient(135deg, #0284c7, #f59e0b)'
+      },
+      {
+        id: 'monochrome-studio',
+        name: '11. Studio Charcoal',
+        type: 'css',
+        css: 'radial-gradient(circle at 50% 50%, #27272a 0%, #18181b 60%, #09090b 100%)',
+        preview: '#27272a'
+      },
+      {
+        id: 'abyssal-cyan',
+        name: '12. Deep Ocean Trench',
+        type: 'svg',
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
+          <defs>
+            <linearGradient id="abyss" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0e7490"/>
+              <stop offset="40%" stop-color="#083344"/>
+              <stop offset="100%" stop-color="#02080d"/>
+            </linearGradient>
+          </defs>
+          <rect width="1280" height="1024" fill="url(#abyss)"/>
+          <polygon points="400,0 480,0 560,1024 320,1024" fill="#22d3ee" opacity="0.08"/>
+          <polygon points="620,0 720,0 900,1024 740,1024" fill="#22d3ee" opacity="0.06"/>
+          <polygon points="800,0 870,0 1150,1024 950,1024" fill="#22d3ee" opacity="0.07"/>
+        </svg>`,
+        preview: 'linear-gradient(180deg, #0e7490, #02080d)'
+      }
+    ];
+
+    /* ─── 3. PRESET ACCENT COLORS ─── */
+    const ACCENT_PRESETS = [
+      { name: 'Cyan Glow', hex: '#00f2fe' },
+      { name: 'Classic Navy', hex: '#000080' },
+      { name: 'Emerald', hex: '#10b981' },
+      { name: 'Crimson', hex: '#ef4444' },
+      { name: 'Royal Violet', hex: '#8b5cf6' },
+      { name: 'Amber Gold', hex: '#f59e0b' },
+      { name: 'Fuchsia Pink', hex: '#ec4899' },
+      { name: 'Modern Slate', hex: '#64748b' },
+      { name: 'Neon Lime', hex: '#22c55e' },
+      { name: 'Synthwave Orange', hex: '#f97316' }
+    ];
+
+    /* ─── 4. STATE & PERSISTENCE ─── */
+    let currentThemeId = 'classic';
+    let currentWallpaperId = 'classic-teal';
+    let currentWallpaperFit = 'cover';
+    let currentAccent = '#000080';
+    let slideshowIntervalMin = 0;
+    let slideshowTimer = null;
+
+    // LocalStorage helper with safe try/catch
+    function saveSetting(key, val) {
+      try {
+        localStorage.setItem('antriksh_os_' + key, JSON.stringify(val));
+      } catch (e) {
+        console.warn('LocalStorage save failed:', e);
+      }
     }
 
-    // Close Start Menu when clicking desktop
-    document.addEventListener('click', (e) => {
-      const menu = document.getElementById('startMenu');
-      const btn = document.getElementById('startBtn');
-      if (!menu.contains(e.target) && !btn.contains(e.target)) {
-        menu.classList.remove('active');
-        btn.classList.remove('active');
+    function loadSetting(key, fallback) {
+      try {
+        const item = localStorage.getItem('antriksh_os_' + key);
+        return item ? JSON.parse(item) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    /* ─── 5. THEME MANAGER ─── */
+    function setTheme(themeId) {
+      const theme = THEMES[themeId];
+      if (!theme) return;
+      currentThemeId = themeId;
+
+      // Update Body Class
+      document.body.className = theme.bodyClass;
+
+      // Update Start Button Text & Logo
+      document.getElementById('startBtnLogo').textContent = theme.startLogo;
+      document.getElementById('startBtnText').textContent = theme.startText;
+
+      // Toggle Theme-Specific Start Menu Elements
+      const win11Search = document.getElementById('win11SearchBox');
+      const win11Foot = document.getElementById('win11Footer');
+      if (win11Search) win11Search.style.display = (themeId === 'win11') ? 'block' : 'none';
+      if (win11Foot) win11Foot.style.display = (themeId === 'win11') ? 'flex' : 'none';
+
+      // Update Active Card in Personalize Window
+      document.querySelectorAll('.theme-card').forEach(card => card.classList.remove('active'));
+      const activeCard = document.getElementById('card-theme-' + themeId);
+      if (activeCard) activeCard.classList.add('active');
+
+      saveSetting('theme', themeId);
+    }
+
+    /* ─── 6. WALLPAPER CHANGER & DUAL-LAYER CROSSFADE ─── */
+    function getWallpaperBackgroundCss(wp) {
+      if (!wp) return 'background: #1d2e2f;';
+      if (wp.type === 'css') {
+        return wp.css;
+      } else if (wp.type === 'svg') {
+        const encoded = encodeURIComponent(wp.svg.trim().replace(/[\r\n\t]/g, ' '));
+        return `url("data:image/svg+xml;utf8,${encoded}")`;
+      } else if (wp.type === 'image') {
+        return `url("${wp.url}")`;
+      }
+      return '#1d2e2f';
+    }
+
+    function setWallpaper(wpId, skipAnim = false) {
+      const wp = WALLPAPERS.find(w => w.id === wpId);
+      if (!wp) return;
+      currentWallpaperId = wpId;
+
+      const layerActive = document.getElementById('wallpaper-layer-active');
+      const layerNext = document.getElementById('wallpaper-layer-next');
+      const bgCss = getWallpaperBackgroundCss(wp);
+
+      if (skipAnim || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        layerActive.style.background = bgCss;
+        layerActive.style.opacity = '1';
+        layerNext.style.opacity = '0';
+      } else {
+        // Crossfade: set next layer, fade it in, then swap
+        layerNext.style.background = bgCss;
+        layerNext.style.opacity = '1';
+
+        setTimeout(() => {
+          layerActive.style.background = bgCss;
+          layerNext.style.opacity = '0';
+        }, 460);
+      }
+
+      // Update thumbnail active state
+      document.querySelectorAll('.wallpaper-thumb').forEach(t => t.classList.remove('active'));
+      const activeThumb = document.getElementById('thumb-' + wpId);
+      if (activeThumb) activeThumb.classList.add('active');
+
+      saveSetting('wallpaper', wpId);
+    }
+
+    function setSolidColor(hex) {
+      const customWp = {
+        id: 'solid-custom',
+        name: 'Solid Color (' + hex + ')',
+        type: 'css',
+        css: hex
+      };
+      const existing = WALLPAPERS.find(w => w.id === 'solid-custom');
+      if (existing) {
+        existing.css = hex;
+      } else {
+        WALLPAPERS.push(customWp);
+      }
+      setWallpaper('solid-custom');
+    }
+
+    function handleCustomWallpaperUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      // Validate image type & size (< 5MB)
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file (PNG, JPG, WebP).');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Image file is too large. Please select an image under 5 MB.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        const customUpload = {
+          id: 'custom-upload',
+          name: 'Custom: ' + file.name,
+          type: 'image',
+          url: dataUrl
+        };
+        const idx = WALLPAPERS.findIndex(w => w.id === 'custom-upload');
+        if (idx >= 0) {
+          WALLPAPERS[idx] = customUpload;
+        } else {
+          WALLPAPERS.push(customUpload);
+        }
+        setWallpaper('custom-upload');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function setWallpaperFit(fitMode) {
+      currentWallpaperFit = fitMode;
+      document.documentElement.style.setProperty('--wallpaper-fit', fitMode);
+      if (fitMode === 'repeat') {
+        document.documentElement.style.setProperty('--wallpaper-repeat', 'repeat');
+      } else {
+        document.documentElement.style.setProperty('--wallpaper-repeat', 'no-repeat');
+      }
+      saveSetting('fit', fitMode);
+    }
+
+    function setSlideshowInterval(minutes) {
+      slideshowIntervalMin = parseInt(minutes, 10);
+      if (slideshowTimer) clearInterval(slideshowTimer);
+
+      if (slideshowIntervalMin > 0) {
+        slideshowTimer = setInterval(() => {
+          const currentIdx = WALLPAPERS.findIndex(w => w.id === currentWallpaperId);
+          const nextIdx = (currentIdx + 1) % WALLPAPERS.length;
+          setWallpaper(WALLPAPERS[nextIdx].id);
+        }, slideshowIntervalMin * 60 * 1000);
+      }
+      saveSetting('slideshow', slideshowIntervalMin);
+    }
+
+    /* ─── 7. ACCENT COLOR MANAGER ─── */
+    function setAccentColor(hex) {
+      currentAccent = hex;
+      document.documentElement.style.setProperty('--accent', hex);
+      document.documentElement.style.setProperty('--accent-hover', hex);
+
+      // Derive light variant
+      document.documentElement.style.setProperty('--accent-light', hex + 'cc');
+
+      // Update color picker & hex display
+      const picker = document.getElementById('customAccentPicker');
+      const hexSpan = document.getElementById('customAccentHex');
+      if (picker) picker.value = hex;
+      if (hexSpan) hexSpan.textContent = hex.toUpperCase();
+
+      // Update swatch active state
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      const activeSwatch = document.querySelector(`.color-swatch[data-color="${hex}"]`);
+      if (activeSwatch) activeSwatch.classList.add('active');
+
+      saveSetting('accent', hex);
+    }
+
+    /* ─── 8. POPULATE SETTINGS WINDOW UI ─── */
+    function initPersonalizationWindow() {
+      // 1. Populate Wallpaper Thumbnails
+      const thumbContainer = document.getElementById('wallpaperThumbnails');
+      thumbContainer.innerHTML = '';
+      WALLPAPERS.forEach(wp => {
+        const thumb = document.createElement('div');
+        thumb.className = 'wallpaper-thumb' + (wp.id === currentWallpaperId ? ' active' : '');
+        thumb.id = 'thumb-' + wp.id;
+        thumb.style.background = wp.preview || getWallpaperBackgroundCss(wp);
+        thumb.style.backgroundSize = 'cover';
+        thumb.onclick = () => setWallpaper(wp.id);
+
+        const label = document.createElement('div');
+        label.className = 'wallpaper-thumb-label';
+        label.textContent = wp.name;
+        thumb.appendChild(label);
+
+        thumbContainer.appendChild(thumb);
+      });
+
+      // 2. Populate Accent Color Swatches
+      const swatchContainer = document.getElementById('accentSwatches');
+      swatchContainer.innerHTML = '';
+      ACCENT_PRESETS.forEach(p => {
+        const swatch = document.createElement('div');
+        swatch.className = 'color-swatch' + (p.hex.toLowerCase() === currentAccent.toLowerCase() ? ' active' : '');
+        swatch.style.background = p.hex;
+        swatch.setAttribute('data-color', p.hex);
+        swatch.title = p.name;
+        swatch.onclick = () => setAccentColor(p.hex);
+        swatchContainer.appendChild(swatch);
+      });
+    }
+
+    function switchSettingsTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      const btn = document.getElementById('tab-btn-' + tabName);
+      const content = document.getElementById('tab-content-' + tabName);
+      if (btn) btn.classList.add('active');
+      if (content) content.classList.add('active');
+    }
+
+    /* ─── 9. RIGHT-CLICK DESKTOP CONTEXT MENU ─── */
+    const ctxMenu = document.getElementById('desktopContextMenu');
+
+    document.addEventListener('contextmenu', (e) => {
+      // If clicked on desktop or body (not inside a window or taskbar)
+      const isDesktop = e.target.id === 'desktop' || e.target.classList.contains('wallpaper-layer') || e.target === document.body;
+      if (isDesktop) {
+        e.preventDefault();
+        const menuWidth = 190;
+        const menuHeight = 180;
+        const x = Math.min(e.clientX, window.innerWidth - menuWidth - 4);
+        const y = Math.min(e.clientY, window.innerHeight - menuHeight - 38);
+
+        ctxMenu.style.left = Math.max(4, x) + 'px';
+        ctxMenu.style.top = Math.max(4, y) + 'px';
+        ctxMenu.style.display = 'block';
+      } else {
+        closeContextMenu();
       }
     });
 
-    // Window Management
+    function closeContextMenu() {
+      if (ctxMenu) ctxMenu.style.display = 'none';
+    }
+
+    document.addEventListener('click', (e) => {
+      if (ctxMenu && !ctxMenu.contains(e.target)) {
+        closeContextMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeContextMenu();
+    });
+
+    function refreshDesktop() {
+      const desktop = document.getElementById('desktop');
+      desktop.style.opacity = '0.4';
+      setTimeout(() => {
+        desktop.style.opacity = '1';
+      }, 180);
+    }
+
+    /* ─── 10. CV INTEGRATION: DESKTOP SHORTCUT & 3D PAPER ─── */
+    function openCVShortcut() {
+      // Broadcast openCV message to parent Three.js window to smoothly trigger paper lift
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'openCV' }, '*');
+      }
+      // Also open about window as safe local fallback
+      openWindow('win-about');
+    }
+
+    /* ─── 11. WINDOW MANAGER ─── */
     let highestZ = 100;
     const windowTitles = {
       'win-about': '📄 About Me.txt',
@@ -1003,7 +2768,9 @@
       'win-education': '🎓 Education',
       'win-attributes': '🌟 Attributes',
       'win-objective': '🎯 Career Objective',
-      'win-contact': '📞 Contact Info'
+      'win-contact': '📞 Contact Info',
+      'win-personalization': '⚙️ Settings — Personalization',
+      'win-display': '🖥️ Display Properties'
     };
 
     function bringToFront(id) {
@@ -1058,7 +2825,7 @@
         win.style.top = '0px';
         win.style.left = '0px';
         win.style.width = '100vw';
-        win.style.height = 'calc(100vh - 34px)';
+        win.style.height = `calc(100vh - var(--taskbar-height))`;
         win.dataset.maximized = 'true';
       }
     }
@@ -1086,7 +2853,7 @@
       });
     }
 
-    // Draggable Windows
+    /* ─── 12. DRAGGABLE WINDOWS ─── */
     let dragEl = null;
     let dragOffsetX = 0;
     let dragOffsetY = 0;
@@ -1113,12 +2880,40 @@
       document.removeEventListener('mouseup', stopDrag);
     }
 
-    // Window focus on click
     document.querySelectorAll('.window').forEach(win => {
       win.addEventListener('mousedown', () => bringToFront(win.id));
     });
 
-    // Bubble mouse events to parent Three.js scene so 3D camera tracks correctly
+    /* ─── 13. CLOCK & START MENU TOGGLE ─── */
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      const clockEl = document.getElementById('trayClock');
+      if (clockEl) clockEl.textContent = `${hours}:${minutes} ${ampm}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleStartMenu() {
+      const menu = document.getElementById('startMenu');
+      const btn = document.getElementById('startBtn');
+      menu.classList.toggle('active');
+      btn.classList.toggle('active');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('startMenu');
+      const btn = document.getElementById('startBtn');
+      if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('active');
+        btn.classList.remove('active');
+      }
+    });
+
+    /* ─── 14. EVENT SYNCHRONIZATION WITH 3D SCENE ─── */
     document.addEventListener('mousemove', (e) => {
       if (window.parent && window.parent !== window) {
         window.parent.postMessage({
@@ -1147,9 +2942,30 @@
       }
     });
 
-    // Initialize taskbar on load
-    updateTaskbar();
+    /* ─── 15. RESTORE PERSISTED STATE ON LOAD ─── */
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = loadSetting('theme', 'classic');
+      const savedWallpaper = loadSetting('wallpaper', 'classic-teal');
+      const savedFit = loadSetting('fit', 'cover');
+      const savedAccent = loadSetting('accent', '#000080');
+      const savedSlideshow = loadSetting('slideshow', 0);
+
+      // Apply saved values
+      setTheme(savedTheme);
+      setWallpaperFit(savedFit);
+      setAccentColor(savedAccent);
+      setWallpaper(savedWallpaper, true);
+
+      const fitSelect = document.getElementById('wallpaperFitSelect');
+      if (fitSelect) fitSelect.value = savedFit;
+
+      const slideSelect = document.getElementById('slideshowSelect');
+      if (slideSelect) slideSelect.value = savedSlideshow;
+      if (savedSlideshow > 0) setSlideshowInterval(savedSlideshow);
+
+      initPersonalizationWindow();
+      updateTaskbar();
+    });
   </script>
 </body>
 </html>
-
