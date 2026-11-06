@@ -43,6 +43,7 @@ export default class World {
     update() {
         if (this.monitorScreen) this.monitorScreen.update();
         if (this.environment) this.environment.update();
+        if (this.decor) this.decor.update();
         if (this.coffeeSteam) this.coffeeSteam.update();
         if (this.audioManager) this.audioManager.update();
     }
