@@ -149,6 +149,13 @@ export default class MonitorScreen extends EventEmitter {
         iframe.onload = () => {
             if (iframe.contentWindow) {
                 window.addEventListener('message', (event) => {
+                    if (!event.data || typeof event.data.type !== 'string') return;
+
+                    if (event.data.type === 'openCV') {
+                        UIEventBus.dispatch('openCV', {});
+                        return;
+                    }
+
                     var evt = new CustomEvent(event.data.type, {
                         bubbles: true,
                         cancelable: false,
@@ -176,9 +183,6 @@ export default class MonitorScreen extends EventEmitter {
                     } else if (event.data.type === 'keyup') {
                         // @ts-ignore
                         evt.key = event.data.key;
-                    } else if (event.data.type === 'openCV') {
-                        UIEventBus.dispatch('openCV', {});
-                        return;
                     }
 
                     iframe.dispatchEvent(evt);

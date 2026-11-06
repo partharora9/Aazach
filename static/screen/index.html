@@ -16,12 +16,11 @@
        THEME DESIGN TOKENS (CSS VARIABLES)
        ═══════════════════════════════════════════════════════════════ */
     :root {
-      /* Shared Accent Defaults */
       --accent: #000080;
       --accent-light: #1084d0;
       --accent-hover: #1e90ff;
 
-      /* Classic Theme Defaults (Win95/98) */
+      /* Classic Theme (Win95/98) */
       --win-bg: #c0c0c0;
       --win-text: #000000;
       --win-border-light: #ffffff;
@@ -55,16 +54,16 @@
       --wallpaper-position: center;
     }
 
-    /* ─── THEME: WINDOWS 11 (Centered Mica / Acrylic) ─── */
+    /* ─── THEME: WINDOWS 11 (Centered Mica / Clean Dark) ─── */
     body.theme-win11 {
       --font-system: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      --win-bg: rgba(34, 36, 44, 0.94);
+      --win-bg: #22242c;
       --win-text: #ffffff;
       --win-border-light: rgba(255, 255, 255, 0.16);
       --win-border-dark: rgba(0, 0, 0, 0.35);
       --win-border-darkest: rgba(0, 0, 0, 0.5);
       --win-radius: 10px;
-      --win-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 1px rgba(255,255,255,0.2);
+      --win-shadow: 0 16px 48px rgba(0, 0, 0, 0.65), 0 0 1px rgba(255,255,255,0.25);
       --win-body-bg: #18191f;
       --win-body-text: #e4e4e7;
       --win-body-border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -72,14 +71,14 @@
       --win-body-border-right: none;
       --win-body-border-bottom: none;
 
-      --taskbar-bg: rgba(24, 25, 30, 0.82);
+      --taskbar-bg: #1c1d24;
       --taskbar-height: 44px;
       --taskbar-border: 1px solid rgba(255, 255, 255, 0.12);
 
-      --start-bg: rgba(28, 30, 38, 0.92);
+      --start-bg: #1f212a;
       --start-border: 1px solid rgba(255, 255, 255, 0.16);
       --start-radius: 12px;
-      --start-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      --start-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
     }
 
     /* ─── THEME: WINDOWS 10 (Modern Flat & Live Tiles) ─── */
@@ -99,11 +98,11 @@
       --win-body-border-right: none;
       --win-body-border-bottom: none;
 
-      --taskbar-bg: rgba(16, 16, 18, 0.96);
+      --taskbar-bg: #101014;
       --taskbar-height: 40px;
       --taskbar-border: 1px solid rgba(255, 255, 255, 0.08);
 
-      --start-bg: rgba(24, 24, 28, 0.96);
+      --start-bg: #18181c;
       --start-border: 1px solid rgba(255, 255, 255, 0.15);
       --start-radius: 0px;
       --start-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -112,9 +111,9 @@
     /* ─── THEME: WINDOWS 7 AERO (Glass Sheen) ─── */
     body.theme-win7 {
       --font-system: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      --win-bg: rgba(210, 225, 245, 0.88);
+      --win-bg: #dce7f5;
       --win-text: #0c1a30;
-      --win-border-light: rgba(255, 255, 255, 0.65);
+      --win-border-light: rgba(255, 255, 255, 0.8);
       --win-border-dark: rgba(30, 60, 100, 0.5);
       --win-border-darkest: rgba(10, 30, 60, 0.7);
       --win-radius: 8px 8px 4px 4px;
@@ -126,11 +125,11 @@
       --win-body-border-right: 1px solid #cbd5e1;
       --win-body-border-bottom: 1px solid #cbd5e1;
 
-      --taskbar-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(20, 50, 95, 0.8) 12%, rgba(10, 28, 55, 0.92) 100%);
+      --taskbar-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, #163661 14%, #0a1f3c 100%);
       --taskbar-height: 40px;
       --taskbar-border: 1px solid rgba(255, 255, 255, 0.45);
 
-      --start-bg: rgba(15, 32, 60, 0.92);
+      --start-bg: #102444;
       --start-border: 1px solid rgba(255, 255, 255, 0.4);
       --start-radius: 8px 8px 0 0;
       --start-shadow: 0 16px 40px rgba(0, 10, 30, 0.65);
@@ -158,6 +157,7 @@
       height: 100%;
       z-index: 0;
       overflow: hidden;
+      background-color: var(--desktop-bg);
     }
 
     .wallpaper-layer {
@@ -242,7 +242,6 @@
     .theme-win11 .desktop-icon:hover {
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(8px);
     }
 
     .theme-win7 .desktop-icon:hover {
@@ -298,9 +297,7 @@
 
     /* Win11 Window Chrome */
     .theme-win11 .window {
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
     }
 
     /* Win10 Window Chrome */
@@ -315,8 +312,6 @@
     /* Win7 Window Chrome */
     .theme-win7 .window {
       border: 1px solid rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
     }
 
     .window-titlebar {
@@ -339,13 +334,13 @@
     }
 
     .theme-win11 .window-titlebar {
-      background: transparent;
+      background: #20222a;
       color: #ffffff;
       padding: 8px 10px;
     }
 
     .theme-win11 .window:not(.active) .window-titlebar {
-      background: transparent;
+      background: #181920;
       color: #9ca3af;
     }
 
@@ -361,7 +356,7 @@
     }
 
     .theme-win7 .window-titlebar {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 45%, rgba(0, 0, 0, 0.12) 100%);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(200, 225, 255, 0.3) 45%, rgba(0, 0, 0, 0.12) 100%);
       color: #0c1a30;
       text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
       padding: 6px 10px;
@@ -573,7 +568,7 @@
     }
 
     .theme-win11 .item-card {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.08);
       color: #e4e4e7;
       border-radius: 6px;
@@ -693,8 +688,6 @@
       justify-content: var(--taskbar-justify);
       padding: 0 6px;
       z-index: 1000;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
     }
 
     /* Taskbar center group for Windows 11 */
@@ -758,7 +751,7 @@
     }
 
     .theme-win11 .start-btn:hover, .theme-win11 .start-btn.active {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.14);
     }
 
     /* Win10 Start Button */
@@ -876,7 +869,7 @@
     }
 
     .theme-win11 .task-item.active {
-      background: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.16);
     }
 
     .theme-win11 .task-item.active::after {
@@ -912,15 +905,15 @@
 
     /* Win7 Task Item */
     .theme-win7 .task-item {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
       border-radius: 4px;
       color: #ffffff;
       height: 30px;
     }
 
     .theme-win7 .task-item.active {
-      background: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.38);
       border-color: rgba(255, 255, 255, 0.6);
       box-shadow: 0 0 8px rgba(100, 180, 255, 0.5);
     }
@@ -1027,8 +1020,7 @@
       bottom: calc(var(--taskbar-height) + 10px);
       width: 440px;
       flex-direction: column;
-      backdrop-filter: blur(35px);
-      -webkit-backdrop-filter: blur(35px);
+      background: #1c1d25;
       border: var(--start-border);
       border-radius: var(--start-radius);
       color: #ffffff;
@@ -1088,7 +1080,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 12px 18px;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.3);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
@@ -1099,48 +1091,12 @@
       width: 480px;
       flex-direction: row;
       color: #ffffff;
-      background: rgba(20, 20, 24, 0.98);
+      background: #18181c;
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .theme-win10 .start-banner {
       display: none;
-    }
-
-    .theme-win10 .win10-left-pane {
-      width: 210px;
-      padding: 8px;
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .theme-win10 .win10-tiles-pane {
-      flex: 1;
-      padding: 10px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .win10-tile {
-      background: var(--accent);
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 72px;
-      cursor: pointer;
-      font-size: 11px;
-      color: #ffffff;
-      font-weight: 500;
-      transition: transform 0.1s;
-    }
-
-    .win10-tile:hover {
-      transform: scale(1.02);
-      filter: brightness(1.1);
     }
 
     /* Win7 Start Menu */
@@ -1149,35 +1105,13 @@
       bottom: var(--taskbar-height);
       width: 380px;
       flex-direction: row;
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+      background: #0f2240;
       border: 1px solid rgba(255, 255, 255, 0.45);
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
     }
 
     .theme-win7 .start-banner {
       display: none;
-    }
-
-    .theme-win7 .win7-left-pane {
-      width: 230px;
-      background: #ffffff;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      color: #1f2937;
-    }
-
-    .theme-win7 .win7-right-pane {
-      flex: 1;
-      background: rgba(15, 30, 55, 0.85);
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      color: #ffffff;
-      font-size: 11px;
     }
 
     /* ═══════════════════════════════════════════════════════════════
@@ -1202,8 +1136,7 @@
     .theme-win11 #desktopContextMenu {
       border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 8px;
-      background: rgba(30, 32, 40, 0.95);
-      backdrop-filter: blur(25px);
+      background: #232530;
       box-shadow: 0 12px 32px rgba(0,0,0,0.6);
       color: #ffffff;
       padding: 6px;
@@ -1921,7 +1854,7 @@
       <!-- TAB 1: THEMES -->
       <div class="tab-content active" id="tab-content-themes">
         <p style="margin-bottom: 12px; font-size: 11.5px; opacity: 0.85;">
-          Select a system theme to instantly transform the window chrome, taskbar, start menu, and typography:
+          Select a system theme to transform the window chrome, taskbar, start menu, and typography:
         </p>
         <div class="theme-grid">
           <!-- Theme 1: Win95 Classic -->
@@ -1941,7 +1874,7 @@
           <!-- Theme 2: Win7 Aero -->
           <div class="theme-card" id="card-theme-win7" onclick="setTheme('win7')">
             <div class="theme-card-preview" style="background:linear-gradient(135deg, #1e3a8a, #0369a1);">
-              <div style="height:14px; background:linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(200,225,255,0.3) 100%); color:#0f172a; font-size:8px; padding:1px 4px; border-radius:3px 3px 0 0; display:flex; justify-content:space-between;">
+              <div style="height:14px; background:linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(200,225,255,0.4) 100%); color:#0f172a; font-size:8px; padding:1px 4px; border-radius:3px 3px 0 0; display:flex; justify-content:space-between;">
                 <span>Aero Glass</span><span style="color:#ef4444;">✕</span>
               </div>
               <div style="height:12px; background:linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(10,30,60,0.8) 100%); font-size:8px; display:flex; align-items:center; padding:0 4px; color:#fff;">
@@ -1949,7 +1882,7 @@
               </div>
             </div>
             <h4 style="font-size:12px; margin-bottom:2px;">Windows 7 Aero</h4>
-            <p style="font-size:10.5px; opacity:0.8;">Aero Glass translucency, start orb, and glossy title bar reflections.</p>
+            <p style="font-size:10.5px; opacity:0.8;">Aero Glass style, start orb, and glossy title bar reflections.</p>
           </div>
 
           <!-- Theme 3: Win10 Modern -->
@@ -1969,15 +1902,15 @@
           <!-- Theme 4: Win11 Centered -->
           <div class="theme-card" id="card-theme-win11" onclick="setTheme('win11')">
             <div class="theme-card-preview" style="background:linear-gradient(135deg, #181920, #272730);">
-              <div style="height:14px; background:rgba(255,255,255,0.08); color:#fff; font-size:8px; padding:1px 6px; border-radius:5px 5px 0 0; display:flex; justify-content:space-between;">
+              <div style="height:14px; background:#20222a; color:#fff; font-size:8px; padding:1px 6px; border-radius:5px 5px 0 0; display:flex; justify-content:space-between;">
                 <span>Windows 11</span><span>✕</span>
               </div>
-              <div style="height:12px; background:rgba(30,30,35,0.9); border-radius:4px; font-size:8px; display:flex; align-items:center; justify-content:center; gap:4px; color:#fff;">
+              <div style="height:12px; background:#1c1d25; border-radius:4px; font-size:8px; display:flex; align-items:center; justify-content:center; gap:4px; color:#fff;">
                 <span>🪟</span><span>📁</span><span>⚙️</span>
               </div>
             </div>
             <h4 style="font-size:12px; margin-bottom:2px;">Windows 11</h4>
-            <p style="font-size:10.5px; opacity:0.8;">Centered taskbar icons, acrylic mica materials, and rounded corners.</p>
+            <p style="font-size:10.5px; opacity:0.8;">Centered taskbar icons, clean dark acrylic styling, and rounded corners.</p>
           </div>
         </div>
       </div>
@@ -2204,247 +2137,78 @@
       }
     };
 
-    /* ─── 2. EXTENSIBLE 12 ORIGINAL HD SVG/CSS WALLPAPERS ─── */
+    /* ─── 2. 12 ORIGINAL HIGH-PERFORMANCE PURE-CSS WALLPAPERS ─── */
     const WALLPAPERS = [
       {
         id: 'classic-teal',
         name: '1. Classic Teal (95)',
-        type: 'css',
         css: 'linear-gradient(135deg, #1d2e2f 0%, #152223 100%)',
         preview: '#1d2e2f'
       },
       {
         id: 'cyber-soc',
         name: '2. Cyber SOC Matrix',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024" viewBox="0 0 1280 1024">
-          <defs>
-            <radialGradient id="socRad" cx="50%" cy="50%" r="60%">
-              <stop offset="0%" stop-color="#0b1b2b"/>
-              <stop offset="100%" stop-color="#030710"/>
-            </radialGradient>
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0, 242, 254, 0.12)" stroke-width="1"/>
-            </pattern>
-          </defs>
-          <rect width="1280" height="1024" fill="url(#socRad)"/>
-          <rect width="1280" height="1024" fill="url(#grid)"/>
-          <circle cx="640" cy="512" r="320" fill="none" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1.5"/>
-          <circle cx="640" cy="512" r="220" fill="none" stroke="rgba(0, 242, 254, 0.25)" stroke-dasharray="8 6"/>
-          <circle cx="640" cy="512" r="100" fill="none" stroke="rgba(0, 242, 254, 0.35)" stroke-width="2"/>
-          <line x1="640" y1="100" x2="640" y2="924" stroke="rgba(0, 242, 254, 0.15)"/>
-          <line x1="100" y1="512" x2="1180" y2="512" stroke="rgba(0, 242, 254, 0.15)"/>
-          <text x="640" y="505" fill="#00f2fe" font-family="monospace" font-size="12" letter-spacing="4" text-anchor="middle" opacity="0.7">ANTRIKSH // SOC TELEMETRY MATRIX</text>
-          <text x="640" y="525" fill="#38bdf8" font-family="monospace" font-size="10" letter-spacing="2" text-anchor="middle" opacity="0.5">[ 28°34' N  77°13' E // DEFENSE SECURE ]</text>
-        </svg>`,
+        css: 'linear-gradient(rgba(0, 242, 254, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 242, 254, 0.12) 1px, transparent 1px), radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.22) 0%, rgba(7, 14, 26, 0.98) 72%)',
         preview: 'linear-gradient(135deg, #0b1b2b, #030710)'
       },
       {
         id: 'cosmic-nebula',
         name: '3. Cosmic Nebula',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
-          <defs>
-            <radialGradient id="neb1" cx="30%" cy="40%" r="55%">
-              <stop offset="0%" stop-color="#4c1d95" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#050510" stop-opacity="0"/>
-            </radialGradient>
-            <radialGradient id="neb2" cx="70%" cy="65%" r="60%">
-              <stop offset="0%" stop-color="#0284c7" stop-opacity="0.7"/>
-              <stop offset="100%" stop-color="#050510" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <rect width="1280" height="1024" fill="#04040c"/>
-          <rect width="1280" height="1024" fill="url(#neb1)"/>
-          <rect width="1280" height="1024" fill="url(#neb2)"/>
-          <g fill="#ffffff">
-            <circle cx="200" cy="180" r="1.5" opacity="0.8"/>
-            <circle cx="450" cy="320" r="1.2" opacity="0.6"/>
-            <circle cx="850" cy="220" r="2" opacity="0.9"/>
-            <circle cx="1050" cy="480" r="1.5" opacity="0.7"/>
-            <circle cx="720" cy="780" r="1.8" opacity="0.8"/>
-            <circle cx="340" cy="820" r="1.2" opacity="0.5"/>
-            <circle cx="950" cy="860" r="1.5" opacity="0.7"/>
-            <circle cx="640" cy="512" r="2.5" opacity="1"/>
-          </g>
-        </svg>`,
+        css: 'radial-gradient(circle at 25% 35%, rgba(124, 58, 237, 0.75) 0%, transparent 60%), radial-gradient(circle at 75% 65%, rgba(2, 132, 199, 0.65) 0%, transparent 55%), radial-gradient(circle at 50% 50%, #04040c 0%, #020206 100%)',
         preview: 'linear-gradient(135deg, #4c1d95, #0284c7)'
       },
       {
         id: 'spider-noir',
         name: '4. Red Spider Noir',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
-          <rect width="1280" height="1024" fill="#080204"/>
-          <path d="M0,0 L640,512 L1280,0 M640,512 L640,1024 M0,1024 L640,512 L1280,1024" stroke="rgba(225, 29, 72, 0.4)" stroke-width="1.5" fill="none"/>
-          <polygon points="640,250 820,380 750,650 530,650 460,380" fill="none" stroke="#e11d48" stroke-width="2" opacity="0.6"/>
-          <polygon points="640,320 760,410 710,600 570,600 520,410" fill="none" stroke="#be123c" stroke-width="1.5" opacity="0.5"/>
-          <polygon points="640,390 710,450 680,560 600,560 570,450" fill="rgba(225, 29, 72, 0.15)" stroke="#9f1239" stroke-width="1.5"/>
-          <line x1="0" y1="512" x2="1280" y2="512" stroke="rgba(225, 29, 72, 0.25)"/>
-        </svg>`,
+        css: 'radial-gradient(circle at 50% 50%, rgba(225, 29, 72, 0.3) 0%, transparent 70%), linear-gradient(135deg, #090204 0%, #1c050a 50%, #050102 100%)',
         preview: 'linear-gradient(135deg, #881337, #090204)'
       },
       {
         id: 'sunset-synth',
         name: '5. Sunset Synthwave',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
-          <defs>
-            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#180424"/>
-              <stop offset="45%" stop-color="#581c87"/>
-              <stop offset="65%" stop-color="#c2410c"/>
-              <stop offset="70%" stop-color="#f59e0b"/>
-            </linearGradient>
-            <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#fde047"/>
-              <stop offset="100%" stop-color="#e11d48"/>
-            </linearGradient>
-          </defs>
-          <rect width="1280" height="700" fill="url(#skyGrad)"/>
-          <circle cx="640" cy="520" r="170" fill="url(#sunGrad)"/>
-          <rect x="450" y="470" width="380" height="6" fill="#581c87"/>
-          <rect x="460" y="490" width="360" height="9" fill="#581c87"/>
-          <rect x="475" y="515" width="330" height="13" fill="#581c87"/>
-          <rect x="495" y="545" width="290" height="18" fill="#581c87"/>
-          <rect y="700" width="1280" height="324" fill="#0a0112"/>
-          <g stroke="#d946ef" stroke-width="1" opacity="0.35">
-            <line x1="640" y1="700" x2="0" y2="1024"/>
-            <line x1="640" y1="700" x2="200" y2="1024"/>
-            <line x1="640" y1="700" x2="400" y2="1024"/>
-            <line x1="640" y1="700" x2="640" y2="1024"/>
-            <line x1="640" y1="700" x2="880" y2="1024"/>
-            <line x1="640" y1="700" x2="1080" y2="1024"/>
-            <line x1="640" y1="700" x2="1280" y2="1024"/>
-            <line x1="0" y1="730" x2="1280" y2="730"/>
-            <line x1="0" y1="780" x2="1280" y2="780"/>
-            <line x1="0" y1="850" x2="1280" y2="850"/>
-            <line x1="0" y1="940" x2="1280" y2="940"/>
-          </g>
-        </svg>`,
+        css: 'linear-gradient(180deg, #180424 0%, #4a044e 35%, #701a75 55%, #c2410c 72%, #f59e0b 78%, #0a0112 78%, #050009 100%)',
         preview: 'linear-gradient(180deg, #180424, #f59e0b)'
       },
       {
         id: 'aurora-borealis',
         name: '6. Aurora Borealis',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
-          <defs>
-            <linearGradient id="auroraSky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#020b14"/>
-              <stop offset="100%" stop-color="#041f2d"/>
-            </linearGradient>
-            <linearGradient id="auroraWave" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#10b981" stop-opacity="0.2"/>
-              <stop offset="50%" stop-color="#06b6d4" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.3"/>
-            </linearGradient>
-          </defs>
-          <rect width="1280" height="1024" fill="url(#auroraSky)"/>
-          <path d="M-50,420 Q300,280 640,400 T1350,320 L1350,600 L-50,600 Z" fill="url(#auroraWave)" opacity="0.6"/>
-          <path d="M-50,360 Q400,220 800,340 T1350,260 L1350,550 L-50,550 Z" fill="url(#auroraWave)" opacity="0.4"/>
-          <circle cx="300" cy="150" r="1.5" fill="#fff" opacity="0.7"/>
-          <circle cx="700" cy="120" r="1.5" fill="#fff" opacity="0.8"/>
-          <circle cx="950" cy="180" r="1.2" fill="#fff" opacity="0.6"/>
-        </svg>`,
+        css: 'radial-gradient(ellipse at 40% 40%, rgba(16, 185, 129, 0.55) 0%, transparent 60%), radial-gradient(ellipse at 70% 30%, rgba(6, 182, 212, 0.65) 0%, transparent 55%), linear-gradient(180deg, #020b14 0%, #041f2d 100%)',
         preview: 'linear-gradient(135deg, #020b14, #06b6d4)'
       },
       {
         id: 'dark-obsidian',
         name: '7. Dark Obsidian',
-        type: 'css',
         css: 'radial-gradient(circle at 50% 40%, #1e2129 0%, #0d0e12 70%, #050608 100%)',
         preview: '#111317'
       },
       {
         id: 'bliss-remix',
         name: '8. Bliss Modernized',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
-          <defs>
-            <linearGradient id="blissSky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#1e40af"/>
-              <stop offset="55%" stop-color="#60a5fa"/>
-              <stop offset="70%" stop-color="#93c5fd"/>
-            </linearGradient>
-            <linearGradient id="hill1" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#4ade80"/>
-              <stop offset="100%" stop-color="#15803d"/>
-            </linearGradient>
-            <linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#86efac"/>
-              <stop offset="100%" stop-color="#166534"/>
-            </linearGradient>
-          </defs>
-          <rect width="1280" height="1024" fill="url(#blissSky)"/>
-          <ellipse cx="400" cy="280" rx="140" ry="25" fill="#ffffff" opacity="0.7"/>
-          <ellipse cx="850" cy="340" rx="180" ry="30" fill="#ffffff" opacity="0.6"/>
-          <path d="M-50,680 Q350,560 750,660 T1350,620 L1350,1050 L-50,1050 Z" fill="url(#hill1)"/>
-          <path d="M-50,780 Q450,640 900,750 T1350,710 L1350,1050 L-50,1050 Z" fill="url(#hill2)"/>
-        </svg>`,
+        css: 'linear-gradient(180deg, #1e40af 0%, #3b82f6 35%, #93c5fd 60%, #4ade80 60%, #15803d 85%, #14532d 100%)',
         preview: 'linear-gradient(180deg, #1e40af, #22c55e)'
       },
       {
         id: 'geometric-silk',
         name: '9. Abstract Silk Waves',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
-          <defs>
-            <linearGradient id="silk1" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#1e1b4b"/>
-              <stop offset="50%" stop-color="#4338ca"/>
-              <stop offset="100%" stop-color="#06b6d4"/>
-            </linearGradient>
-          </defs>
-          <rect width="1280" height="1024" fill="#090a12"/>
-          <path d="M-50,200 C300,500 700,100 1350,400 L1350,1050 L-50,1050 Z" fill="url(#silk1)" opacity="0.75"/>
-          <path d="M-50,450 C400,200 800,600 1350,300 L1350,1050 L-50,1050 Z" fill="#0f172a" opacity="0.6"/>
-        </svg>`,
+        css: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #4338ca 65%, #06b6d4 100%)',
         preview: 'linear-gradient(135deg, #1e1b4b, #06b6d4)'
       },
       {
         id: 'motion-velocity',
         name: '10. Motion Velocity',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
-          <defs>
-            <linearGradient id="velBeam" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8"/>
-              <stop offset="60%" stop-color="#f59e0b" stop-opacity="0.6"/>
-              <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <rect width="1280" height="1024" fill="#050811"/>
-          <polygon points="0,1024 1280,0 1280,300 0,1024" fill="url(#velBeam)"/>
-          <polygon points="0,850 1280,100 1280,200 0,950" fill="#38bdf8" opacity="0.3"/>
-          <polygon points="0,980 900,0 1100,0 0,1024" fill="#fbbf24" opacity="0.2"/>
-        </svg>`,
+        css: 'linear-gradient(125deg, #050811 0%, #0f172a 40%, #0284c7 70%, #f59e0b 92%, #ef4444 100%)',
         preview: 'linear-gradient(135deg, #0284c7, #f59e0b)'
       },
       {
         id: 'monochrome-studio',
         name: '11. Studio Charcoal',
-        type: 'css',
         css: 'radial-gradient(circle at 50% 50%, #27272a 0%, #18181b 60%, #09090b 100%)',
         preview: '#27272a'
       },
       {
         id: 'abyssal-cyan',
         name: '12. Deep Ocean Trench',
-        type: 'svg',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1024">
-          <defs>
-            <linearGradient id="abyss" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#0e7490"/>
-              <stop offset="40%" stop-color="#083344"/>
-              <stop offset="100%" stop-color="#02080d"/>
-            </linearGradient>
-          </defs>
-          <rect width="1280" height="1024" fill="url(#abyss)"/>
-          <polygon points="400,0 480,0 560,1024 320,1024" fill="#22d3ee" opacity="0.08"/>
-          <polygon points="620,0 720,0 900,1024 740,1024" fill="#22d3ee" opacity="0.06"/>
-          <polygon points="800,0 870,0 1150,1024 950,1024" fill="#22d3ee" opacity="0.07"/>
-        </svg>`,
+        css: 'radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.4) 0%, transparent 60%), linear-gradient(180deg, #083344 0%, #02080d 100%)',
         preview: 'linear-gradient(180deg, #0e7490, #02080d)'
       }
     ];
@@ -2471,12 +2235,11 @@
     let slideshowIntervalMin = 0;
     let slideshowTimer = null;
 
-    // LocalStorage helper with safe try/catch
     function saveSetting(key, val) {
       try {
         localStorage.setItem('antriksh_os_' + key, JSON.stringify(val));
       } catch (e) {
-        console.warn('LocalStorage save failed:', e);
+        // Safe catch for restricted browser contexts
       }
     }
 
@@ -2495,20 +2258,18 @@
       if (!theme) return;
       currentThemeId = themeId;
 
-      // Update Body Class
       document.body.className = theme.bodyClass;
 
-      // Update Start Button Text & Logo
-      document.getElementById('startBtnLogo').textContent = theme.startLogo;
-      document.getElementById('startBtnText').textContent = theme.startText;
+      const logoEl = document.getElementById('startBtnLogo');
+      const textEl = document.getElementById('startBtnText');
+      if (logoEl) logoEl.textContent = theme.startLogo;
+      if (textEl) textEl.textContent = theme.startText;
 
-      // Toggle Theme-Specific Start Menu Elements
       const win11Search = document.getElementById('win11SearchBox');
       const win11Foot = document.getElementById('win11Footer');
       if (win11Search) win11Search.style.display = (themeId === 'win11') ? 'block' : 'none';
       if (win11Foot) win11Foot.style.display = (themeId === 'win11') ? 'flex' : 'none';
 
-      // Update Active Card in Personalize Window
       document.querySelectorAll('.theme-card').forEach(card => card.classList.remove('active'));
       const activeCard = document.getElementById('card-theme-' + themeId);
       if (activeCard) activeCard.classList.add('active');
@@ -2518,16 +2279,10 @@
 
     /* ─── 6. WALLPAPER CHANGER & DUAL-LAYER CROSSFADE ─── */
     function getWallpaperBackgroundCss(wp) {
-      if (!wp) return 'background: #1d2e2f;';
-      if (wp.type === 'css') {
-        return wp.css;
-      } else if (wp.type === 'svg') {
-        const encoded = encodeURIComponent(wp.svg.trim().replace(/[\r\n\t]/g, ' '));
-        return `url("data:image/svg+xml;utf8,${encoded}")`;
-      } else if (wp.type === 'image') {
-        return `url("${wp.url}")`;
-      }
-      return '#1d2e2f';
+      if (!wp) return 'linear-gradient(135deg, #1d2e2f 0%, #152223 100%)';
+      if (wp.css) return wp.css;
+      if (wp.url) return `url("${wp.url}")`;
+      return 'linear-gradient(135deg, #1d2e2f 0%, #152223 100%)';
     }
 
     function setWallpaper(wpId, skipAnim = false) {
@@ -2537,6 +2292,8 @@
 
       const layerActive = document.getElementById('wallpaper-layer-active');
       const layerNext = document.getElementById('wallpaper-layer-next');
+      if (!layerActive || !layerNext) return;
+
       const bgCss = getWallpaperBackgroundCss(wp);
 
       if (skipAnim || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -2544,7 +2301,6 @@
         layerActive.style.opacity = '1';
         layerNext.style.opacity = '0';
       } else {
-        // Crossfade: set next layer, fade it in, then swap
         layerNext.style.background = bgCss;
         layerNext.style.opacity = '1';
 
@@ -2554,7 +2310,6 @@
         }, 460);
       }
 
-      // Update thumbnail active state
       document.querySelectorAll('.wallpaper-thumb').forEach(t => t.classList.remove('active'));
       const activeThumb = document.getElementById('thumb-' + wpId);
       if (activeThumb) activeThumb.classList.add('active');
@@ -2566,12 +2321,13 @@
       const customWp = {
         id: 'solid-custom',
         name: 'Solid Color (' + hex + ')',
-        type: 'css',
-        css: hex
+        css: hex,
+        preview: hex
       };
       const existing = WALLPAPERS.find(w => w.id === 'solid-custom');
       if (existing) {
         existing.css = hex;
+        existing.preview = hex;
       } else {
         WALLPAPERS.push(customWp);
       }
@@ -2582,7 +2338,6 @@
       const file = e.target.files && e.target.files[0];
       if (!file) return;
 
-      // Validate image type & size (< 5MB)
       if (!file.type.startsWith('image/')) {
         alert('Please select a valid image file (PNG, JPG, WebP).');
         return;
@@ -2598,8 +2353,8 @@
         const customUpload = {
           id: 'custom-upload',
           name: 'Custom: ' + file.name,
-          type: 'image',
-          url: dataUrl
+          url: dataUrl,
+          preview: dataUrl
         };
         const idx = WALLPAPERS.findIndex(w => w.id === 'custom-upload');
         if (idx >= 0) {
@@ -2642,17 +2397,13 @@
       currentAccent = hex;
       document.documentElement.style.setProperty('--accent', hex);
       document.documentElement.style.setProperty('--accent-hover', hex);
-
-      // Derive light variant
       document.documentElement.style.setProperty('--accent-light', hex + 'cc');
 
-      // Update color picker & hex display
       const picker = document.getElementById('customAccentPicker');
       const hexSpan = document.getElementById('customAccentHex');
       if (picker) picker.value = hex;
       if (hexSpan) hexSpan.textContent = hex.toUpperCase();
 
-      // Update swatch active state
       document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
       const activeSwatch = document.querySelector(`.color-swatch[data-color="${hex}"]`);
       if (activeSwatch) activeSwatch.classList.add('active');
@@ -2662,37 +2413,38 @@
 
     /* ─── 8. POPULATE SETTINGS WINDOW UI ─── */
     function initPersonalizationWindow() {
-      // 1. Populate Wallpaper Thumbnails
       const thumbContainer = document.getElementById('wallpaperThumbnails');
-      thumbContainer.innerHTML = '';
-      WALLPAPERS.forEach(wp => {
-        const thumb = document.createElement('div');
-        thumb.className = 'wallpaper-thumb' + (wp.id === currentWallpaperId ? ' active' : '');
-        thumb.id = 'thumb-' + wp.id;
-        thumb.style.background = wp.preview || getWallpaperBackgroundCss(wp);
-        thumb.style.backgroundSize = 'cover';
-        thumb.onclick = () => setWallpaper(wp.id);
+      if (thumbContainer) {
+        thumbContainer.innerHTML = '';
+        WALLPAPERS.forEach(wp => {
+          const thumb = document.createElement('div');
+          thumb.className = 'wallpaper-thumb' + (wp.id === currentWallpaperId ? ' active' : '');
+          thumb.id = 'thumb-' + wp.id;
+          thumb.style.background = wp.preview || wp.css || '#1d2e2f';
+          thumb.onclick = () => setWallpaper(wp.id);
 
-        const label = document.createElement('div');
-        label.className = 'wallpaper-thumb-label';
-        label.textContent = wp.name;
-        thumb.appendChild(label);
+          const label = document.createElement('div');
+          label.className = 'wallpaper-thumb-label';
+          label.textContent = wp.name;
+          thumb.appendChild(label);
 
-        thumbContainer.appendChild(thumb);
-      });
+          thumbContainer.appendChild(thumb);
+        });
+      }
 
-      // 2. Populate Accent Color Swatches
       const swatchContainer = document.getElementById('accentSwatches');
-      swatchContainer.innerHTML = '';
-      ACCENT_PRESETS.forEach(p => {
-        const swatch = document.createElement('div');
-        swatch.className = 'color-swatch' + (p.hex.toLowerCase() === currentAccent.toLowerCase() ? ' active' : '');
-        swatch.style.background = p.hex;
-        swatch.setAttribute('data-color', p.hex);
-        swatch.title = p.name;
-        swatch.onclick = () => setAccentColor(p.hex);
-        swatchContainer.appendChild(swatch);
-      });
+      if (swatchContainer) {
+        swatchContainer.innerHTML = '';
+        ACCENT_PRESETS.forEach(p => {
+          const swatch = document.createElement('div');
+          swatch.className = 'color-swatch' + (p.hex.toLowerCase() === currentAccent.toLowerCase() ? ' active' : '');
+          swatch.style.background = p.hex;
+          swatch.setAttribute('data-color', p.hex);
+          swatch.title = p.name;
+          swatch.onclick = () => setAccentColor(p.hex);
+          swatchContainer.appendChild(swatch);
+        });
+      }
     }
 
     function switchSettingsTab(tabName) {
@@ -2709,7 +2461,6 @@
     const ctxMenu = document.getElementById('desktopContextMenu');
 
     document.addEventListener('contextmenu', (e) => {
-      // If clicked on desktop or body (not inside a window or taskbar)
       const isDesktop = e.target.id === 'desktop' || e.target.classList.contains('wallpaper-layer') || e.target === document.body;
       if (isDesktop) {
         e.preventDefault();
@@ -2742,6 +2493,7 @@
 
     function refreshDesktop() {
       const desktop = document.getElementById('desktop');
+      if (!desktop) return;
       desktop.style.opacity = '0.4';
       setTimeout(() => {
         desktop.style.opacity = '1';
@@ -2750,11 +2502,9 @@
 
     /* ─── 10. CV INTEGRATION: DESKTOP SHORTCUT & 3D PAPER ─── */
     function openCVShortcut() {
-      // Broadcast openCV message to parent Three.js window to smoothly trigger paper lift
       if (window.parent && window.parent !== window) {
         window.parent.postMessage({ type: 'openCV' }, '*');
       }
-      // Also open about window as safe local fallback
       openWindow('win-about');
     }
 
@@ -2832,6 +2582,7 @@
 
     function updateTaskbar() {
       const taskContainer = document.getElementById('taskbarTasks');
+      if (!taskContainer) return;
       taskContainer.innerHTML = '';
       document.querySelectorAll('.window').forEach(win => {
         if (win.style.display !== 'none') {
@@ -2900,8 +2651,10 @@
     function toggleStartMenu() {
       const menu = document.getElementById('startMenu');
       const btn = document.getElementById('startBtn');
-      menu.classList.toggle('active');
-      btn.classList.toggle('active');
+      if (menu && btn) {
+        menu.classList.toggle('active');
+        btn.classList.toggle('active');
+      }
     }
 
     document.addEventListener('click', (e) => {
@@ -2950,7 +2703,6 @@
       const savedAccent = loadSetting('accent', '#000080');
       const savedSlideshow = loadSetting('slideshow', 0);
 
-      // Apply saved values
       setTheme(savedTheme);
       setWallpaperFit(savedFit);
       setAccentColor(savedAccent);
