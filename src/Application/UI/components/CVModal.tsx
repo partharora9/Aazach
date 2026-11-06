@@ -1,16 +1,9 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import UIEventBus from '../EventBus';
 
-interface HoverState {
-    visible: boolean;
-    x: number;
-    y: number;
-}
-
 const CVModal: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isViewerReady, setIsViewerReady] = useState(false);
-    const [hoverHint, setHoverHint] = useState<HoverState>({ visible: false, x: 0, y: 0 });
     const modalRef = useRef<HTMLDivElement>(null);
     const closeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -18,7 +11,6 @@ const CVModal: React.FC = () => {
     useEffect(() => {
         const handleOpen = () => {
             setIsOpen(true);
-            setHoverHint({ visible: false, x: 0, y: 0 });
             document.body.style.overflow = 'hidden';
         };
 
@@ -35,18 +27,9 @@ const CVModal: React.FC = () => {
             document.body.style.overflow = '';
         };
 
-        const handleHover = (data: { hovered: boolean; x?: number; y?: number }) => {
-            if (data.hovered && typeof data.x === 'number' && typeof data.y === 'number') {
-                setHoverHint({ visible: true, x: data.x, y: data.y });
-            } else {
-                setHoverHint({ visible: false, x: 0, y: 0 });
-            }
-        };
-
         UIEventBus.on('openCV', handleOpen);
         UIEventBus.on('paperAnimComplete', handleAnimComplete);
         UIEventBus.on('closeCV', handleClose);
-        UIEventBus.on('paperHover', handleHover);
 
         return () => {
             document.body.style.overflow = '';
@@ -95,28 +78,7 @@ const CVModal: React.FC = () => {
 
     return (
         <>
-            {/* ─── 3D Hover Pill Badge (Follows Paper in Screen Space) ─── */}
-            {hoverHint.visible && !isOpen && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        left: hoverHint.x,
-                        top: hoverHint.y,
-                        transform: 'translate(-50%, -100%) translateY(-12px)',
-                        zIndex: 9000,
-                        pointerEvents: 'none',
-                        transition: 'opacity 0.2s ease, transform 0.2s ease',
-                    }}
-                >
-                    <div style={styles.hoverPill}>
-                        <span style={styles.hoverSparkle}>📄</span>
-                        <span style={styles.hoverText}>View CV</span>
-                        <span style={styles.hoverSubtext}>(Click Paper)</span>
-                    </div>
-                </div>
-            )}
-
-            {/* ─── Pure CV Presentation (No Heavy Frames) ─── */}
+            {/* ─── Pure Frameless CV Document Presentation ─── */}
             {isOpen && (
                 <div
                     style={Object.assign(
@@ -193,35 +155,6 @@ const CVModal: React.FC = () => {
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
-    hoverPill: {
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 8,
-        padding: '6px 14px',
-        background: 'rgba(8, 10, 16, 0.92)',
-        border: '1.5px solid #00f2fe',
-        borderRadius: '9999px',
-        boxShadow: '0 4px 20px rgba(0, 242, 254, 0.4), 0 2px 8px rgba(0,0,0,0.8)',
-        backdropFilter: 'blur(10px)',
-        cursor: 'pointer',
-        animation: 'floatHoverPill 2s infinite ease-in-out',
-    },
-    hoverSparkle: {
-        fontSize: 14,
-    },
-    hoverText: {
-        color: '#ffffff',
-        fontFamily: "'Segoe UI', -apple-system, sans-serif",
-        fontSize: 12,
-        fontWeight: 700,
-        letterSpacing: '0.04em',
-    },
-    hoverSubtext: {
-        color: '#00f2fe',
-        fontFamily: "'Segoe UI', -apple-system, sans-serif",
-        fontSize: 11,
-        fontWeight: 500,
-    },
     backdrop: {
         position: 'fixed',
         top: 0,

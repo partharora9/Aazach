@@ -286,11 +286,6 @@ export default class PaperCV {
             y + 24
         );
 
-        // Bottom badge
-        ctx.font = 'bold 14px "Segoe UI", sans-serif';
-        ctx.fillStyle = '#000080';
-        ctx.textAlign = 'center';
-        ctx.fillText('ANTRIKSH RESUME / CURRICULUM VITAE — CLICK SHEET TO OPEN FULL PDF', 600, 1660);
 
         this.paperTexture = new THREE.CanvasTexture(this.canvas);
         this.paperTexture.encoding = THREE.sRGBEncoding;
@@ -415,18 +410,6 @@ export default class PaperCV {
         this.paperMesh.scale.set(currentScale, currentScale, currentScale);
     }
 
-    getScreenCoordinates(): { x: number; y: number } {
-        if (!this.paperMesh) return { x: 0, y: 0 };
-        const tempVec = new THREE.Vector3();
-        this.paperMesh.getWorldPosition(tempVec);
-        tempVec.y += 120; // Above the paper
-        tempVec.project(this.camera.instance);
-
-        const x = (tempVec.x * 0.5 + 0.5) * window.innerWidth;
-        const y = (-(tempVec.y * 0.5) + 0.5) * window.innerHeight;
-        return { x, y };
-    }
-
     update() {
         if (!this.paperMesh || this.isCVOpen || this.isAnimating) return;
 
@@ -443,19 +426,10 @@ export default class PaperCV {
             // Subtle paper lift on hover
             this.hoverLiftOffset = THREE.MathUtils.lerp(this.hoverLiftOffset, 28, 0.15);
             this.paperMesh.position.y = this.restPosition.y + this.hoverLiftOffset;
-
-            // Broadcast hover position for UI pill hint
-            const screenPos = this.getScreenCoordinates();
-            UIEventBus.dispatch('paperHover', {
-                hovered: true,
-                x: screenPos.x,
-                y: screenPos.y,
-            });
         } else {
             if (this.isHovered) {
                 this.isHovered = false;
                 document.body.style.cursor = '';
-                UIEventBus.dispatch('paperHover', { hovered: false });
             }
 
             // Return to rest position
