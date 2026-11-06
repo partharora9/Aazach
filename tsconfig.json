@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "target": "ES6",
+        "lib": ["DOM", "DOM.Iterable", "ES2017", "ESNext"],
         "moduleResolution": "node",
         "strict": true,
         "paths": {

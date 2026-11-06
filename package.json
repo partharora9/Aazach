@@ -4,8 +4,12 @@
     "author": "Antriksh",
     "repository": "#",
     "license": "UNLICENSED",
+    "engines": {
+        "node": ">=18.0.0"
+    },
     "scripts": {
         "start": "node server/index.ts",
+        "preview": "node server/index.ts",
         "build": "webpack --config ./bundler/webpack.prod.js",
         "dev": "webpack serve --config ./bundler/webpack.dev.js"
     },
