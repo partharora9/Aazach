@@ -24,7 +24,6 @@ const CVModal: React.FC = () => {
 
         const handleAnimComplete = () => {
             setIsViewerReady(true);
-            // Auto focus close button for accessibility
             setTimeout(() => {
                 closeBtnRef.current?.focus();
             }, 50);
@@ -50,7 +49,6 @@ const CVModal: React.FC = () => {
         UIEventBus.on('paperHover', handleHover);
 
         return () => {
-            // Clean up on unmount
             document.body.style.overflow = '';
         };
     }, []);
@@ -72,10 +70,9 @@ const CVModal: React.FC = () => {
                 return;
             }
 
-            // Simple focus trap inside modal
             if (e.key === 'Tab' && modalRef.current) {
-                const focusable = modalRef.current.querySelectorAll<HTMLElement>(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                const focusable = document.querySelectorAll<HTMLElement>(
+                    '#prevent-click button, #prevent-click [href], #prevent-click iframe'
                 );
                 if (focusable.length > 0) {
                     const first = focusable[0];
@@ -119,7 +116,7 @@ const CVModal: React.FC = () => {
                 </div>
             )}
 
-            {/* ─── Full-screen Dim Backdrop & Modal ─── */}
+            {/* ─── Pure CV Presentation (No Heavy Frames) ─── */}
             {isOpen && (
                 <div
                     style={Object.assign(
@@ -128,7 +125,6 @@ const CVModal: React.FC = () => {
                         isViewerReady ? styles.backdropActive : {}
                     )}
                     onClick={(e) => {
-                        // Click outside modal content closes the CV
                         if (e.target === e.currentTarget) {
                             triggerClose();
                         }
@@ -138,104 +134,57 @@ const CVModal: React.FC = () => {
                     aria-label="Antriksh Curriculum Vitae"
                     id="prevent-click"
                 >
+                    {/* Sleek Floating Controls (Top Right) */}
+                    <div style={styles.floatingControls}>
+                        <a
+                            href="/cv.pdf"
+                            download="CV.pdf"
+                            style={styles.floatingDownloadBtn}
+                            title="Download CV (PDF)"
+                            aria-label="Download CV"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                style={{ width: 16, height: 16 }}
+                            >
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            <span>Download CV</span>
+                        </a>
+
+                        <button
+                            ref={closeBtnRef}
+                            onClick={triggerClose}
+                            style={styles.floatingCloseBtn}
+                            aria-label="Close CV"
+                            title="Close (Esc)"
+                        >
+                            ✕
+                        </button>
+                    </div>
+
+                    {/* ONLY The CV Document Sheet */}
                     <div
                         ref={modalRef}
                         style={Object.assign(
                             {},
-                            styles.modalCard,
-                            isViewerReady ? styles.modalCardActive : {}
+                            styles.cvSheet,
+                            isViewerReady ? styles.cvSheetActive : {}
                         )}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* ── Modal Header ── */}
-                        <div style={styles.header}>
-                            <div style={styles.headerTitleCol}>
-                                <div style={styles.headerBadgeRow}>
-                                    <span style={styles.headerBadge}>CURRICULUM VITAE</span>
-                                    <span style={styles.authorBadge}>ANTRIKSH</span>
-                                </div>
-                                <h2 style={styles.headerTitle}>Antriksh — Professional Resume</h2>
-                                <p style={styles.headerSubtitle}>
-                                    Motion Graphics Designer | Video Editor | Graphic Designer
-                                </p>
-                            </div>
-
-                            <div style={styles.headerActions}>
-                                {/* Download Button */}
-                                <a
-                                    href="/cv.pdf"
-                                    download="CV.pdf"
-                                    style={styles.downloadBtn}
-                                    title="Download CV as PDF"
-                                    aria-label="Download CV as PDF"
-                                >
-                                    <svg
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        style={{ width: 16, height: 16 }}
-                                    >
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                        <polyline points="7 10 12 15 17 10" />
-                                        <line x1="12" y1="15" x2="12" y2="3" />
-                                    </svg>
-                                    <span>Download CV</span>
-                                </a>
-
-                                {/* Close Button */}
-                                <button
-                                    ref={closeBtnRef}
-                                    onClick={triggerClose}
-                                    style={styles.closeBtn}
-                                    aria-label="Close CV Viewer"
-                                    title="Close (Esc)"
-                                >
-                                    ✕
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* ── Mobile Fallback Banner ── */}
-                        <div style={styles.mobileBanner}>
-                            <span>Mobile device detected. If viewer does not render:</span>
-                            <a
-                                href="/cv.pdf"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={styles.mobileLink}
-                            >
-                                Open PDF in New Tab ↗
-                            </a>
-                        </div>
-
-                        {/* ── PDF Embed Container ── */}
-                        <div style={styles.viewerWrapper}>
-                            <iframe
-                                src="/cv.pdf#toolbar=0&navpanes=0&scrollbar=1"
-                                style={styles.iframe}
-                                title="Antriksh CV PDF Document"
-                            />
-                        </div>
-
-                        {/* ── Modal Footer Bar ── */}
-                        <div style={styles.footer}>
-                            <span style={styles.footerInfo}>
-                                Location: South Delhi, Delhi, 110003 • Phone: +91 98717 84187 • Email: devbaisoya36@gmail.com
-                            </span>
-                            <div style={styles.footerRight}>
-                                <a
-                                    href="https://www.behance.net/devbaisoya"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={styles.behanceFooterLink}
-                                >
-                                    View Behance Portfolio ↗
-                                </a>
-                            </div>
-                        </div>
+                        <iframe
+                            src="/cv.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                            style={styles.iframe}
+                            title="Antriksh CV"
+                        />
                     </div>
                 </div>
             )}
@@ -279,14 +228,14 @@ const styles: { [key: string]: React.CSSProperties } = {
         left: 0,
         width: '100vw',
         height: '100vh',
-        background: 'rgba(4, 6, 10, 0.78)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
+        background: 'rgba(5, 7, 12, 0.85)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         zIndex: 100000,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '20px 16px',
+        padding: '24px 16px',
         boxSizing: 'border-box',
         opacity: 0,
         transition: 'opacity 0.35s ease',
@@ -295,136 +244,70 @@ const styles: { [key: string]: React.CSSProperties } = {
     backdropActive: {
         opacity: 1,
     },
-    modalCard: {
-        width: '100%',
-        maxWidth: 960,
-        height: '92vh',
-        background: '#0d1117',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
-        borderRadius: 16,
-        boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 242, 254, 0.15)',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        transform: 'scale(0.96) translateY(15px)',
-        transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease',
-        opacity: 0,
-        boxSizing: 'border-box',
-    },
-    modalCardActive: {
-        transform: 'scale(1) translateY(0)',
-        opacity: 1,
-    },
-    header: {
-        padding: '16px 24px',
-        background: '#161b22',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexShrink: 0,
-        gap: 16,
-    },
-    headerTitleCol: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 4,
-    },
-    headerBadgeRow: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-    },
-    headerBadge: {
-        fontSize: 10,
-        fontFamily: "'Space Grotesk', monospace",
-        fontWeight: 700,
-        letterSpacing: '0.12em',
-        color: '#00f2fe',
-        background: 'rgba(0, 242, 254, 0.12)',
-        padding: '2px 8px',
-        borderRadius: 4,
-    },
-    authorBadge: {
-        fontSize: 11,
-        fontFamily: "'Space Grotesk', monospace",
-        fontWeight: 700,
-        color: '#ffffff',
-    },
-    headerTitle: {
-        margin: 0,
-        fontSize: 18,
-        fontWeight: 700,
-        color: '#ffffff',
-        fontFamily: "'Segoe UI', -apple-system, sans-serif",
-    },
-    headerSubtitle: {
-        margin: 0,
-        fontSize: 12,
-        color: '#94a3b8',
-        fontFamily: "'Segoe UI', -apple-system, sans-serif",
-    },
-    headerActions: {
+    floatingControls: {
+        position: 'fixed',
+        top: 20,
+        right: 24,
         display: 'flex',
         alignItems: 'center',
         gap: 12,
-        flexShrink: 0,
+        zIndex: 100002,
     },
-    downloadBtn: {
+    floatingDownloadBtn: {
         display: 'inline-flex',
         alignItems: 'center',
         gap: 8,
-        padding: '8px 16px',
-        background: '#00f2fe',
-        color: '#04060a',
-        borderRadius: 8,
+        padding: '10px 18px',
+        background: 'rgba(15, 23, 42, 0.85)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        color: '#ffffff',
+        borderRadius: '9999px',
         fontSize: 13,
-        fontWeight: 700,
+        fontWeight: 600,
         fontFamily: "'Segoe UI', -apple-system, sans-serif",
         textDecoration: 'none',
-        transition: 'background 0.2s, transform 0.15s',
-        boxShadow: '0 2px 10px rgba(0, 242, 254, 0.3)',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
         cursor: 'pointer',
+        transition: 'all 0.2s ease',
     },
-    closeBtn: {
-        width: 36,
-        height: 36,
-        borderRadius: 8,
-        background: 'rgba(255, 255, 255, 0.08)',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
+    floatingCloseBtn: {
+        width: 42,
+        height: 42,
+        borderRadius: '50%',
+        background: 'rgba(15, 23, 42, 0.85)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         color: '#ffffff',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'pointer',
-        transition: 'background 0.2s, border-color 0.2s',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
+        transition: 'all 0.2s ease',
     },
-    mobileBanner: {
-        padding: '8px 16px',
-        background: 'rgba(0, 242, 254, 0.08)',
-        borderBottom: '1px solid rgba(0, 242, 254, 0.2)',
-        fontSize: 12,
-        color: '#94a3b8',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: 8,
-    },
-    mobileLink: {
-        color: '#00f2fe',
-        fontWeight: 600,
-        textDecoration: 'none',
-    },
-    viewerWrapper: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
-        background: '#1e293b',
-        position: 'relative',
+    cvSheet: {
+        width: '92vw',
+        maxWidth: 880,
+        height: '94vh',
+        background: '#ffffff',
+        borderRadius: 8,
+        boxShadow: '0 25px 70px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.4)',
         overflow: 'hidden',
+        transform: 'scale(0.96) translateY(15px)',
+        transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease',
+        opacity: 0,
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    cvSheetActive: {
+        transform: 'scale(1) translateY(0)',
+        opacity: 1,
     },
     iframe: {
         width: '100%',
@@ -432,32 +315,6 @@ const styles: { [key: string]: React.CSSProperties } = {
         border: 'none',
         display: 'block',
         backgroundColor: '#ffffff',
-    },
-    footer: {
-        padding: '10px 24px',
-        background: '#161b22',
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexShrink: 0,
-        fontSize: 11,
-        color: '#64748b',
-        gap: 12,
-        flexWrap: 'wrap',
-    },
-    footerInfo: {
-        color: '#94a3b8',
-    },
-    footerRight: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-    },
-    behanceFooterLink: {
-        color: '#00f2fe',
-        textDecoration: 'none',
-        fontWeight: 600,
     },
 };
 
