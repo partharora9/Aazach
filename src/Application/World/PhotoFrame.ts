@@ -29,8 +29,8 @@ export default class PhotoFrame {
     photoTexture: THREE.Texture | null = null;
     glassTexture: THREE.CanvasTexture;
 
-    // Desk placement (right side of keyboard/mouse, in front of coffee mug)
-    restPosition: THREE.Vector3 = new THREE.Vector3(1380, -445, 1280);
+    // Desk placement beside the coffee cup
+    restPosition: THREE.Vector3 = new THREE.Vector3(1360, -445, 1260);
     restRotation: THREE.Euler = new THREE.Euler(0, -0.32, 0); // ~ -18 deg turned toward camera
 
     // Clean portrait placeholder base64 data-URI
@@ -107,10 +107,11 @@ export default class PhotoFrame {
         this.tiltGroup.rotation.x = -0.1745;
         this.frameGroup.add(this.tiltGroup);
 
-        const frameW = 186;
-        const frameH = 246;
-        const frameD = 10;
-        const borderT = 12; // Sleek 12-unit outer wood molding
+        // Big, prominent proportions matching coffee cup scale
+        const frameW = 296;
+        const frameH = 396;
+        const frameD = 14;
+        const borderT = 16; // Sleek 16-unit outer wood molding
 
         this.outerFrameGroup = new THREE.Group();
 
@@ -149,18 +150,18 @@ export default class PhotoFrame {
 
         // Dark felt backboard behind the photo
         const backboard = new THREE.Mesh(
-            new THREE.BoxGeometry(frameW - 4, frameH - 4, 2),
+            new THREE.BoxGeometry(frameW - 4, frameH - 4, 3),
             new THREE.MeshBasicMaterial({ color: 0x141210, toneMapped: false })
         );
-        backboard.position.set(0, frameH / 2, -frameD / 2 + 1);
+        backboard.position.set(0, frameH / 2, -frameD / 2 + 1.5);
         this.outerFrameGroup.add(backboard);
 
         this.tiltGroup.add(this.outerFrameGroup);
 
-        // Photo Planes (162x222 edge-to-edge inside the frame opening with zero white background)
-        const photoW = frameW - borderT * 2; // 162
-        const photoH = frameH - borderT * 2; // 222
-        const photoYCenter = frameH / 2; // 123
+        // Photo Planes (264x364 edge-to-edge full bleed with zero white background)
+        const photoW = frameW - borderT * 2; // 264
+        const photoH = frameH - borderT * 2; // 364
+        const photoYCenter = frameH / 2; // 198
         const photoGeo = new THREE.PlaneGeometry(photoW, photoH);
 
         // 1. Blurred placeholder plane at Z = 0.502
@@ -178,11 +179,11 @@ export default class PhotoFrame {
         this.glassMesh.position.set(0, photoYCenter, 0.75);
         this.tiltGroup.add(this.glassMesh);
 
-        // 4. Back Easel Leg (strut resting on desk at Y = -445)
-        const hingeY = 168;
-        const legLength = 186;
-        const legWidth = 14;
-        const legThickness = 4;
+        // 4. Back Easel Leg (scaled for 396-height frame, touches table at Y = -445)
+        const hingeY = 270;
+        const legLength = 275;
+        const legWidth = 18;
+        const legThickness = 5;
         const easelGeo = new THREE.BoxGeometry(legWidth, legLength, legThickness);
         easelGeo.translate(0, -legLength / 2, 0);
 
@@ -227,11 +228,11 @@ export default class PhotoFrame {
             toneMapped: false,
         });
 
-        const shadowGeo = new THREE.PlaneGeometry(240, 260);
+        const shadowGeo = new THREE.PlaneGeometry(360, 380);
         this.shadowMesh = new THREE.Mesh(shadowGeo, this.shadowMaterial);
         this.shadowMesh.rotation.x = -Math.PI / 2;
         this.shadowMesh.rotation.z = this.restRotation.y;
-        this.shadowMesh.position.set(this.restPosition.x, -444.8, this.restPosition.z - 30);
+        this.shadowMesh.position.set(this.restPosition.x, -444.8, this.restPosition.z - 40);
 
         this.scene.add(this.shadowMesh);
     }
@@ -273,12 +274,12 @@ export default class PhotoFrame {
                 texture.magFilter = THREE.LinearFilter;
                 texture.anisotropy = 16;
 
-                // "Cover" fit logic for 162x222 frame opening:
-                // Image: 900x1227 (0.7335 aspect), Frame: 162x222 (0.7297 aspect)
+                // "Cover" fit logic for 264x364 frame opening:
+                // Image: 900x1227 (0.7335 aspect), Frame: 264x364 (0.7253 aspect)
                 const imgW = texture.image.width || 900;
                 const imgH = texture.image.height || 1227;
                 const imgAspect = imgW / imgH;
-                const frameAspect = 162 / 222;
+                const frameAspect = 264 / 364;
 
                 if (imgAspect > frameAspect) {
                     const scaleX = frameAspect / imgAspect;
