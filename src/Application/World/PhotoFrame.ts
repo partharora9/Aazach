@@ -56,6 +56,7 @@ export default class PhotoFrame {
 
     hoverLift = { y: 0 };
     hoverTween: any = null;
+    tiltTween: any = null;
 
     // Blurred 20px placeholder data-URI
     placeholderDataUri =
@@ -444,11 +445,14 @@ export default class PhotoFrame {
             this.checkHover();
         });
 
-        window.addEventListener('click', (e) => {
+        // Use pointerdown (matching PaperCV) so stopPropagation prevents triggering scene keyframe transitions
+        window.addEventListener('pointerdown', (e) => {
             const target = e.target as HTMLElement;
             if (target && target.closest('#prevent-click')) return;
 
             if (this.isHovered && !this.isPhotoOpen && !this.isCVOpen && !this.isAnimating) {
+                e.preventDefault();
+                e.stopPropagation();
                 this.openPhoto();
             }
         });
@@ -521,30 +525,46 @@ export default class PhotoFrame {
 
         document.body.style.cursor = 'default';
 
+        if (this.tiltTween) this.tiltTween.stop();
+
         // Gentle forward tilt toward viewer on click
-        new TWEEN.Tween(this.tiltGroup.rotation)
+        this.tiltTween = new TWEEN.Tween(this.tiltGroup.rotation)
             .to({ x: -0.05 }, 350)
             .easing(TWEEN.Easing.Quadratic.Out)
             .onComplete(() => {
                 this.isAnimating = false;
+                this.tiltTween = null;
             })
             .start();
+
+        // Safety fallback so isAnimating can never stay stuck
+        setTimeout(() => {
+            this.isAnimating = false;
+        }, 400);
 
         UIEventBus.dispatch('openPhoto', {});
     }
 
     closePhoto() {
-        this.isPhotoOpen = false;
+        if (this.tiltTween) this.tiltTween.stop();
         this.isAnimating = true;
 
-        new TWEEN.Tween(this.tiltGroup.rotation)
+        this.tiltTween = new TWEEN.Tween(this.tiltGroup.rotation)
             .to({ x: -0.1745 }, 400)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onComplete(() => {
                 this.isAnimating = false;
+                this.tiltTween = null;
                 this.frameGroup.position.y = this.restPosition.y;
             })
             .start();
+
+        // Safety fallback so isAnimating and isPhotoOpen can never stay stuck
+        setTimeout(() => {
+            this.isAnimating = false;
+            this.isPhotoOpen = false;
+            this.frameGroup.position.y = this.restPosition.y;
+        }, 450);
     }
 
     update() {}

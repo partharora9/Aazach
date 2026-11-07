@@ -24,7 +24,11 @@ const PhotoModal: React.FC = () => {
         return () => {};
     }, []);
 
-    const triggerClose = useCallback(() => {
+    const triggerClose = useCallback((e?: React.SyntheticEvent) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         setIsOpen(false);
         UIEventBus.dispatch('closePhoto', {});
     }, []);
@@ -54,13 +58,19 @@ const PhotoModal: React.FC = () => {
             aria-modal="true"
             aria-label="Antriksh Profile Photo"
             style={styles.backdrop}
+            onMouseDown={(e) => e.stopPropagation()}
             onClick={(e) => {
+                e.stopPropagation();
                 if (e.target === modalRef.current) {
-                    triggerClose();
+                    triggerClose(e);
                 }
             }}
         >
-            <div style={styles.card}>
+            <div
+                style={styles.card}
+                onMouseDown={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
+            >
                 {/* Header */}
                 <div style={styles.header}>
                     <div style={styles.headerTitleGroup}>
@@ -70,7 +80,8 @@ const PhotoModal: React.FC = () => {
                     <button
                         ref={closeBtnRef}
                         type="button"
-                        onClick={triggerClose}
+                        onClick={(e) => triggerClose(e)}
+                        onMouseDown={(e) => e.stopPropagation()}
                         style={styles.closeBtn}
                         aria-label="Close photo"
                         title="Close (Esc)"
@@ -103,6 +114,8 @@ const PhotoModal: React.FC = () => {
                             rel="noopener noreferrer"
                             style={styles.linkBtn}
                             title="View Behance Profile"
+                            onMouseDown={(e) => e.stopPropagation()}
+                            onClick={(e) => e.stopPropagation()}
                         >
                             Behance ↗
                         </a>
@@ -111,12 +124,15 @@ const PhotoModal: React.FC = () => {
                             download="Antriksh-Photo.jpg"
                             style={styles.downloadBtn}
                             title="Download full-size photo"
+                            onMouseDown={(e) => e.stopPropagation()}
+                            onClick={(e) => e.stopPropagation()}
                         >
                             Download ↓
                         </a>
                         <button
                             type="button"
-                            onClick={triggerClose}
+                            onClick={(e) => triggerClose(e)}
+                            onMouseDown={(e) => e.stopPropagation()}
                             style={styles.backBtn}
                         >
                             Back to Desk

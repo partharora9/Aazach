@@ -48,6 +48,9 @@ export default class Camera extends EventEmitter {
     targetKeyframe: CameraKey | undefined;
     keyframes: { [key in CameraKey]: CameraKeyframeInstance };
 
+    private posTween: any = null;
+    private focTween: any = null;
+
     constructor() {
         super();
         this.application = new Application();
@@ -72,11 +75,12 @@ export default class Camera extends EventEmitter {
         };
 
         document.addEventListener('mousedown', (event) => {
+            const target = event.target as HTMLElement;
             if (this.isCVOpen || this.isPhotoOpen) return;
-            event.preventDefault();
-            // @ts-ignore
-            if (event.target.id === 'prevent-click') return;
-            // print target and current keyframe
+            if (target && target.closest('#prevent-click')) return;
+            if (target && target.closest('button, a, input, select, [role="dialog"]')) return;
+
+            // Toggle camera between DESK and IDLE on clicking empty scene background
             if (
                 this.currentKeyframe === CameraKey.IDLE ||
                 this.targetKeyframe === CameraKey.IDLE
@@ -110,11 +114,17 @@ export default class Camera extends EventEmitter {
     setPhotoListeners() {
         UIEventBus.on('openPhoto', () => {
             this.isPhotoOpen = true;
-            this.transition(CameraKey.PHONE, 900);
+            if (
+                this.currentKeyframe === CameraKey.IDLE ||
+                this.targetKeyframe === CameraKey.IDLE
+            ) {
+                this.transition(CameraKey.DESK, 1000);
+            }
         });
         UIEventBus.on('closePhoto', () => {
-            this.isPhotoOpen = false;
-            this.transition(CameraKey.DESK, 800);
+            setTimeout(() => {
+                this.isPhotoOpen = false;
+            }, 250);
         });
     }
 
@@ -126,28 +136,38 @@ export default class Camera extends EventEmitter {
     ) {
         if (this.currentKeyframe === key) return;
 
-        if (this.targetKeyframe) TWEEN.removeAll();
+        // Isolate camera tweens so we never kill world/UI tweens
+        if (this.posTween) {
+            this.posTween.stop();
+            this.posTween = null;
+        }
+        if (this.focTween) {
+            this.focTween.stop();
+            this.focTween = null;
+        }
 
         this.currentKeyframe = undefined;
         this.targetKeyframe = key;
 
         const keyframe = this.keyframes[key];
 
-        const posTween = new TWEEN.Tween(this.position)
+        this.posTween = new TWEEN.Tween(this.position)
             .to(keyframe.position, duration)
             .easing(easing || TWEEN.Easing.Quintic.InOut)
             .onComplete(() => {
                 this.currentKeyframe = key;
                 this.targetKeyframe = undefined;
+                this.posTween = null;
+                this.focTween = null;
                 if (callback) callback();
             });
 
-        const focTween = new TWEEN.Tween(this.focalPoint)
+        this.focTween = new TWEEN.Tween(this.focalPoint)
             .to(keyframe.focalPoint, duration)
             .easing(easing || TWEEN.Easing.Quintic.InOut);
 
-        posTween.start();
-        focTween.start();
+        this.posTween.start();
+        this.focTween.start();
     }
 
     setInstance() {
@@ -256,6 +276,12 @@ export default class Camera extends EventEmitter {
         for (const key in this.keyframes) {
             const _key = key as CameraKey;
             this.keyframes[_key].update();
+        }
+
+        // Safety fallback: if no transition is active, keep currentKeyframe set
+        if (!this.posTween && !this.currentKeyframe) {
+            this.currentKeyframe = this.targetKeyframe || CameraKey.DESK;
+            this.targetKeyframe = undefined;
         }
 
         if (this.currentKeyframe) {
