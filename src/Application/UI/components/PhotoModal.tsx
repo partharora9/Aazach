@@ -3,6 +3,7 @@ import UIEventBus from '../EventBus';
 
 const PhotoModal: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isCloseHovered, setIsCloseHovered] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
     const closeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -24,11 +25,7 @@ const PhotoModal: React.FC = () => {
         return () => {};
     }, []);
 
-    const triggerClose = useCallback((e?: React.SyntheticEvent) => {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
+    const triggerClose = useCallback(() => {
         setIsOpen(false);
         UIEventBus.dispatch('closePhoto', {});
     }, []);
@@ -60,9 +57,8 @@ const PhotoModal: React.FC = () => {
             style={styles.backdrop}
             onMouseDown={(e) => e.stopPropagation()}
             onClick={(e) => {
-                e.stopPropagation();
                 if (e.target === modalRef.current) {
-                    triggerClose(e);
+                    triggerClose();
                 }
             }}
         >
@@ -80,13 +76,33 @@ const PhotoModal: React.FC = () => {
                     <button
                         ref={closeBtnRef}
                         type="button"
-                        onClick={(e) => triggerClose(e)}
-                        onMouseDown={(e) => e.stopPropagation()}
-                        style={styles.closeBtn}
+                        onClick={triggerClose}
+                        onPointerDown={(e) => {
+                            e.stopPropagation();
+                            triggerClose();
+                        }}
+                        onMouseEnter={() => setIsCloseHovered(true)}
+                        onMouseLeave={() => setIsCloseHovered(false)}
+                        style={Object.assign(
+                            {},
+                            styles.closeBtn,
+                            isCloseHovered ? styles.closeBtnHover : {}
+                        )}
                         aria-label="Close photo"
                         title="Close (Esc)"
                     >
-                        ✕
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            style={{ width: 18, height: 18, pointerEvents: 'none' }}
+                        >
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
                     </button>
                 </div>
 
@@ -114,8 +130,6 @@ const PhotoModal: React.FC = () => {
                             rel="noopener noreferrer"
                             style={styles.linkBtn}
                             title="View Behance Profile"
-                            onMouseDown={(e) => e.stopPropagation()}
-                            onClick={(e) => e.stopPropagation()}
                         >
                             Behance ↗
                         </a>
@@ -124,15 +138,12 @@ const PhotoModal: React.FC = () => {
                             download="Antriksh-Photo.jpg"
                             style={styles.downloadBtn}
                             title="Download full-size photo"
-                            onMouseDown={(e) => e.stopPropagation()}
-                            onClick={(e) => e.stopPropagation()}
                         >
                             Download ↓
                         </a>
                         <button
                             type="button"
-                            onClick={(e) => triggerClose(e)}
-                            onMouseDown={(e) => e.stopPropagation()}
+                            onClick={triggerClose}
                             style={styles.backBtn}
                         >
                             Back to Desk
@@ -202,14 +213,26 @@ const styles: { [key: string]: React.CSSProperties } = {
         borderRadius: '10px',
     },
     closeBtn: {
-        background: 'none',
-        border: 'none',
-        color: '#94a3b8',
-        fontSize: '18px',
+        width: '36px',
+        height: '36px',
+        borderRadius: '50%',
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        border: '1px solid rgba(255, 255, 255, 0.16)',
+        color: '#cbd5e1',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         cursor: 'pointer',
-        padding: '4px 8px',
-        borderRadius: '6px',
+        padding: 0,
+        outline: 'none',
         transition: 'all 0.15s ease',
+        flexShrink: 0,
+    },
+    closeBtnHover: {
+        backgroundColor: 'rgba(255, 255, 255, 0.22)',
+        borderColor: 'rgba(255, 255, 255, 0.4)',
+        color: '#ffffff',
+        transform: 'scale(1.08)',
     },
     imageContainer: {
         padding: '14px',
