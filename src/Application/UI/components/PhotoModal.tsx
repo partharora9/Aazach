@@ -4,12 +4,14 @@ import UIEventBus from '../EventBus';
 const PhotoModal: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCloseHovered, setIsCloseHovered] = useState(false);
+    const [isFloatingHovered, setIsFloatingHovered] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
     const closeBtnRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         const handleOpen = () => {
             setIsOpen(true);
+            document.body.style.overflow = 'hidden';
             setTimeout(() => {
                 closeBtnRef.current?.focus();
             }, 60);
@@ -17,16 +19,20 @@ const PhotoModal: React.FC = () => {
 
         const handleClose = () => {
             setIsOpen(false);
+            document.body.style.overflow = '';
         };
 
         UIEventBus.on('openPhoto', handleOpen);
         UIEventBus.on('closePhoto', handleClose);
 
-        return () => {};
+        return () => {
+            document.body.style.overflow = '';
+        };
     }, []);
 
     const triggerClose = useCallback(() => {
         setIsOpen(false);
+        document.body.style.overflow = '';
         UIEventBus.dispatch('closePhoto', {});
     }, []);
 
@@ -55,16 +61,34 @@ const PhotoModal: React.FC = () => {
             aria-modal="true"
             aria-label="Antriksh Profile Photo"
             style={styles.backdrop}
-            onMouseDown={(e) => e.stopPropagation()}
             onClick={(e) => {
-                if (e.target === modalRef.current) {
+                if (e.target === e.currentTarget || e.target === modalRef.current) {
                     triggerClose();
                 }
             }}
         >
+            {/* Top Right Floating Close Button (matching CV presentation) */}
+            <div style={styles.floatingControls}>
+                <button
+                    type="button"
+                    onClick={triggerClose}
+                    onMouseEnter={() => setIsFloatingHovered(true)}
+                    onMouseLeave={() => setIsFloatingHovered(false)}
+                    style={Object.assign(
+                        {},
+                        styles.floatingCloseBtn,
+                        isFloatingHovered ? styles.floatingCloseBtnHover : {}
+                    )}
+                    aria-label="Close photo"
+                    title="Close (Esc)"
+                >
+                    ✕
+                </button>
+            </div>
+
+            {/* Content Card */}
             <div
                 style={styles.card}
-                onMouseDown={(e) => e.stopPropagation()}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
@@ -77,10 +101,6 @@ const PhotoModal: React.FC = () => {
                         ref={closeBtnRef}
                         type="button"
                         onClick={triggerClose}
-                        onPointerDown={(e) => {
-                            e.stopPropagation();
-                            triggerClose();
-                        }}
                         onMouseEnter={() => setIsCloseHovered(true)}
                         onMouseLeave={() => setIsCloseHovered(false)}
                         style={Object.assign(
@@ -162,21 +182,57 @@ const styles: { [key: string]: React.CSSProperties } = {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'rgba(5, 7, 12, 0.82)',
+        backgroundColor: 'rgba(5, 7, 12, 0.85)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 9999,
+        zIndex: 100000,
         padding: '20px',
         boxSizing: 'border-box',
-        animation: 'fadeIn 0.25s ease-out forwards',
+        pointerEvents: 'auto',
+    },
+    floatingControls: {
+        position: 'fixed',
+        top: 20,
+        right: 24,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 12,
+        zIndex: 100002,
+        pointerEvents: 'auto',
+    },
+    floatingCloseBtn: {
+        width: 42,
+        height: 42,
+        borderRadius: '50%',
+        background: 'rgba(15, 23, 42, 0.85)',
+        border: '1px solid rgba(255, 255, 255, 0.25)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        color: '#ffffff',
+        fontSize: 18,
+        fontWeight: 'bold',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
+        transition: 'all 0.15s ease',
+        pointerEvents: 'auto',
+    },
+    floatingCloseBtnHover: {
+        background: 'rgba(239, 68, 68, 0.85)',
+        borderColor: 'rgba(255, 255, 255, 0.6)',
+        transform: 'scale(1.08)',
     },
     card: {
         position: 'relative',
         backgroundColor: '#12141c',
-        border: '1px solid rgba(255, 255, 255, 0.12)',
+        border: '1px solid rgba(255, 255, 255, 0.14)',
         borderRadius: '16px',
-        boxShadow: '0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 120, 255, 0.12)',
+        boxShadow: '0 24px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 120, 255, 0.12)',
         maxWidth: '460px',
         width: '100%',
         maxHeight: '92vh',
@@ -185,6 +241,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         overflow: 'hidden',
         color: '#ffffff',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        pointerEvents: 'auto',
     },
     header: {
         display: 'flex',
@@ -193,6 +250,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         padding: '14px 18px',
         borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         backgroundColor: '#161922',
+        pointerEvents: 'auto',
     },
     headerTitleGroup: {
         display: 'flex',
@@ -227,10 +285,11 @@ const styles: { [key: string]: React.CSSProperties } = {
         outline: 'none',
         transition: 'all 0.15s ease',
         flexShrink: 0,
+        pointerEvents: 'auto',
     },
     closeBtnHover: {
-        backgroundColor: 'rgba(255, 255, 255, 0.22)',
-        borderColor: 'rgba(255, 255, 255, 0.4)',
+        backgroundColor: 'rgba(239, 68, 68, 0.25)',
+        borderColor: 'rgba(239, 68, 68, 0.6)',
         color: '#ffffff',
         transform: 'scale(1.08)',
     },
@@ -258,6 +317,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
+        pointerEvents: 'auto',
     },
     footerBio: {
         fontSize: '12px',
@@ -281,6 +341,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         display: 'inline-flex',
         alignItems: 'center',
         cursor: 'pointer',
+        pointerEvents: 'auto',
     },
     downloadBtn: {
         fontSize: '12px',
@@ -294,6 +355,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         display: 'inline-flex',
         alignItems: 'center',
         cursor: 'pointer',
+        pointerEvents: 'auto',
     },
     backBtn: {
         fontSize: '12px',
@@ -304,8 +366,8 @@ const styles: { [key: string]: React.CSSProperties } = {
         padding: '6px 14px',
         borderRadius: '8px',
         cursor: 'pointer',
+        pointerEvents: 'auto',
     },
 };
 
 export default PhotoModal;
-
