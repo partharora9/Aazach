@@ -39,8 +39,8 @@ const keys: { [key in CameraKey]: CameraKeyframe } = {
         focalPoint: new THREE.Vector3(-100, 350, 0),
     },
     phone: {
-        position: new THREE.Vector3(1350, 150, 2200),
-        focalPoint: new THREE.Vector3(1350, -440, 1250),
+        position: new THREE.Vector3(1380, -220, 1950),
+        focalPoint: new THREE.Vector3(1380, -315, 1280),
     },
 };
 
