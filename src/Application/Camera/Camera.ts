@@ -42,7 +42,6 @@ export default class Camera extends EventEmitter {
     freeCam: boolean;
     orbitControls: OrbitControls;
     isCVOpen: boolean = false;
-    isPhotoOpen: boolean = false;
 
     currentKeyframe: CameraKey | undefined;
     targetKeyframe: CameraKey | undefined;
@@ -76,7 +75,7 @@ export default class Camera extends EventEmitter {
 
         document.addEventListener('mousedown', (event) => {
             const target = event.target as HTMLElement;
-            if (this.isCVOpen || this.isPhotoOpen) return;
+            if (this.isCVOpen) return;
             if (target && target.closest('#prevent-click')) return;
             if (target && target.closest('button, a, input, select, [role="dialog"]')) return;
 
@@ -99,7 +98,6 @@ export default class Camera extends EventEmitter {
         this.setMonitorListeners();
         this.setFreeCamListeners();
         this.setCVListeners();
-        this.setPhotoListeners();
     }
 
     setCVListeners() {
@@ -108,23 +106,6 @@ export default class Camera extends EventEmitter {
         });
         UIEventBus.on('closeCV', () => {
             this.isCVOpen = false;
-        });
-    }
-
-    setPhotoListeners() {
-        UIEventBus.on('openPhoto', () => {
-            this.isPhotoOpen = true;
-            if (
-                this.currentKeyframe === CameraKey.IDLE ||
-                this.targetKeyframe === CameraKey.IDLE
-            ) {
-                this.transition(CameraKey.DESK, 1000);
-            }
-        });
-        UIEventBus.on('closePhoto', () => {
-            setTimeout(() => {
-                this.isPhotoOpen = false;
-            }, 250);
         });
     }
 

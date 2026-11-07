@@ -4,7 +4,6 @@ import LoadingScreen from './components/LoadingScreen';
 import HelpPrompt from './components/HelpPrompt';
 import InterfaceUI from './components/InterfaceUI';
 import CVModal from './components/CVModal';
-import PhotoModal from './components/PhotoModal';
 import eventBus from './EventBus';
 import './style.css';
 
@@ -22,7 +21,6 @@ const App = () => {
             {!loading && <HelpPrompt />}
             <LoadingScreen />
             <CVModal />
-            <PhotoModal />
         </div>
     );
 };
