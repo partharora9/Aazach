@@ -11,7 +11,6 @@ export default class PhotoFrame {
 
     // Meshes
     outerFrameGroup: THREE.Group;
-    matMesh: THREE.Group;
     thumbMesh: THREE.Mesh;
     photoMesh: THREE.Mesh;
     glassMesh: THREE.Mesh;
@@ -20,8 +19,6 @@ export default class PhotoFrame {
 
     // Materials
     frameMaterial: THREE.MeshBasicMaterial;
-    innerBevelMaterial: THREE.MeshBasicMaterial;
-    matMaterial: THREE.MeshBasicMaterial;
     thumbMaterial: THREE.MeshBasicMaterial;
     photoMaterial: THREE.MeshBasicMaterial;
     glassMaterial: THREE.MeshBasicMaterial;
@@ -58,26 +55,14 @@ export default class PhotoFrame {
             toneMapped: false,
         });
 
-        // 2. Subtle warm inner bevel lip (accent edge)
-        this.innerBevelMaterial = new THREE.MeshBasicMaterial({
-            color: 0x3d3024,
-            toneMapped: false,
-        });
-
-        // 3. Fine archival cream mat border
-        this.matMaterial = new THREE.MeshBasicMaterial({
-            color: 0xfaf7f2,
-            toneMapped: false,
-        });
-
-        // 4. Blurred placeholder photo material
+        // 2. Blurred placeholder photo material
         this.thumbMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
             toneMapped: false,
             side: THREE.FrontSide,
         });
 
-        // 5. Sharp full-res photo material
+        // 3. Sharp full-res photo material
         this.photoMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
             transparent: true,
@@ -86,17 +71,17 @@ export default class PhotoFrame {
             side: THREE.FrontSide,
         });
 
-        // 6. Very faint protective glass layer (< 0.05 opacity)
+        // 4. Very faint protective glass layer (< 0.04 opacity)
         const glassCanvas = document.createElement('canvas');
         glassCanvas.width = 256;
         glassCanvas.height = 340;
         const gctx = glassCanvas.getContext('2d');
         if (gctx) {
             const grad = gctx.createLinearGradient(0, 0, 256, 340);
-            grad.addColorStop(0, 'rgba(255, 255, 255, 0.16)');
-            grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.04)');
+            grad.addColorStop(0, 'rgba(255, 255, 255, 0.14)');
+            grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.03)');
             grad.addColorStop(0.65, 'rgba(255, 255, 255, 0.0)');
-            grad.addColorStop(1, 'rgba(255, 255, 255, 0.12)');
+            grad.addColorStop(1, 'rgba(255, 255, 255, 0.10)');
             gctx.fillStyle = grad;
             gctx.fillRect(0, 0, 256, 340);
         }
@@ -105,7 +90,7 @@ export default class PhotoFrame {
         this.glassMaterial = new THREE.MeshBasicMaterial({
             map: this.glassTexture,
             transparent: true,
-            opacity: 0.04,
+            opacity: 0.035,
             depthWrite: false,
             side: THREE.FrontSide,
             toneMapped: false,
@@ -122,7 +107,6 @@ export default class PhotoFrame {
         this.tiltGroup.rotation.x = -0.1745;
         this.frameGroup.add(this.tiltGroup);
 
-        // Balanced proportions: photo fills the vast majority of the frame
         const frameW = 186;
         const frameH = 246;
         const frameD = 10;
@@ -173,65 +157,25 @@ export default class PhotoFrame {
 
         this.tiltGroup.add(this.outerFrameGroup);
 
-        // Slim, elegant archival mat border (8 units) surrounding a large 146x206 opening
-        this.matMesh = new THREE.Group();
-        const matOuterW = frameW - borderT * 2; // 162
-        const matOuterH = frameH - borderT * 2; // 222
-        const matMargin = 8; // Crisp slim 8-unit white border
-        const photoOpenW = matOuterW - matMargin * 2; // 146
-        const photoOpenH = matOuterH - matMargin * 2; // 206
-        const matYCenter = frameH / 2; // 123
+        // Photo Planes (162x222 edge-to-edge inside the frame opening with zero white background)
+        const photoW = frameW - borderT * 2; // 162
+        const photoH = frameH - borderT * 2; // 222
+        const photoYCenter = frameH / 2; // 123
+        const photoGeo = new THREE.PlaneGeometry(photoW, photoH);
 
-        // Mat top border
-        const mTop = new THREE.Mesh(
-            new THREE.PlaneGeometry(matOuterW, matMargin),
-            this.matMaterial
-        );
-        mTop.position.set(0, matYCenter + photoOpenH / 2 + matMargin / 2, 0.5);
-        this.matMesh.add(mTop);
-
-        // Mat bottom border
-        const mBottom = new THREE.Mesh(
-            new THREE.PlaneGeometry(matOuterW, matMargin),
-            this.matMaterial
-        );
-        mBottom.position.set(0, matYCenter - photoOpenH / 2 - matMargin / 2, 0.5);
-        this.matMesh.add(mBottom);
-
-        // Mat left border
-        const mLeft = new THREE.Mesh(
-            new THREE.PlaneGeometry(matMargin, photoOpenH),
-            this.matMaterial
-        );
-        mLeft.position.set(-photoOpenW / 2 - matMargin / 2, matYCenter, 0.5);
-        this.matMesh.add(mLeft);
-
-        // Mat right border
-        const mRight = new THREE.Mesh(
-            new THREE.PlaneGeometry(matMargin, photoOpenH),
-            this.matMaterial
-        );
-        mRight.position.set(photoOpenW / 2 + matMargin / 2, matYCenter, 0.5);
-        this.matMesh.add(mRight);
-
-        this.tiltGroup.add(this.matMesh);
-
-        // Photo Planes (146x206 large, beautifully filling the frame)
-        // 1. Blurred placeholder plane at Z = 0.502 (in front of mat, zero z-fighting)
-        const photoGeo = new THREE.PlaneGeometry(photoOpenW, photoOpenH);
+        // 1. Blurred placeholder plane at Z = 0.502
         this.thumbMesh = new THREE.Mesh(photoGeo, this.thumbMaterial);
-        this.thumbMesh.position.set(0, matYCenter, 0.502);
+        this.thumbMesh.position.set(0, photoYCenter, 0.502);
         this.tiltGroup.add(this.thumbMesh);
 
         // 2. High-res photo plane at Z = 0.505
         this.photoMesh = new THREE.Mesh(photoGeo, this.photoMaterial);
-        this.photoMesh.position.set(0, matYCenter, 0.505);
+        this.photoMesh.position.set(0, photoYCenter, 0.505);
         this.tiltGroup.add(this.photoMesh);
 
         // 3. Faint protective glass layer at Z = 0.75
-        const glassGeo = new THREE.PlaneGeometry(matOuterW, matOuterH);
-        this.glassMesh = new THREE.Mesh(glassGeo, this.glassMaterial);
-        this.glassMesh.position.set(0, matYCenter, 0.75);
+        this.glassMesh = new THREE.Mesh(photoGeo, this.glassMaterial);
+        this.glassMesh.position.set(0, photoYCenter, 0.75);
         this.tiltGroup.add(this.glassMesh);
 
         // 4. Back Easel Leg (strut resting on desk at Y = -445)
@@ -329,11 +273,12 @@ export default class PhotoFrame {
                 texture.magFilter = THREE.LinearFilter;
                 texture.anisotropy = 16;
 
-                // "Cover" fit logic for 146x206 frame cutout:
+                // "Cover" fit logic for 162x222 frame opening:
+                // Image: 900x1227 (0.7335 aspect), Frame: 162x222 (0.7297 aspect)
                 const imgW = texture.image.width || 900;
                 const imgH = texture.image.height || 1227;
                 const imgAspect = imgW / imgH;
-                const frameAspect = 146 / 206; // 0.7087
+                const frameAspect = 162 / 222;
 
                 if (imgAspect > frameAspect) {
                     const scaleX = frameAspect / imgAspect;
