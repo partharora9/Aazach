@@ -20,6 +20,7 @@ export default class PhotoFrame {
 
     // Materials
     frameMaterial: THREE.MeshBasicMaterial;
+    innerBevelMaterial: THREE.MeshBasicMaterial;
     matMaterial: THREE.MeshBasicMaterial;
     thumbMaterial: THREE.MeshBasicMaterial;
     photoMaterial: THREE.MeshBasicMaterial;
@@ -35,9 +36,9 @@ export default class PhotoFrame {
     restPosition: THREE.Vector3 = new THREE.Vector3(1380, -445, 1280);
     restRotation: THREE.Euler = new THREE.Euler(0, -0.32, 0); // ~ -18 deg turned toward camera
 
-    // Blurred 20px placeholder data-URI for zero-delay first render
+    // Clean portrait placeholder base64 data-URI
     placeholderDataUri =
-        'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAgABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDzwDNOMZA6U22DO4A6mta7sHgsxMDn1qXJIpRbMhvvCiiQEnIGAaKBGraWSpcbsEoOlaptpLm0fzJAq54HrWUJ2jPWnx3NxO20MSB2qJpvUpO2hSvI3gzG68DoaKsTTed8j8gUVZB//9k=';
+        'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAhABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDzzpPc/nSlWC55ptuWZhgEk9B71q3dhNa2f2hvnGcSd9p9KltIpJsymJDrgniimyZ3/L36GigRqWNgovVyztCCPnQf41reRdahp0oLRRxAjjJywz7nis1bl1J3uWOOMmpBf3NwREMFRztRcfjUTTdilK10Zt2DDmCVCrxnPI5Ioq5czi6URy87ehPJFFWRcZJ/rB9KtaR/x+f8aiis6nwMuPxFJf9YfrRRRVkH//Z';
 
     constructor() {
         this.application = new Application();
@@ -53,24 +54,30 @@ export default class PhotoFrame {
     initMaterials() {
         // 1. Rich dark espresso walnut wood outer frame
         this.frameMaterial = new THREE.MeshBasicMaterial({
-            color: 0x241d18,
+            color: 0x1e1814,
             toneMapped: false,
         });
 
-        // 2. Fine textured cream archival mat (passé-partout)
+        // 2. Subtle warm inner bevel lip (accent edge)
+        this.innerBevelMaterial = new THREE.MeshBasicMaterial({
+            color: 0x3d3024,
+            toneMapped: false,
+        });
+
+        // 3. Fine archival cream mat border
         this.matMaterial = new THREE.MeshBasicMaterial({
-            color: 0xf6f3ed,
+            color: 0xfaf7f2,
             toneMapped: false,
         });
 
-        // 3. Blurred placeholder photo material
+        // 4. Blurred placeholder photo material
         this.thumbMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
             toneMapped: false,
             side: THREE.FrontSide,
         });
 
-        // 4. Sharp full-res photo material (starts transparent, fades in)
+        // 5. Sharp full-res photo material
         this.photoMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
             transparent: true,
@@ -79,17 +86,17 @@ export default class PhotoFrame {
             side: THREE.FrontSide,
         });
 
-        // 5. Very faint protective glass layer (< 0.08 opacity, soft reflection sheen)
+        // 6. Very faint protective glass layer (< 0.05 opacity)
         const glassCanvas = document.createElement('canvas');
         glassCanvas.width = 256;
         glassCanvas.height = 340;
         const gctx = glassCanvas.getContext('2d');
         if (gctx) {
             const grad = gctx.createLinearGradient(0, 0, 256, 340);
-            grad.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
-            grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.05)');
+            grad.addColorStop(0, 'rgba(255, 255, 255, 0.16)');
+            grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.04)');
             grad.addColorStop(0.65, 'rgba(255, 255, 255, 0.0)');
-            grad.addColorStop(1, 'rgba(255, 255, 255, 0.15)');
+            grad.addColorStop(1, 'rgba(255, 255, 255, 0.12)');
             gctx.fillStyle = grad;
             gctx.fillRect(0, 0, 256, 340);
         }
@@ -98,7 +105,7 @@ export default class PhotoFrame {
         this.glassMaterial = new THREE.MeshBasicMaterial({
             map: this.glassTexture,
             transparent: true,
-            opacity: 0.05, // Faint glass layer keeping photo 100% crisp and readable
+            opacity: 0.04,
             depthWrite: false,
             side: THREE.FrontSide,
             toneMapped: false,
@@ -111,14 +118,15 @@ export default class PhotoFrame {
         this.frameGroup.rotation.copy(this.restRotation);
 
         this.tiltGroup = new THREE.Group();
-        // 10 degree backward tilt so the photo faces the camera naturally from desk
+        // 10 degree backward tilt so the photo faces the camera naturally from the desk
         this.tiltGroup.rotation.x = -0.1745;
         this.frameGroup.add(this.tiltGroup);
 
-        const frameW = 200;
-        const frameH = 260;
-        const frameD = 12;
-        const borderT = 20;
+        // Balanced proportions: photo fills the vast majority of the frame
+        const frameW = 186;
+        const frameH = 246;
+        const frameD = 10;
+        const borderT = 12; // Sleek 12-unit outer wood molding
 
         this.outerFrameGroup = new THREE.Group();
 
@@ -155,82 +163,81 @@ export default class PhotoFrame {
         rightBar.position.set(frameW / 2 - borderT / 2, frameH / 2, 0);
         this.outerFrameGroup.add(rightBar);
 
-        // Dark felt backboard behind the photo (Z = -4.5)
+        // Dark felt backboard behind the photo
         const backboard = new THREE.Mesh(
-            new THREE.BoxGeometry(frameW - 6, frameH - 6, 3),
+            new THREE.BoxGeometry(frameW - 4, frameH - 4, 2),
             new THREE.MeshBasicMaterial({ color: 0x141210, toneMapped: false })
         );
-        backboard.position.set(0, frameH / 2, -frameD / 2 + 1.5);
+        backboard.position.set(0, frameH / 2, -frameD / 2 + 1);
         this.outerFrameGroup.add(backboard);
 
         this.tiltGroup.add(this.outerFrameGroup);
 
-        // Cream Mat (Passé-Partout) with 120x160 Cutout at Z = 0.5
+        // Slim, elegant archival mat border (8 units) surrounding a large 146x206 opening
         this.matMesh = new THREE.Group();
-        const matOuterW = frameW - borderT * 2; // 160
-        const matOuterH = frameH - borderT * 2; // 220
-        const photoOpenW = 120;
-        const photoOpenH = 160;
-        const matMarginX = (matOuterW - photoOpenW) / 2; // 20
-        const matMarginY = (matOuterH - photoOpenH) / 2; // 30
-        const matYCenter = frameH / 2; // 130
+        const matOuterW = frameW - borderT * 2; // 162
+        const matOuterH = frameH - borderT * 2; // 222
+        const matMargin = 8; // Crisp slim 8-unit white border
+        const photoOpenW = matOuterW - matMargin * 2; // 146
+        const photoOpenH = matOuterH - matMargin * 2; // 206
+        const matYCenter = frameH / 2; // 123
 
         // Mat top border
         const mTop = new THREE.Mesh(
-            new THREE.PlaneGeometry(matOuterW, matMarginY),
+            new THREE.PlaneGeometry(matOuterW, matMargin),
             this.matMaterial
         );
-        mTop.position.set(0, matYCenter + photoOpenH / 2 + matMarginY / 2, 0.5);
+        mTop.position.set(0, matYCenter + photoOpenH / 2 + matMargin / 2, 0.5);
         this.matMesh.add(mTop);
 
         // Mat bottom border
         const mBottom = new THREE.Mesh(
-            new THREE.PlaneGeometry(matOuterW, matMarginY),
+            new THREE.PlaneGeometry(matOuterW, matMargin),
             this.matMaterial
         );
-        mBottom.position.set(0, matYCenter - photoOpenH / 2 - matMarginY / 2, 0.5);
+        mBottom.position.set(0, matYCenter - photoOpenH / 2 - matMargin / 2, 0.5);
         this.matMesh.add(mBottom);
 
         // Mat left border
         const mLeft = new THREE.Mesh(
-            new THREE.PlaneGeometry(matMarginX, photoOpenH),
+            new THREE.PlaneGeometry(matMargin, photoOpenH),
             this.matMaterial
         );
-        mLeft.position.set(-photoOpenW / 2 - matMarginX / 2, matYCenter, 0.5);
+        mLeft.position.set(-photoOpenW / 2 - matMargin / 2, matYCenter, 0.5);
         this.matMesh.add(mLeft);
 
         // Mat right border
         const mRight = new THREE.Mesh(
-            new THREE.PlaneGeometry(matMarginX, photoOpenH),
+            new THREE.PlaneGeometry(matMargin, photoOpenH),
             this.matMaterial
         );
-        mRight.position.set(photoOpenW / 2 + matMarginX / 2, matYCenter, 0.5);
+        mRight.position.set(photoOpenW / 2 + matMargin / 2, matYCenter, 0.5);
         this.matMesh.add(mRight);
 
         this.tiltGroup.add(this.matMesh);
 
-        // Photo Planes (Positioned right in the cutout opening)
+        // Photo Planes (146x206 large, beautifully filling the frame)
         // 1. Blurred placeholder plane at Z = 0.502 (in front of mat, zero z-fighting)
         const photoGeo = new THREE.PlaneGeometry(photoOpenW, photoOpenH);
         this.thumbMesh = new THREE.Mesh(photoGeo, this.thumbMaterial);
         this.thumbMesh.position.set(0, matYCenter, 0.502);
         this.tiltGroup.add(this.thumbMesh);
 
-        // 2. High-res photo plane at Z = 0.505 (sits in front, ready to fade in)
+        // 2. High-res photo plane at Z = 0.505
         this.photoMesh = new THREE.Mesh(photoGeo, this.photoMaterial);
         this.photoMesh.position.set(0, matYCenter, 0.505);
         this.tiltGroup.add(this.photoMesh);
 
-        // 3. Protective Glass Layer at Z = 0.8
+        // 3. Faint protective glass layer at Z = 0.75
         const glassGeo = new THREE.PlaneGeometry(matOuterW, matOuterH);
         this.glassMesh = new THREE.Mesh(glassGeo, this.glassMaterial);
-        this.glassMesh.position.set(0, matYCenter, 0.8);
+        this.glassMesh.position.set(0, matYCenter, 0.75);
         this.tiltGroup.add(this.glassMesh);
 
         // 4. Back Easel Leg (strut resting on desk at Y = -445)
-        const hingeY = 178;
-        const legLength = 196;
-        const legWidth = 16;
+        const hingeY = 168;
+        const legLength = 186;
+        const legWidth = 14;
         const legThickness = 4;
         const easelGeo = new THREE.BoxGeometry(legWidth, legLength, legThickness);
         easelGeo.translate(0, -legLength / 2, 0);
@@ -240,7 +247,7 @@ export default class PhotoFrame {
             new THREE.MeshBasicMaterial({ color: 0x1f1915, toneMapped: false })
         );
         this.easelMesh.position.set(0, hingeY, -frameD / 2);
-        this.easelMesh.rotation.x = 0.43; // ~ 24.6 degrees backwards
+        this.easelMesh.rotation.x = 0.43; // ~ 24.6 degrees backwards to touch desk surface
         this.outerFrameGroup.add(this.easelMesh);
 
         this.scene.add(this.frameGroup);
@@ -286,7 +293,6 @@ export default class PhotoFrame {
     }
 
     disableInteractions() {
-        // Completely disable raycasting on all frame meshes so clicks pass cleanly through
         const noopRaycast = () => {};
         this.frameGroup.traverse((child) => {
             child.raycast = noopRaycast;
@@ -297,7 +303,7 @@ export default class PhotoFrame {
     }
 
     loadTextures() {
-        // 1. Load blurred thumbnail immediately for zero-delay initial view
+        // 1. Load blurred thumbnail immediately for zero-delay first view
         const thumbImg = new Image();
         thumbImg.onload = () => {
             const tex = new THREE.Texture(thumbImg);
@@ -323,12 +329,11 @@ export default class PhotoFrame {
                 texture.magFilter = THREE.LinearFilter;
                 texture.anisotropy = 16;
 
-                // "Cover" fit logic for 3:4 frame cutout (120x160):
-                // Keeps Antriksh's face centered without any stretching or distortion
+                // "Cover" fit logic for 146x206 frame cutout:
                 const imgW = texture.image.width || 900;
-                const imgH = texture.image.height || 1202;
+                const imgH = texture.image.height || 1227;
                 const imgAspect = imgW / imgH;
-                const frameAspect = 120 / 160; // 0.75
+                const frameAspect = 146 / 206; // 0.7087
 
                 if (imgAspect > frameAspect) {
                     const scaleX = frameAspect / imgAspect;
@@ -337,7 +342,7 @@ export default class PhotoFrame {
                 } else {
                     const scaleY = imgAspect / frameAspect;
                     texture.repeat.set(1, scaleY);
-                    texture.offset.set(0, (1 - scaleY) * 0.45);
+                    texture.offset.set(0, (1 - scaleY) * 0.4);
                 }
                 texture.needsUpdate = true;
 
@@ -357,7 +362,6 @@ export default class PhotoFrame {
                     .onComplete(() => {
                         this.photoMaterial.transparent = false;
                         this.photoMaterial.needsUpdate = true;
-                        // Remove blurred placeholder once full photo is solid
                         if (this.thumbMesh.parent) {
                             this.thumbMesh.parent.remove(this.thumbMesh);
                         }
