@@ -8,6 +8,7 @@ import CoffeeSteam from './CoffeeSteam';
 import Cursor from './Cursor';
 import Hitboxes from './Hitboxes';
 import AudioManager from '../Audio/AudioManager';
+import Phone from './Phone';
 export default class World {
     application: Application;
     scene: THREE.Scene;
@@ -19,6 +20,7 @@ export default class World {
     computerSetup: ComputerSetup;
     monitorScreen: MonitorScreen;
     coffeeSteam: CoffeeSteam;
+    phone: Phone;
     cursor: Cursor;
     audioManager: AudioManager;
 
@@ -34,6 +36,7 @@ export default class World {
             this.computerSetup = new ComputerSetup();
             this.monitorScreen = new MonitorScreen();
             this.coffeeSteam = new CoffeeSteam();
+            this.phone = new Phone();
             this.audioManager = new AudioManager();
             // const hb = new Hitboxes();
             // this.cursor = new Cursor();
@@ -45,6 +48,7 @@ export default class World {
         if (this.environment) this.environment.update();
         if (this.decor) this.decor.update();
         if (this.coffeeSteam) this.coffeeSteam.update();
+        if (this.phone) this.phone.update();
         if (this.audioManager) this.audioManager.update();
     }
 }

@@ -38,6 +38,10 @@ const keys: { [key in CameraKey]: CameraKeyframe } = {
         position: new THREE.Vector3(-15000, 10000, 15000),
         focalPoint: new THREE.Vector3(-100, 350, 0),
     },
+    phone: {
+        position: new THREE.Vector3(1350, 150, 2200),
+        focalPoint: new THREE.Vector3(1350, -440, 1250),
+    },
 };
 
 export class MonitorKeyframe extends CameraKeyframeInstance {
@@ -136,6 +140,15 @@ export class IdleKeyframe extends CameraKeyframeInstance {
 export class OrbitControlsStart extends CameraKeyframeInstance {
     constructor() {
         const keyframe = keys.orbitControlsStart;
+        super(keyframe);
+    }
+
+    update() {}
+}
+
+export class PhoneKeyframe extends CameraKeyframeInstance {
+    constructor() {
+        const keyframe = keys.phone;
         super(keyframe);
     }
 

@@ -16,6 +16,7 @@ import {
     LoadingKeyframe,
     DeskKeyframe,
     OrbitControlsStart,
+    PhoneKeyframe,
 } from './CameraKeyframes';
 
 export enum CameraKey {
@@ -24,6 +25,7 @@ export enum CameraKey {
     LOADING = 'loading',
     DESK = 'desk',
     ORBIT_CONTROLS_START = 'orbitControlsStart',
+    PHONE = 'phone',
 }
 export default class Camera extends EventEmitter {
     application: Application;
@@ -40,6 +42,7 @@ export default class Camera extends EventEmitter {
     freeCam: boolean;
     orbitControls: OrbitControls;
     isCVOpen: boolean = false;
+    isPhotoOpen: boolean = false;
 
     currentKeyframe: CameraKey | undefined;
     targetKeyframe: CameraKey | undefined;
@@ -65,10 +68,11 @@ export default class Camera extends EventEmitter {
             loading: new LoadingKeyframe(),
             desk: new DeskKeyframe(),
             orbitControlsStart: new OrbitControlsStart(),
+            phone: new PhoneKeyframe(),
         };
 
         document.addEventListener('mousedown', (event) => {
-            if (this.isCVOpen) return;
+            if (this.isCVOpen || this.isPhotoOpen) return;
             event.preventDefault();
             // @ts-ignore
             if (event.target.id === 'prevent-click') return;
@@ -91,6 +95,7 @@ export default class Camera extends EventEmitter {
         this.setMonitorListeners();
         this.setFreeCamListeners();
         this.setCVListeners();
+        this.setPhotoListeners();
     }
 
     setCVListeners() {
@@ -99,6 +104,17 @@ export default class Camera extends EventEmitter {
         });
         UIEventBus.on('closeCV', () => {
             this.isCVOpen = false;
+        });
+    }
+
+    setPhotoListeners() {
+        UIEventBus.on('openPhoto', () => {
+            this.isPhotoOpen = true;
+            this.transition(CameraKey.PHONE, 900);
+        });
+        UIEventBus.on('closePhoto', () => {
+            this.isPhotoOpen = false;
+            this.transition(CameraKey.DESK, 800);
         });
     }
 
